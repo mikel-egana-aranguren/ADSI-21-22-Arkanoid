@@ -22,6 +22,7 @@ import eus.ehu.adsi.arkanoid.view.Ball;
 import eus.ehu.adsi.arkanoid.view.Config;
 import eus.ehu.adsi.arkanoid.view.Paddle;
 import eus.ehu.adsi.arkanoid.view.ScoreBoard;
+import eus.ehu.adsi.arkanoid.view.SelectNivel;
 import eus.ehu.adsi.arkanoid.view.Brick;
 import eus.ehu.adsi.arkanoid.core.Game;
 
@@ -60,7 +61,8 @@ public class Arkanoid extends JFrame implements KeyListener {
 	}
 	
 	void run() {
-
+		SelectNivel selectNivel = new SelectNivel();
+		
 		BufferStrategy bf = this.getBufferStrategy();
 		Graphics g = bf.getDrawGraphics();
 		g.setColor(Color.black);
@@ -200,4 +202,8 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 	public void keyTyped(KeyEvent arg0) {}
 
+	public int seleccionarNivel(){
+		int nivel = 0;
+		return (nivel);	
+	}
 }
