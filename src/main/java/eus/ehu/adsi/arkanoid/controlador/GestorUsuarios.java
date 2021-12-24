@@ -13,7 +13,7 @@ public class GestorUsuarios {
         lUsuarios = new ArrayList<Usuario>();
     }
 
-    public static GestorUsuarios getGestorUsuario() {
+    public static GestorUsuarios getGestorUsuarios() {
         if (mGestorUsuarios == null) mGestorUsuarios = new GestorUsuarios();
         return mGestorUsuarios;
     }
@@ -24,6 +24,12 @@ public class GestorUsuarios {
                 return u;
         }
         return null;
+    }
+
+
+    /*MÉTODOS PARA PRUEBAS*/
+    public void anadir(Usuario u) {
+        this.lUsuarios.add(u);
     }
 
 }

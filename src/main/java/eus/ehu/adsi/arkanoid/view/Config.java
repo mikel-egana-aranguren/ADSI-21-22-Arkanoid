@@ -32,4 +32,5 @@ public abstract class Config {
 	public static final Color BALL_COLOR = Color.orange;
 	public static final Color PADDLE_COLOR = Color.red;
 	public static final Color BRICK_COLOR = Color.blue;
+    public static final Color BRICK_COLOR_SUERTE = Color.yellow;
 }

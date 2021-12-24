@@ -2,6 +2,10 @@ package eus.ehu.adsi.arkanoid.core;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
+import eus.ehu.adsi.arkanoid.Arkanoid;
+import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
 import eus.ehu.adsi.arkanoid.view.Ball;
 import eus.ehu.adsi.arkanoid.view.Brick;
 import eus.ehu.adsi.arkanoid.view.Config;
@@ -50,6 +54,12 @@ public class Game {
 
 		mBrick.destroyed = true;
 
+		if (mBrick.getSuerte()) {
+			JSONObject j = ArkanoidFrontera.getArkanoidFrontera().darVentaja("null");
+			int vidas = j.getInt("vidas");
+			scoreboard.updateLives(vidas);
+		}
+
 		scoreboard.increaseScore();
 
 		double overlapLeft = mBall.right() - mBrick.left();
@@ -76,12 +86,20 @@ public class Game {
 	}
 	
 	public static List<Brick> initializeBricks(List<Brick> bricks) {
+		int counter = 10; //Para generar ladrillos de la suerte
+		boolean suerte = false;
 		bricks.clear();
 		for (int iX = 0; iX < Config.COUNT_BLOCKS_X; ++iX) {
 			for (int iY = 0; iY < Config.COUNT_BLOCKS_Y; ++iY) {
+				counter--;
+				if (counter == 0) {
+					suerte = true;
+					counter = 7; //igual es más rentable hacerlo con números aleatorios para que no quede tan random xdddd
+				} else suerte = false;
 				bricks.add(new Brick(
 						(iX + 1) * (Config.BLOCK_WIDTH + 3) + 22,
-						(iY + 2) * (Config.BLOCK_HEIGHT + 3) + 50)
+						(iY + 2) * (Config.BLOCK_HEIGHT + 3) + 50,
+						suerte)
 						);
 			}
 		}

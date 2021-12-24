@@ -1,10 +1,8 @@
-package eus.ehu.adsi.arkanoid.controlador;
+package eus.ehu.adsi.arkanoid.modelo;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import eus.ehu.adsi.arkanoid.modelo.Ventaja;
-import eus.ehu.adsi.arkanoid.modelo.Usuario;
 
 public class Partida {
     private int puntuacion;
@@ -13,11 +11,12 @@ public class Partida {
     private boolean victoria;
     private Date fechaFin;
     private Usuario jugador;
-    private List<Ventaja> listaVentajas;
+    private List<Ventaja> listaVentajas = new ArrayList<Ventaja>();
     private int numVidas;
 
-    public Partida() {
-
+    public Partida(Usuario u) {
+        jugador = u;
+        fechaFin = null;
     }
 
     public boolean esUsuario(Usuario u) {
@@ -28,10 +27,8 @@ public class Partida {
         return fechaFin == null;
     }
 
-    public String crearVentaja(int random) {
-        Ventaja v = CreadorVentaja.getCreadorVentaja().crearVentaja(random);
-        v.darVentaja();
-        return v.getDescrip();
+    public void agregarAListaVentaja(Ventaja v) {
+        listaVentajas.add(v);
     }
 
 
