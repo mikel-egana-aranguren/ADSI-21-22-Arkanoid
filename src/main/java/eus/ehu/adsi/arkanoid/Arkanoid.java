@@ -2,27 +2,24 @@ package eus.ehu.adsi.arkanoid;
 
 // Adapted from https://gist.github.com/Miretz/f10b18df01f9f9ebfad5
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 
+import eus.ehu.adsi.arkanoid.view.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import eus.ehu.adsi.arkanoid.view.Ball;
-import eus.ehu.adsi.arkanoid.view.Config;
-import eus.ehu.adsi.arkanoid.view.Paddle;
-import eus.ehu.adsi.arkanoid.view.ScoreBoard;
-import eus.ehu.adsi.arkanoid.view.Brick;
 import eus.ehu.adsi.arkanoid.core.Game;
 
 public class Arkanoid extends JFrame implements KeyListener {
@@ -32,6 +29,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 	private static final Logger logger = LogManager.getLogger(Arkanoid.class);
 
 	// Game variables
+
 	private Game game;
 	private Paddle paddle = new Paddle(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT - 50);
 	private Ball ball = new Ball(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT / 2);
@@ -39,12 +37,12 @@ public class Arkanoid extends JFrame implements KeyListener {
 	private ScoreBoard scoreboard = new ScoreBoard();
 
 	private double lastFt;
-	private double currentSlice;	
+	private double currentSlice;
+	private static boolean continuar = false;
 	
 	public Arkanoid() {
 		
 		game = new Game ();
-
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setUndecorated(false);
 		this.setResizable(false);
@@ -58,16 +56,26 @@ public class Arkanoid extends JFrame implements KeyListener {
 		bricks = Game.initializeBricks(bricks);
 
 	}
-	
-	void run() {
 
+	public static void recibirPersonalizacion(String fondo, String bola, String ladrillo, String paddle, String sonido){
+		Config.recibirColores(fondo, bola, ladrillo, paddle, sonido);
+		continuar = true;
+	}
+	
+	public void run() {
 		BufferStrategy bf = this.getBufferStrategy();
 		Graphics g = bf.getDrawGraphics();
 		g.setColor(Color.black);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		
+		//Llamamos a la ventana de personalizacion
+		Personalizacion p = new Personalizacion();
+		p.setVisible(true);
+		this.setVisible(false);
+		while(!continuar){System.out.println("");}
+		//Cerramos la ventana de personalizacion y abrimos la del juego
+		p.setVisible(false);
+		this.setVisible(true);
 		game.setRunning(true);
-
 		while (game.isRunning()) {
 
 			long time1 = System.currentTimeMillis();
@@ -115,7 +123,6 @@ public class Arkanoid extends JFrame implements KeyListener {
 		}
 
 		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-
 	}
 
 	private void update() {
@@ -147,7 +154,6 @@ public class Arkanoid extends JFrame implements KeyListener {
 		try {
 
 			g = bf.getDrawGraphics();
-
 			g.setColor(Config.BACKGROUND_COLOR);
 			g.fillRect(0, 0, getWidth(), getHeight());
 
