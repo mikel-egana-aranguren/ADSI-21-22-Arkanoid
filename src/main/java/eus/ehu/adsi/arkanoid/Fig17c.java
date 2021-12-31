@@ -23,7 +23,7 @@ public class Fig17c extends JFrame {
         this.setUndecorated(false);
         this.setResizable(false);
         this.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
-        this.setTitle("Iniciar sesión");
+        this.setTitle("Recuperar Contraseña");
         drawScene();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
