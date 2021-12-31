@@ -22,7 +22,6 @@ public class Fig17a extends JFrame {
         drawScene();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
-        //this.createBufferStrategy(2);
     }
 
     private void drawScene() {
@@ -87,7 +86,7 @@ public class Fig17a extends JFrame {
             {
                 System.out.println("Iniciar");
 
-//                JSON = Arkanoid.comprobarInicio(nombre.getText(), contraseña.getText());
+//                int resultado = FronteraArkanoid.comprobarInicio(nombre.getText(), contrasena.getText());
 //                * Definición de JSON:
 //                { : boolean, : String }
 //                    Si es True, String = nombreUsuario
