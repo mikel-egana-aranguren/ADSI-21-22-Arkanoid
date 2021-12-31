@@ -12,8 +12,8 @@ public class Fig17c extends JFrame {
     private String correo;
     private String codigo;
     private JTextField codigoIntroducido;
-    private JTextField contrasena1;
-    private JTextField contrasena2;
+    private JPasswordField contrasena1;
+    private JPasswordField contrasena2;
 
     public Fig17c(String pCorreo, String pCodigo) {
 
@@ -47,13 +47,13 @@ public class Fig17c extends JFrame {
         JLabel textoContrasena1 = new JLabel("Nueva contraseña:");
         textoContrasena1.setForeground(Config.FONT_COLOR);
         this.add(textoContrasena1);
-        contrasena1 = new JTextField("", 10);
+        contrasena1 = new JPasswordField("", 10);
         this.add(contrasena1);
 
         JLabel textoContrasena2 = new JLabel("Confirmar contraseña:");
         textoContrasena2.setForeground(Config.FONT_COLOR);
         this.add(textoContrasena2);
-        contrasena2 = new JTextField("", 10);
+        contrasena2 = new JPasswordField("", 10);
         this.add(contrasena2);
 
         JLabel textoVolver = new JLabel("¿No te ha llegado el código?:");
@@ -67,8 +67,8 @@ public class Fig17c extends JFrame {
 
     private JButton botonVolver() {
 
-        JButton olvidar = new JButton("Volver a enviar");
-        olvidar.addActionListener(new ActionListener()
+        JButton volver = new JButton("Volver a enviar");
+        volver.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -78,13 +78,13 @@ public class Fig17c extends JFrame {
                 new Fig17c("", "");
             }
         });
-        return olvidar;
+        return volver;
     }
 
     private JButton botonAceptar() {
 
-        JButton cancelar = new JButton("Aceptar");
-        cancelar.addActionListener(new ActionListener()
+        JButton aceptar = new JButton("Aceptar");
+        aceptar.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -94,13 +94,13 @@ public class Fig17c extends JFrame {
                 new Fig17a();
             }
         });
-        return cancelar;
+        return aceptar;
     }
 
     private JButton botonCancelar() {
 
-        JButton olvidar = new JButton("Cancelar");
-        olvidar.addActionListener(new ActionListener()
+        JButton cancelar = new JButton("Cancelar");
+        cancelar.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -109,6 +109,6 @@ public class Fig17c extends JFrame {
                 new Fig17b();
             }
         });
-        return olvidar;
+        return cancelar;
     }
 }

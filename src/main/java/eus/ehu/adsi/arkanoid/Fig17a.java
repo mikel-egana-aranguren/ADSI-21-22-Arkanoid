@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 public class Fig17a extends JFrame {
 
     private JTextField nombre;
-    private JTextField contrasena;
+    private JPasswordField contrasena;
 
     public Fig17a() {
 
@@ -38,7 +38,7 @@ public class Fig17a extends JFrame {
         JLabel textoContrasena = new JLabel("Contraseña:");
         textoContrasena.setForeground(Config.FONT_COLOR);
         this.add(textoContrasena);
-        contrasena = new JTextField("", 10);
+        contrasena = new JPasswordField("", 10);
         this.add(contrasena);
 
         this.add(botonOlvidar());

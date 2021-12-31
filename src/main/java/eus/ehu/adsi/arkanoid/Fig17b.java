@@ -41,8 +41,8 @@ public class Fig17b extends JFrame {
 
     private JButton botonCancelar() {
 
-        JButton olvidar = new JButton("Cancelar");
-        olvidar.addActionListener(new ActionListener()
+        JButton cancelar = new JButton("Cancelar");
+        cancelar.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -51,13 +51,13 @@ public class Fig17b extends JFrame {
                 //new Fig16();
             }
         });
-        return olvidar;
+        return cancelar;
     }
 
     private JButton botonEnviar() {
 
-        JButton cancelar = new JButton("Enviar correo");
-        cancelar.addActionListener(new ActionListener()
+        JButton enviar = new JButton("Enviar correo");
+        enviar.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -74,6 +74,6 @@ public class Fig17b extends JFrame {
                 new Fig17c("", "");
             }
         });
-        return cancelar;
+        return enviar;
     }
 }
