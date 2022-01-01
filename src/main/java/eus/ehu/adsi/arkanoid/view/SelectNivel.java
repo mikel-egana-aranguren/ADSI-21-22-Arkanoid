@@ -16,6 +16,7 @@ import javax.swing.plaf.ColorUIResource;
 import eus.ehu.adsi.arkanoid.App;
 import eus.ehu.adsi.arkanoid.Arkanoid;
 
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.MouseAdapter;
@@ -98,7 +99,15 @@ public class SelectNivel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					frame.dispose();
-					//App.jugar(Nivel)
+					
+				}
+				@Override
+				public void mouseEntered(MouseEvent e){
+					btnComenzar.setForeground(Color.RED);
+				}
+				@Override
+				public void mouseExited(MouseEvent e){
+					btnComenzar.setForeground(Color.WHITE);
 				}
 			});
 		}
@@ -116,7 +125,16 @@ public class SelectNivel {
 			btnCancelar.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					new MenuPrincipal();
+					//new menu principal
+					frame.dispose();
+				}
+				@Override
+				public void mouseEntered(MouseEvent e){
+					btnCancelar.setForeground(Color.RED);
+				}
+				@Override
+				public void mouseExited(MouseEvent e){
+					btnCancelar.setForeground(Color.WHITE);
 				}
 			});
 		}

@@ -60,9 +60,8 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 	}
 	
-	void run() {
-		SelectNivel selectNivel = new SelectNivel();
-		
+	void run(int nivel) {
+			
 		BufferStrategy bf = this.getBufferStrategy();
 		Graphics g = bf.getDrawGraphics();
 		g.setColor(Color.black);
