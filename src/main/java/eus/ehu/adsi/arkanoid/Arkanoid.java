@@ -22,7 +22,6 @@ import eus.ehu.adsi.arkanoid.view.Ball;
 import eus.ehu.adsi.arkanoid.view.Config;
 import eus.ehu.adsi.arkanoid.view.Paddle;
 import eus.ehu.adsi.arkanoid.view.ScoreBoard;
-import eus.ehu.adsi.arkanoid.view.SelectNivel;
 import eus.ehu.adsi.arkanoid.view.Brick;
 import eus.ehu.adsi.arkanoid.core.Game;
 
@@ -40,7 +39,9 @@ public class Arkanoid extends JFrame implements KeyListener {
 	private ScoreBoard scoreboard = new ScoreBoard();
 
 	private double lastFt;
-	private double currentSlice;	
+	private double currentSlice;
+
+	private int nivel;
 	
 	public Arkanoid() {
 		
@@ -60,8 +61,10 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 	}
 	
-	void run(int nivel) {
-			
+	public void run(int lvl) {
+
+		nivel = lvl;
+
 		BufferStrategy bf = this.getBufferStrategy();
 		Graphics g = bf.getDrawGraphics();
 		g.setColor(Color.black);
@@ -125,14 +128,14 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 		for (; currentSlice >= Config.FT_SLICE; currentSlice -= Config.FT_SLICE) {
 
-			ball.update(scoreboard, paddle);
+			ball.update(scoreboard, paddle, nivel);
 			paddle.update();
-			Game.testCollision(paddle, ball);
+			Game.testCollision(paddle, ball, nivel);
 
 			Iterator<Brick> it = bricks.iterator();
 			while (it.hasNext()) {
 				Brick brick = it.next();
-				Game.testCollision(brick, ball, scoreboard);
+				Game.testCollision(brick, ball, scoreboard, nivel);
 				if (brick.destroyed) {
 					it.remove();
 				}
@@ -201,8 +204,4 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 	public void keyTyped(KeyEvent arg0) {}
 
-	public int seleccionarNivel(){
-		int nivel = 0;
-		return (nivel);	
-	}
 }

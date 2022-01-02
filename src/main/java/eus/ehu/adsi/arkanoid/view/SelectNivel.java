@@ -4,18 +4,15 @@ import javax.swing.JFrame;
 import java.awt.Color;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+
 import javax.swing.JPanel;
+
+import eus.ehu.adsi.arkanoid.Arkanoid;
+
 import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import javax.swing.JTextField;
-import javax.swing.plaf.ColorUIResource;
-
-import eus.ehu.adsi.arkanoid.App;
-import eus.ehu.adsi.arkanoid.Arkanoid;
-
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -31,7 +28,6 @@ public class SelectNivel {
     private JButton btnCancelar;
 	private JLabel lblNivel;
 	private JComboBox<String> comboBoxNivel;
-	private int nivel;
 	
 	public SelectNivel() {
 		initialize();
@@ -87,6 +83,7 @@ public class SelectNivel {
           	}
 		return panelCentro;
 	}
+	
 	private JButton getBtnComenzar() {
 		if (btnComenzar == null) {
 			btnComenzar = new JButton("Comenzar");
@@ -99,7 +96,7 @@ public class SelectNivel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					frame.dispose();
-					
+					new Arkanoid().run(comboBoxNivel.getSelectedIndex());
 				}
 				@Override
 				public void mouseEntered(MouseEvent e){
