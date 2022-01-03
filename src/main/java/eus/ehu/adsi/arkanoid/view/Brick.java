@@ -24,4 +24,12 @@ public class Brick extends Rectangle {
 	public boolean getSuerte() {
 		return suerte;
 	}
+
+	public double getX () {
+		return x;
+	}
+
+	public double getY() {
+		return y;
+	}
 }

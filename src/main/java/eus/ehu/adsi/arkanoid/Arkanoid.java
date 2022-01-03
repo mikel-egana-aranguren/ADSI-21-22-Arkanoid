@@ -32,7 +32,7 @@ import eus.ehu.adsi.arkanoid.core.Game;
 import eus.ehu.adsi.arkanoid.modelo.Partida;
 import eus.ehu.adsi.arkanoid.modelo.Usuario;
 
-public class Arkanoid extends JFrame implements KeyListener {
+public class Arkanoid extends JFrame implements KeyListener { //No se si se podrá hacer MAE esta clase
 
 	// Housekeeping
 	private static final long serialVersionUID = 1L;
@@ -42,13 +42,22 @@ public class Arkanoid extends JFrame implements KeyListener {
 	private Game game;
 	private Paddle paddle = new Paddle(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT - 50);
 	private Ball ball = new Ball(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT / 2);
+	private Ball ball2 = null;
 	private List<Brick> bricks = new ArrayList<Brick>();
 	private ScoreBoard scoreboard = new ScoreBoard();
 
+	private int numBolas = 1;
+	private static Arkanoid mArkanoid; 
+
 	private double lastFt;
-	private double currentSlice;	
+	private double currentSlice;
 	
-	public Arkanoid() {
+	public static Arkanoid getArkanoid() {
+		if (mArkanoid == null) mArkanoid = new Arkanoid();
+		return mArkanoid;
+	}
+	
+	private Arkanoid() {
 		
 		game = new Game ();
 
@@ -136,11 +145,13 @@ public class Arkanoid extends JFrame implements KeyListener {
 			ball.update(scoreboard, paddle);
 			paddle.update();
 			Game.testCollision(paddle, ball);
+			if (ball2 != null) Game.testCollision(paddle, ball2);
 
 			Iterator<Brick> it = bricks.iterator();
 			while (it.hasNext()) {
 				Brick brick = it.next();
 				Game.testCollision(brick, ball, scoreboard);
+				if (ball2 != null )Game.testCollision(brick, ball2, scoreboard);
 				if (brick.destroyed) {
 					it.remove();
 				}
@@ -216,5 +227,27 @@ public class Arkanoid extends JFrame implements KeyListener {
 		GestorUsuarios.getGestorUsuarios().anadir(u);
 		Partida p = new Partida(u);
 		GestorPartidas.getGestorPartidas().anadir(p);
+	}
+
+	public void duplicarBola() {
+		this.ball2 = new Ball(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT / 2);
+		drawScene(ball2, bricks, scoreboard);
+		numBolas++;
+	}
+
+	public int getNumBolas() {
+		return numBolas;
+	}
+
+	public void actNumBolas() {
+		numBolas--;
+	}
+
+	public void eliminarLadrillos(int ladrillos, Brick mBrick) {
+		int i = 0;
+		boolean enc = false;
+		while (i < bricks.size() && !enc) {
+			
+		}
 	}
 }

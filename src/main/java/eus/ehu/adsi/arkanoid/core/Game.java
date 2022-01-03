@@ -56,8 +56,22 @@ public class Game {
 
 		if (mBrick.getSuerte()) {
 			JSONObject j = ArkanoidFrontera.getArkanoidFrontera().darVentaja("null");
-			int vidas = j.getInt("vidas");
-			scoreboard.updateLives(vidas);
+			String descrip = j.getString("descrip");
+			
+			if (!j.isNull("vidas")) {
+				int vidas = j.getInt("vidas");
+				scoreboard.updateLives(vidas);
+				System.out.println(descrip);
+			} else if (!j.isNull("bola")) {
+				Arkanoid.getArkanoid().duplicarBola();
+				System.out.println(descrip);
+			} else if (!j.isNull("paddle")) {
+				System.out.println(descrip);
+			} else if (!j.isNull("ladrillos")) {
+				int ladrillos = j.getInt("ladrillos");
+				Arkanoid.getArkanoid().eliminarLadrillos(ladrillos, mBrick);
+				System.out.println(descrip);
+			}
 		}
 
 		scoreboard.increaseScore();
@@ -99,7 +113,7 @@ public class Game {
 				bricks.add(new Brick(
 						(iX + 1) * (Config.BLOCK_WIDTH + 3) + 22,
 						(iY + 2) * (Config.BLOCK_HEIGHT + 3) + 50,
-						suerte)
+						true)
 						);
 			}
 		}

@@ -41,6 +41,7 @@ public class ScoreBoard {
 		}
 	}
 
+	//Actualizar vidas
 	public void updateLives(int l) {
 		this.lives = lives + l;
 		updateScoreboard();

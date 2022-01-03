@@ -1,6 +1,5 @@
 package eus.ehu.adsi.arkanoid.view;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 

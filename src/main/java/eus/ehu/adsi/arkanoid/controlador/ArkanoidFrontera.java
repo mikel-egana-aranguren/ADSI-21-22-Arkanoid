@@ -18,12 +18,13 @@ public class ArkanoidFrontera {
 
     public JSONObject darVentaja(String nombreUsuario) {
         Usuario u = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
-        int random = generarNumeroAleatorio(1, 4);
+        int random = generarNumeroAleatorio(4, 1);
+        System.out.println(random);
         return GestorPartidas.getGestorPartidas().crearVentaja(random, u);
     }
 
     private int generarNumeroAleatorio(int i, int j) {
-        /*Random r = new Random();
-        return r.nextInt(i + j) + j;*/ return 1;
+        Random r = new Random();
+        return r.nextInt(i - j + 1) + j;
     }
 }
