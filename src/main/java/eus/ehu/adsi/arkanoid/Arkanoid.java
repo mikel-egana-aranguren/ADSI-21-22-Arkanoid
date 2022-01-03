@@ -39,12 +39,14 @@ public class Arkanoid extends JFrame implements KeyListener {
 	private ScoreBoard scoreboard = new ScoreBoard();
 
 	private double lastFt;
-	private double currentSlice;	
+	private double currentSlice;
+
+	private int nivel;
 	
-	public Arkanoid() {
+	public Arkanoid(int lvl) {
 		
 		game = new Game ();
-
+		nivel = lvl;
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setUndecorated(false);
 		this.setResizable(false);
@@ -55,11 +57,11 @@ public class Arkanoid extends JFrame implements KeyListener {
 		this.setLocationRelativeTo(null);
 		this.createBufferStrategy(2);
 
-		bricks = Game.initializeBricks(bricks);
+		bricks = Game.initializeBricks(bricks, nivel);
 
 	}
 	
-	void run() {
+	public void run() {
 
 		BufferStrategy bf = this.getBufferStrategy();
 		Graphics g = bf.getDrawGraphics();
@@ -89,7 +91,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 				if (game.isTryAgain()) {
 					logger.info("Trying again");
 					game.setTryAgain(false);
-					bricks = Game.initializeBricks(bricks);
+					bricks = Game.initializeBricks(bricks, nivel);
 					scoreboard.lives = Config.PLAYER_LIVES;
 					scoreboard.score = 0;
 					scoreboard.win = false;
@@ -124,14 +126,14 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 		for (; currentSlice >= Config.FT_SLICE; currentSlice -= Config.FT_SLICE) {
 
-			ball.update(scoreboard, paddle);
+			ball.update(scoreboard, paddle, nivel);
 			paddle.update();
-			Game.testCollision(paddle, ball);
+			Game.testCollision(paddle, ball, nivel);
 
 			Iterator<Brick> it = bricks.iterator();
 			while (it.hasNext()) {
 				Brick brick = it.next();
-				Game.testCollision(brick, ball, scoreboard);
+				Game.testCollision(brick, ball, scoreboard, nivel);
 				if (brick.destroyed) {
 					it.remove();
 				}

@@ -1,9 +1,11 @@
 package eus.ehu.adsi.arkanoid;
 
-public class App {
-	
-	public static void main(String[] args) {
-		new Fig17a();
-	}
+import eus.ehu.adsi.arkanoid.view.SelectNivel;
 
+public class App {
+
+	public static void main(String[] args) {
+		new Arkanoid(1).run();
+	}
 }
+
