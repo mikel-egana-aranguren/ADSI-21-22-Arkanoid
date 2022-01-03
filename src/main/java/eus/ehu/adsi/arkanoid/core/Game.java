@@ -38,17 +38,17 @@ public class Game {
 		this.tryAgain = tryAgain;
 	}
 	
-	public static void testCollision(Paddle mPaddle, Ball mBall) {
+	public static void testCollision(Paddle mPaddle, Ball mBall, int nivel) {
 		if (!Game.isIntersecting(mPaddle, mBall))
 			return;
-		mBall.velocityY = -Config.BALL_VELOCITY;
+		mBall.velocityY = -Config.getBallVelocity(nivel);
 		if (mBall.x < mPaddle.x)
-			mBall.velocityX = -Config.BALL_VELOCITY;
+			mBall.velocityX = -Config.getBallVelocity(nivel);
 		else
-			mBall.velocityX = Config.BALL_VELOCITY;
+			mBall.velocityX = Config.getBallVelocity(nivel);
 	}
 	
-	public static void testCollision(Brick mBrick, Ball mBall, ScoreBoard scoreboard) {
+	public static void testCollision(Brick mBrick, Ball mBall, ScoreBoard scoreboard, int nivel) {
 		if (!Game.isIntersecting(mBrick, mBall))
 			return;
 
@@ -74,7 +74,7 @@ public class Game {
 			}
 		}
 
-		scoreboard.increaseScore();
+		scoreboard.increaseScore(nivel);
 
 		double overlapLeft = mBall.right() - mBrick.left();
 		double overlapRight = mBrick.right() - mBall.left();
@@ -88,9 +88,9 @@ public class Game {
 		double minOverlapY = ballFromTop ? overlapTop : overlapBottom;
 
 		if (minOverlapX < minOverlapY) {
-			mBall.velocityX = ballFromLeft ? -Config.BALL_VELOCITY : Config.BALL_VELOCITY;
+			mBall.velocityX = ballFromLeft ? -Config.getBallVelocity(nivel) : Config.getBallVelocity(nivel);
 		} else {
-			mBall.velocityY = ballFromTop ? -Config.BALL_VELOCITY : Config.BALL_VELOCITY;
+			mBall.velocityY = ballFromTop ? -Config.getBallVelocity(nivel) : Config.getBallVelocity(nivel);
 		}
 	}
 	
@@ -99,12 +99,12 @@ public class Game {
 				&& mA.bottom() >= mB.top() && mA.top() <= mB.bottom();
 	}
 	
-	public static List<Brick> initializeBricks(List<Brick> bricks) {
+	public static List<Brick> initializeBricks(List<Brick> bricks, int nivel) {
 		int counter = 10; //Para generar ladrillos de la suerte
 		boolean suerte = false;
 		bricks.clear();
-		for (int iX = 0; iX < Config.COUNT_BLOCKS_X; ++iX) {
-			for (int iY = 0; iY < Config.COUNT_BLOCKS_Y; ++iY) {
+		for (int iX = 0; iX < Config.getCountBlocksX(nivel); ++iX) {
+			for (int iY = 0; iY < Config.getCountBlocksY(nivel); ++iY) {
 				counter--;
 				if (counter == 0) {
 					suerte = true;
@@ -113,7 +113,7 @@ public class Game {
 				bricks.add(new Brick(
 						(iX + 1) * (Config.BLOCK_WIDTH + 3) + 22,
 						(iY + 2) * (Config.BLOCK_HEIGHT + 3) + 50,
-						true)
+						suerte)
 						);
 			}
 		}
@@ -121,3 +121,6 @@ public class Game {
 	}
 
 }
+
+
+
