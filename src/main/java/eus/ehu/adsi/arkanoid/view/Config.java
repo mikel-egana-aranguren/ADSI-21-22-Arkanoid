@@ -39,6 +39,9 @@ public abstract class Config {
 	public static final Color PADDLE_COLOR = Color.red;
 	public static final Color BRICK_COLOR = Color.blue;
 
+  public static final Color BRICK_COLOR_SUERTE = Color.yellow;
+
+
 	public static double getBallVelocity(int nivel) {
 		if (nivel==1)
 			return BALL_VELOCITY1;
@@ -72,3 +75,4 @@ public abstract class Config {
 			return 0;
 	}
 }
+

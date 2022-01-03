@@ -2,6 +2,8 @@ package eus.ehu.adsi.arkanoid.view;
 
 import java.awt.Graphics;
 
+import eus.ehu.adsi.arkanoid.Arkanoid;
+
 public class Ball extends GameObject {
 
 	public double x;
@@ -35,7 +37,11 @@ public class Ball extends GameObject {
 			velocityY = -Config.getBallVelocity(nivel);
 			x = paddle.x;
 			y = paddle.y - 50;
-			scoreBoard.die();
+			if (Arkanoid.getArkanoid().getNumBolas() == 1) {
+				scoreBoard.die();
+				Arkanoid.getArkanoid().actNumBolas();
+			}
+			
 		}
 
 	}
