@@ -51,6 +51,7 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 
 	private double lastFt;
 	private double currentSlice;
+
 	
 	public static Arkanoid getArkanoid() {
 		if (mArkanoid == null) mArkanoid = new Arkanoid();
@@ -58,9 +59,15 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 	}
 	
 	private Arkanoid() {
+
+
+	private int nivel;
+	
+	public Arkanoid(int lvl) {
+
 		
 		game = new Game ();
-
+		nivel = lvl;
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setUndecorated(false);
 		this.setResizable(false);
@@ -71,10 +78,11 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 		this.setLocationRelativeTo(null);
 		this.createBufferStrategy(2);
 
-		bricks = Game.initializeBricks(bricks);
+		bricks = Game.initializeBricks(bricks, nivel);
 
 	}
 	
+
 	void run() {
 		
 		this.prepararPartida();
@@ -107,7 +115,7 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 				if (game.isTryAgain()) {
 					//logger.info("Trying again");
 					game.setTryAgain(false);
-					bricks = Game.initializeBricks(bricks);
+					bricks = Game.initializeBricks(bricks, nivel);
 					scoreboard.lives = Config.PLAYER_LIVES;
 					scoreboard.score = 0;
 					scoreboard.win = false;
@@ -142,16 +150,19 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 
 		for (; currentSlice >= Config.FT_SLICE; currentSlice -= Config.FT_SLICE) {
 
-			ball.update(scoreboard, paddle);
+			ball.update(scoreboard, paddle, nivel);
 			paddle.update();
+
 			Game.testCollision(paddle, ball);
 			if (ball2 != null) Game.testCollision(paddle, ball2);
+
 
 			Iterator<Brick> it = bricks.iterator();
 			while (it.hasNext()) {
 				Brick brick = it.next();
 				Game.testCollision(brick, ball, scoreboard);
 				if (ball2 != null )Game.testCollision(brick, ball2, scoreboard);
+
 				if (brick.destroyed) {
 					it.remove();
 				}
@@ -251,3 +262,4 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 		}
 	}
 }
+
