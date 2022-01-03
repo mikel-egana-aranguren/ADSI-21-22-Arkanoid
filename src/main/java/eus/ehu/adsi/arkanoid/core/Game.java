@@ -6,12 +6,8 @@ import org.json.JSONObject;
 
 import eus.ehu.adsi.arkanoid.Arkanoid;
 import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
-import eus.ehu.adsi.arkanoid.view.Ball;
-import eus.ehu.adsi.arkanoid.view.Brick;
-import eus.ehu.adsi.arkanoid.view.Config;
-import eus.ehu.adsi.arkanoid.view.GameObject;
-import eus.ehu.adsi.arkanoid.view.Paddle;
-import eus.ehu.adsi.arkanoid.view.ScoreBoard;
+import eus.ehu.adsi.arkanoid.view.*;
+
 
 public class Game {
 	private boolean running;

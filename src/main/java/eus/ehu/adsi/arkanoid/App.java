@@ -8,4 +8,3 @@ public class App {
 		new Arkanoid(1).run();
 	}
 }
-
