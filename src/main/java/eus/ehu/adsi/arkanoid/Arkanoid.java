@@ -43,10 +43,10 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 	private int nivel;
 	
-	public Arkanoid() {
+	public Arkanoid(int lvl) {
 		
 		game = new Game ();
-
+		nivel = lvl;
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setUndecorated(false);
 		this.setResizable(false);
@@ -57,13 +57,11 @@ public class Arkanoid extends JFrame implements KeyListener {
 		this.setLocationRelativeTo(null);
 		this.createBufferStrategy(2);
 
-		bricks = Game.initializeBricks(bricks);
+		bricks = Game.initializeBricks(bricks, nivel);
 
 	}
 	
-	public void run(int lvl) {
-
-		nivel = lvl;
+	public void run() {
 
 		BufferStrategy bf = this.getBufferStrategy();
 		Graphics g = bf.getDrawGraphics();
@@ -93,7 +91,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 				if (game.isTryAgain()) {
 					logger.info("Trying again");
 					game.setTryAgain(false);
-					bricks = Game.initializeBricks(bricks);
+					bricks = Game.initializeBricks(bricks, nivel);
 					scoreboard.lives = Config.PLAYER_LIVES;
 					scoreboard.score = 0;
 					scoreboard.win = false;

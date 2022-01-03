@@ -45,7 +45,7 @@ public class Game {
 
 		mBrick.destroyed = true;
 
-		scoreboard.increaseScore();
+		scoreboard.increaseScore(nivel);
 
 		double overlapLeft = mBall.right() - mBrick.left();
 		double overlapRight = mBrick.right() - mBall.left();
@@ -70,10 +70,10 @@ public class Game {
 				&& mA.bottom() >= mB.top() && mA.top() <= mB.bottom();
 	}
 	
-	public static List<Brick> initializeBricks(List<Brick> bricks) {
+	public static List<Brick> initializeBricks(List<Brick> bricks, int nivel) {
 		bricks.clear();
-		for (int iX = 0; iX < Config.COUNT_BLOCKS_X; ++iX) {
-			for (int iY = 0; iY < Config.COUNT_BLOCKS_Y; ++iY) {
+		for (int iX = 0; iX < Config.getCountBlocksX(nivel); ++iX) {
+			for (int iY = 0; iY < Config.getCountBlocksY(nivel); ++iY) {
 				bricks.add(new Brick(
 						(iX + 1) * (Config.BLOCK_WIDTH + 3) + 22,
 						(iY + 2) * (Config.BLOCK_HEIGHT + 3) + 50)

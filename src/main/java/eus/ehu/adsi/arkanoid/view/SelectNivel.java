@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 
 import javax.swing.JPanel;
 
+import eus.ehu.adsi.arkanoid.App;
 import eus.ehu.adsi.arkanoid.Arkanoid;
 
 import javax.swing.JButton;
@@ -96,7 +97,7 @@ public class SelectNivel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					frame.dispose();
-					new Arkanoid().run(comboBoxNivel.getSelectedIndex());
+					new Arkanoid(comboBoxNivel.getSelectedIndex()).run();
 				}
 				@Override
 				public void mouseEntered(MouseEvent e){
@@ -122,7 +123,6 @@ public class SelectNivel {
 			btnCancelar.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					//new menu principal
 					frame.dispose();
 				}
 				@Override
