@@ -7,12 +7,14 @@ import java.awt.Dimension;
 import javax.swing.JLabel;
 
 import javax.swing.JPanel;
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
 import eus.ehu.adsi.arkanoid.Arkanoid;
 
 import javax.swing.JButton;
 
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
@@ -39,6 +41,7 @@ public class Personalizacion {
     private JComboBox<String> comboBoxBall;
     private JComboBox<String> comboBoxPaddle;
     private JComboBox<String> comboBoxLadrillo;
+	private boolean sonido;
 	
 	public Personalizacion() {
 		initialize();
@@ -293,29 +296,39 @@ public class Personalizacion {
 		if (btnSonido == null) {
             btnSonido = new JButton("");
 			try {
-                ImageIcon img = new ImageIcon("resources/pngtree-mute-vector-icon-png-image_470285.jpg");
-                btnSonido.setIcon(img);
+                ImageIcon imgIcon = new ImageIcon("/home/bosco/git/ADSI-21-22-Arkanoid/src/main/resources/unmuted.png");
+                Image image = imgIcon.getImage();
+				Image imageReszie = image.getScaledInstance(100,80, java.awt.Image.SCALE_SMOOTH);
+				imgIcon = new ImageIcon(imageReszie);
+				btnSonido.setIcon(imgIcon);
             } catch (Exception ex){
                 System.out.println(ex);
             }
-            btnSonido.setMargin(new Insets(0,0,0,0));
+            btnSonido.setContentAreaFilled(false);
+			btnSonido.setFocusPainted(false);
+			btnSonido.setBorderPainted(false);
             btnSonido.setBackground(Color.BLACK);
-            //btnSonido.setBorder(null);
-			/*btnSonido.addMouseListener(new MouseAdapter() {
+            btnSonido.setBorder(null);
+			btnSonido.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					//new menu principal
-					frame.dispose();
+					if (sonido){
+						ImageIcon imgIcon = new ImageIcon("src/main/resources/unmuted.png");
+                		Image image = imgIcon.getImage();
+						Image imageReszie = image.getScaledInstance(100,80, java.awt.Image.SCALE_SMOOTH);
+						imgIcon = new ImageIcon(imageReszie);
+						btnSonido.setIcon(imgIcon);
+						sonido = false;
+					} else {
+						ImageIcon imgIcon = new ImageIcon("src/main/resources/muted.png");
+               			Image image = imgIcon.getImage();
+						Image imageReszie = image.getScaledInstance(100,80, java.awt.Image.SCALE_SMOOTH);
+						imgIcon = new ImageIcon(imageReszie);
+						btnSonido.setIcon(imgIcon);
+						sonido = true;
+					}
 				}
-				@Override
-				public void mouseEntered(MouseEvent e){
-					btnCancelar.setForeground(Color.RED);
-				}
-				@Override
-				public void mouseExited(MouseEvent e){
-					btnCancelar.setForeground(Color.WHITE);
-				}
-			});*/
+			});
 		}
 		return btnSonido;
 	}
