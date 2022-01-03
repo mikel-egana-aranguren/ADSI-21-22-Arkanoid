@@ -51,7 +51,7 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 
 	private double lastFt;
 	private double currentSlice;
-
+	
 	private int nivel;
 	
 	public Arkanoid(int lvl) {

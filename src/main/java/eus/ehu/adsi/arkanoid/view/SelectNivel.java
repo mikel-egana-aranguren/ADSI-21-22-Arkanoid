@@ -97,7 +97,7 @@ public class SelectNivel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					frame.dispose();
-					new Arkanoid(comboBoxNivel.getSelectedIndex()).run();
+					//Arkanoid.getArkanoid().run();
 				}
 				@Override
 				public void mouseEntered(MouseEvent e){
