@@ -15,7 +15,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager; //TEMAS DEL LOGGER POR LA VULNERABILIDAD
 import org.apache.logging.log4j.Logger;
 
 import eus.ehu.adsi.arkanoid.view.Ball;
@@ -23,25 +23,41 @@ import eus.ehu.adsi.arkanoid.view.Config;
 import eus.ehu.adsi.arkanoid.view.Paddle;
 import eus.ehu.adsi.arkanoid.view.ScoreBoard;
 import eus.ehu.adsi.arkanoid.view.Brick;
+
+import eus.ehu.adsi.arkanoid.controlador.GestorPartidas;
+import eus.ehu.adsi.arkanoid.controlador.GestorUsuarios;
+
 import eus.ehu.adsi.arkanoid.core.Game;
 
-public class Arkanoid extends JFrame implements KeyListener {
+import eus.ehu.adsi.arkanoid.modelo.Partida;
+import eus.ehu.adsi.arkanoid.modelo.Usuario;
+
+public class Arkanoid extends JFrame implements KeyListener { //No se si se podrá hacer MAE esta clase
 
 	// Housekeeping
 	private static final long serialVersionUID = 1L;
-	private static final Logger logger = LogManager.getLogger(Arkanoid.class);
+	//private static final Logger logger = LogManager.getLogger(Arkanoid.class);
 
 	// Game variables
 	private Game game;
 	private Paddle paddle = new Paddle(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT - 50);
 	private Ball ball = new Ball(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT / 2);
+	private Ball ball2 = null;
 	private List<Brick> bricks = new ArrayList<Brick>();
 	private ScoreBoard scoreboard = new ScoreBoard();
 
+	private int numBolas = 1;
+	private static Arkanoid mArkanoid; 
+
 	private double lastFt;
-	private double currentSlice;	
+	private double currentSlice;
 	
-	public Arkanoid() {
+	public static Arkanoid getArkanoid() {
+		if (mArkanoid == null) mArkanoid = new Arkanoid();
+		return mArkanoid;
+	}
+	
+	private Arkanoid() {
 		
 		game = new Game ();
 
@@ -60,6 +76,8 @@ public class Arkanoid extends JFrame implements KeyListener {
 	}
 	
 	void run() {
+		
+		this.prepararPartida();
 
 		BufferStrategy bf = this.getBufferStrategy();
 		Graphics g = bf.getDrawGraphics();
@@ -73,7 +91,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 			long time1 = System.currentTimeMillis();
 
 			if (!scoreboard.gameOver && !scoreboard.win) {
-				logger.info("Playing");
+				//logger.info("Playing");
 				game.setTryAgain(false);
 				update();
 				drawScene(ball, bricks, scoreboard);
@@ -82,12 +100,12 @@ public class Arkanoid extends JFrame implements KeyListener {
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {
-					logger.error(e.getMessage());
+					//logger.error(e.getMessage());
 				}
 
 			} else {
 				if (game.isTryAgain()) {
-					logger.info("Trying again");
+					//logger.info("Trying again");
 					game.setTryAgain(false);
 					bricks = Game.initializeBricks(bricks);
 					scoreboard.lives = Config.PLAYER_LIVES;
@@ -109,7 +127,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 			double seconds = elapsedTime / 1000.0;
 			if (seconds > 0.0) {
 				double fps = 1.0 / seconds;
-				logger.info("FPS: " + fps);
+				//logger.info("FPS: " + fps);
 			}
 
 		}
@@ -127,11 +145,13 @@ public class Arkanoid extends JFrame implements KeyListener {
 			ball.update(scoreboard, paddle);
 			paddle.update();
 			Game.testCollision(paddle, ball);
+			if (ball2 != null) Game.testCollision(paddle, ball2);
 
 			Iterator<Brick> it = bricks.iterator();
 			while (it.hasNext()) {
 				Brick brick = it.next();
 				Game.testCollision(brick, ball, scoreboard);
+				if (ball2 != null )Game.testCollision(brick, ball2, scoreboard);
 				if (brick.destroyed) {
 					it.remove();
 				}
@@ -200,4 +220,34 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 	public void keyTyped(KeyEvent arg0) {}
 
+	//PRUEBAS
+
+	private void prepararPartida() {
+		Usuario u = new Usuario("null");
+		GestorUsuarios.getGestorUsuarios().anadir(u);
+		Partida p = new Partida(u);
+		GestorPartidas.getGestorPartidas().anadir(p);
+	}
+
+	public void duplicarBola() {
+		this.ball2 = new Ball(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT / 2);
+		drawScene(ball2, bricks, scoreboard);
+		numBolas++;
+	}
+
+	public int getNumBolas() {
+		return numBolas;
+	}
+
+	public void actNumBolas() {
+		numBolas--;
+	}
+
+	public void eliminarLadrillos(int ladrillos, Brick mBrick) {
+		int i = 0;
+		boolean enc = false;
+		while (i < bricks.size() && !enc) {
+			
+		}
+	}
 }
