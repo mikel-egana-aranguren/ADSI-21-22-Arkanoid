@@ -1,4 +1,4 @@
-package eus.ehu.adsi.arkanoid.view;
+package eus.ehu.adsi.arkanoid.view.game;
 
 import java.awt.Font;
 import java.awt.FontMetrics;

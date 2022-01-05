@@ -8,7 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import eus.ehu.adsi.arkanoid.App;
-import eus.ehu.adsi.arkanoid.Arkanoid;
+import eus.ehu.adsi.arkanoid.modelo.Arkanoid;
+import eus.ehu.adsi.arkanoid.view.game.Config;
 
 import javax.swing.JButton;
 import java.awt.GridBagLayout;
@@ -97,7 +98,7 @@ public class SelectNivel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					frame.dispose();
-					//Arkanoid.getArkanoid().run();
+					Arkanoid.getArkanoid(comboBoxNivel.getSelectedIndex()-1).run();
 				}
 				@Override
 				public void mouseEntered(MouseEvent e){

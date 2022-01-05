@@ -1,8 +1,8 @@
-package eus.ehu.adsi.arkanoid.view;
+package eus.ehu.adsi.arkanoid.view.game;
 
 import java.awt.Graphics;
 
-import eus.ehu.adsi.arkanoid.Arkanoid;
+import eus.ehu.adsi.arkanoid.modelo.Arkanoid;
 
 public class Ball extends GameObject {
 

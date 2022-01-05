@@ -7,8 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
 import eus.ehu.adsi.arkanoid.core.Game;
-import eus.ehu.adsi.arkanoid.view.Ball;
-import eus.ehu.adsi.arkanoid.view.Brick;
+import eus.ehu.adsi.arkanoid.view.game.Ball;
+import eus.ehu.adsi.arkanoid.view.game.Brick;
 
 public class GameTests {
 	

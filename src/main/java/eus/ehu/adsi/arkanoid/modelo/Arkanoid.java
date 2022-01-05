@@ -1,4 +1,4 @@
-package eus.ehu.adsi.arkanoid;
+package eus.ehu.adsi.arkanoid.modelo;
 
 // Adapted from https://gist.github.com/Miretz/f10b18df01f9f9ebfad5
 
@@ -18,19 +18,15 @@ import javax.swing.JFrame;
 import org.apache.logging.log4j.LogManager; //TEMAS DEL LOGGER POR LA VULNERABILIDAD
 import org.apache.logging.log4j.Logger;
 
-import eus.ehu.adsi.arkanoid.view.Ball;
-import eus.ehu.adsi.arkanoid.view.Config;
-import eus.ehu.adsi.arkanoid.view.Paddle;
-import eus.ehu.adsi.arkanoid.view.ScoreBoard;
-import eus.ehu.adsi.arkanoid.view.Brick;
-
 import eus.ehu.adsi.arkanoid.controlador.GestorPartidas;
 import eus.ehu.adsi.arkanoid.controlador.GestorUsuarios;
 
 import eus.ehu.adsi.arkanoid.core.Game;
-
-import eus.ehu.adsi.arkanoid.modelo.Partida;
-import eus.ehu.adsi.arkanoid.modelo.Usuario;
+import eus.ehu.adsi.arkanoid.view.game.Ball;
+import eus.ehu.adsi.arkanoid.view.game.Brick;
+import eus.ehu.adsi.arkanoid.view.game.Config;
+import eus.ehu.adsi.arkanoid.view.game.Paddle;
+import eus.ehu.adsi.arkanoid.view.game.ScoreBoard;
 
 public class Arkanoid extends JFrame implements KeyListener { //No se si se podrá hacer MAE esta clase
 
@@ -53,8 +49,16 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 	private double currentSlice;
 	
 	private int nivel;
+
+	
+	public static Arkanoid getArkanoid(int nivel) {
+		if (mArkanoid == null) mArkanoid = new Arkanoid(nivel);
+		return mArkanoid;
+	}
+	
 	
 	public Arkanoid(int lvl) {
+
 		
 		game = new Game ();
 		nivel = lvl;
@@ -71,8 +75,11 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 		bricks = Game.initializeBricks(bricks, nivel);
 
 	}
-	
+		
+
 	public void run() {
+		
+		this.prepararPartida();
 
 		BufferStrategy bf = this.getBufferStrategy();
 		Graphics g = bf.getDrawGraphics();
@@ -139,12 +146,17 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 
 			ball.update(scoreboard, paddle, nivel);
 			paddle.update();
+
 			Game.testCollision(paddle, ball, nivel);
+			if (ball2 != null) Game.testCollision(paddle, ball2, nivel);
+
 
 			Iterator<Brick> it = bricks.iterator();
 			while (it.hasNext()) {
 				Brick brick = it.next();
 				Game.testCollision(brick, ball, scoreboard, nivel);
+				if (ball2 != null )Game.testCollision(brick, ball2, scoreboard, nivel);
+
 				if (brick.destroyed) {
 					it.remove();
 				}
@@ -213,4 +225,35 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 
 	public void keyTyped(KeyEvent arg0) {}
 
+	//PRUEBAS
+
+	private void prepararPartida() {
+		Usuario u = new Usuario("null");
+		GestorUsuarios.getGestorUsuarios().anadir(u);
+		Partida p = new Partida(u);
+		GestorPartidas.getGestorPartidas().anadir(p);
+	}
+
+	public void duplicarBola() {
+		this.ball2 = new Ball(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT / 2);
+		drawScene(ball2, bricks, scoreboard);
+		numBolas++;
+	}
+
+	public int getNumBolas() {
+		return numBolas;
+	}
+
+	public void actNumBolas() {
+		numBolas--;
+	}
+
+	public void eliminarLadrillos(int ladrillos, Brick mBrick) {
+		int i = 0;
+		boolean enc = false;
+		while (i < bricks.size() && !enc) {
+			
+		}
+	}
 }
+

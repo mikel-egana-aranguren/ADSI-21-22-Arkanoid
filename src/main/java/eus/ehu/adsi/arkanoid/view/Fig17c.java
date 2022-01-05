@@ -1,8 +1,9 @@
-package eus.ehu.adsi.arkanoid;
-
-import eus.ehu.adsi.arkanoid.view.Config;
+package eus.ehu.adsi.arkanoid.view;
 
 import javax.swing.*;
+
+import eus.ehu.adsi.arkanoid.view.game.Config;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

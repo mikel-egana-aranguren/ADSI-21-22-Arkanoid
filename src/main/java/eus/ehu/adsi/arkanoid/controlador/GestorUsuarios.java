@@ -32,4 +32,7 @@ public class GestorUsuarios {
         this.lUsuarios.add(u);
     }
 
+    public boolean esContrasena(Usuario U, String pContrasena) {
+        return U.esContrasena(pContrasena);
+    }
 }

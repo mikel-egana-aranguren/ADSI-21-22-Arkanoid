@@ -1,26 +1,28 @@
-package eus.ehu.adsi.arkanoid;
-
-import eus.ehu.adsi.arkanoid.view.Config;
+package eus.ehu.adsi.arkanoid.view;
 
 import javax.swing.*;
+
+import eus.ehu.adsi.arkanoid.view.game.Config;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Fig17d extends JFrame {
+public class Fig20 extends JFrame {
 
-    private JTextField nombre;
-    private JTextField correo;
+    private String nombreUsuario;
+    private JPasswordField contrasenaOriginal;
     private JPasswordField contrasena1;
     private JPasswordField contrasena2;
 
-    public Fig17d() {
+    public Fig20(String pNombreUsuario) {
 
+        this.nombreUsuario = pNombreUsuario;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setUndecorated(false);
         this.setResizable(false);
         this.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
-        this.setTitle("Registrarse");
+        this.setTitle("Cambiar contraseña");
         drawScene();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
@@ -31,19 +33,21 @@ public class Fig17d extends JFrame {
         this.getContentPane().setBackground(Config.BACKGROUND_COLOR);
         this.setLayout(new FlowLayout());
 
-        JLabel textoNombre = new JLabel("Nombre:");
-        textoNombre.setForeground(Config.FONT_COLOR);
-        this.add(textoNombre);
-        nombre = new JTextField("", 10);
-        this.add(nombre);
+        JLabel textoCambiarContrasena = new JLabel("Cambiar contraseña");
+        textoCambiarContrasena.setForeground(Config.FONT_COLOR);
+        this.add(textoCambiarContrasena);
 
-        JLabel textoCorreo = new JLabel("Correo:");
-        textoCorreo.setForeground(Config.FONT_COLOR);
-        this.add(textoCorreo);
-        correo = new JTextField("", 10);
-        this.add(correo);
+        JLabel textoNombreUsuario = new JLabel(nombreUsuario);
+        textoNombreUsuario.setForeground(Config.FONT_COLOR);
+        this.add(textoNombreUsuario);
 
-        JLabel textoContrasena1 = new JLabel("Contraseña:");
+        JLabel textoContrasenaOriginal = new JLabel("Antigua contraseña:");
+        textoContrasenaOriginal.setForeground(Config.FONT_COLOR);
+        this.add(textoContrasenaOriginal);
+        contrasenaOriginal = new JPasswordField("", 10);
+        this.add(contrasenaOriginal);
+
+        JLabel textoContrasena1 = new JLabel("Nueva contraseña:");
         textoContrasena1.setForeground(Config.FONT_COLOR);
         this.add(textoContrasena1);
         contrasena1 = new JPasswordField("", 10);
@@ -56,7 +60,7 @@ public class Fig17d extends JFrame {
         this.add(contrasena2);
 
         this.add(botonCancelar());
-        this.add(botonCrear());
+        this.add(botonAceptar());
     }
 
     private JButton botonCancelar() {
@@ -68,16 +72,16 @@ public class Fig17d extends JFrame {
             public void actionPerformed(ActionEvent e)
             {
                 System.out.println("Cancelar");
-                //new Fig16();
+                //new Fig18("");
             }
         });
         return cancelar;
     }
 
-    private JButton botonCrear() {
+    private JButton botonAceptar() {
 
-        JButton crear = new JButton("Crear cuenta");
-        crear.addActionListener(new ActionListener()
+        JButton aceptar = new JButton("Aceptar");
+        aceptar.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -87,6 +91,6 @@ public class Fig17d extends JFrame {
                 //new Fig18("");
             }
         });
-        return crear;
+        return aceptar;
     }
 }
