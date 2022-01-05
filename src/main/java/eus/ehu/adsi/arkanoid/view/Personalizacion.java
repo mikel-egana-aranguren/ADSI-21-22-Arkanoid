@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
-import eus.ehu.adsi.arkanoid.Arkanoid;
+import eus.ehu.adsi.arkanoid.view.game.Config;
 
 import javax.swing.JButton;
 
