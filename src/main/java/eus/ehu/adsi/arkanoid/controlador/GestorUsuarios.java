@@ -26,10 +26,26 @@ public class GestorUsuarios {
         return null;
     }
 
+    public Usuario buscarUsuarioCorreo(String correo) {
+        for (Usuario u : lUsuarios) {
+            if (u.esCorreo(correo))
+                return u;
+        }
+        return null;
+    }
+
     public boolean esContrasena(Usuario U, String contrasena) {
         return U.esContrasena(contrasena);
     }
 
+    public void cambiarContrasena(Usuario U, String contrasena) {
+        U.setContrasena(contrasena);
+    }
+
+    public void registrarUsuario(String nombreUsuario, String correo, String contrasena1) {
+        Usuario U = new Usuario(nombreUsuario, correo, contrasena1);
+        this.lUsuarios.add(U);
+    }
 
     /*MÉTODOS PARA PRUEBAS*/
     public void anadir(Usuario u) {

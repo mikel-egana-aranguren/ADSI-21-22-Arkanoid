@@ -12,6 +12,7 @@ public class IdentificacionTests {
 		//Descripción: Nombre de usuario correcto y contraseña correcta, se pulsa “Iniciar sesión”
 		//Resultado Esperado: Inicio de sesión correcto, se accede al Menú Principal
 
+
 	}
 
 	@Test

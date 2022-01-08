@@ -2,7 +2,9 @@ package eus.ehu.adsi.arkanoid.view;
 
 import javax.swing.*;
 
+import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
 import eus.ehu.adsi.arkanoid.view.game.Config;
+import org.json.JSONObject;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -85,8 +87,16 @@ public class Fig20 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                //Comprobar
-                new Fig18(nombreUsuario);
+                JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarCambio(nombreUsuario, String.valueOf(contrasenaOriginal.getPassword()), String.valueOf(contrasena1.getPassword()), String.valueOf(contrasena2.getPassword()));
+
+                if (!resultado.getBoolean("estado")) {
+
+                    new MensajeError((String) resultado.get("mensaje"), false);
+
+                } else {
+
+                    new Fig18((String) resultado.get("mensaje"));
+                }
             }
         });
         return aceptar;

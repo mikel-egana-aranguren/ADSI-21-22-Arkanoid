@@ -2,7 +2,9 @@ package eus.ehu.adsi.arkanoid.view;
 
 import javax.swing.*;
 
+import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
 import eus.ehu.adsi.arkanoid.view.game.Config;
+import org.json.JSONObject;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -82,8 +84,20 @@ public class Fig17d extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                //Comprobar
-                //new Fig18("");
+                JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarRegistro(nombre.getText(), correo.getText(), String.valueOf(contrasena1.getPassword()), String.valueOf(contrasena2.getPassword()));
+//                * Definición de JSON:
+//                { : boolean, : String }
+//                    Si es True, String = nombreUsuario
+//                    Si es False, String = mensaje de error correspondiente
+
+                if (!resultado.getBoolean("estado")) {
+
+                    new MensajeError((String) resultado.get("mensaje"), false);
+
+                } else {
+
+                    new Fig18((String) resultado.get("mensaje"));
+                }
             }
         });
         return crear;

@@ -51,4 +51,111 @@ public class ArkanoidFrontera {
 
         return resultado;
     }
+
+    public JSONObject recuperarContrasena(String correo) {
+
+        JSONObject resultado = new JSONObject();
+
+        Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuarioCorreo(correo);
+
+        if (U != null) {
+
+            resultado.put("mensaje", enviarEmail(correo));
+
+        } else {
+            resultado.put("mensaje", "El usuario no está registrado.");
+        }
+
+        resultado.put("estado", U != null);
+
+        return resultado;
+    }
+
+    public String enviarEmail(String correo) {
+        //TODO
+        return "CODIGO";
+    }
+
+    public JSONObject comprobarCodigo(String correo, String codigo, String codigoIntroducido, String cNueva1, String cNueva2) {
+
+        boolean correcto = false;
+        JSONObject resultado = new JSONObject();
+        Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuarioCorreo(correo);
+
+        if (U != null) {
+
+            if (codigo.equals(codigoIntroducido)) {
+
+                if (cNueva1.equals(cNueva2)) {
+
+                    GestorUsuarios.getGestorUsuarios().cambiarContrasena(U, cNueva1);
+                    correcto = true;
+
+                } else {
+                    resultado.put("mensaje", "Las contraseñas no coinciden.");
+                }
+            } else {
+                resultado.put("mensaje", "Código incorrecto.");
+            }
+        } else {
+            resultado.put("mensaje", "El usuario no está registrado.");
+        }
+
+        resultado.put("estado", correcto);
+        return resultado;
+    }
+
+    public JSONObject comprobarRegistro(String nombreUsuario, String correo, String contrasena1, String contrasena2) {
+
+        boolean correcto = false;
+        JSONObject resultado = new JSONObject();
+        Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
+
+        if (U == null) {
+
+            U = GestorUsuarios.getGestorUsuarios().buscarUsuarioCorreo(correo);
+
+            if (U == null) {
+
+                if (contrasena1.equals(contrasena2)) {
+
+                    GestorUsuarios.getGestorUsuarios().registrarUsuario(nombreUsuario, correo, contrasena1);
+                    correcto = true;
+                    resultado.put("mensaje", nombreUsuario);
+                } else {
+                    resultado.put("mensaje", "Las contraseñas no coinciden.");
+                }
+            } else {
+                resultado.put("mensaje", "Correo no disponible.");
+            }
+        } else {
+            resultado.put("mensaje", "Nombre de usuario no disponible.");
+        }
+        resultado.put("estado", correcto);
+
+        return resultado;
+    }
+
+    public JSONObject comprobarCambio(String nombreUsuario, String cAnterior, String cNueva1, String cNueva2) {
+
+        boolean correcto = false;
+        JSONObject resultado = new JSONObject();
+        Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
+
+        if (GestorUsuarios.getGestorUsuarios().esContrasena(U, cAnterior)) {
+
+            if (cNueva1.equals(cNueva2)) {
+                GestorUsuarios.getGestorUsuarios().cambiarContrasena(U, cNueva1);
+                correcto = true;
+                resultado.put("mensaje", nombreUsuario);
+            } else {
+                resultado.put("mensaje", "Las contraseñas no coinciden.");
+            }
+        } else {
+            resultado.put("mensaje", "Contraseña incorrecta.");
+        }
+        resultado.put("estado", correcto);
+
+        return resultado;
+    }
 }

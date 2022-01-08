@@ -2,7 +2,9 @@ package eus.ehu.adsi.arkanoid.view;
 
 import javax.swing.*;
 
+import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
 import eus.ehu.adsi.arkanoid.view.game.Config;
+import org.json.JSONObject;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -74,9 +76,8 @@ public class Fig17c extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Volver a enviar");
-                //Enviar correo
-                new Fig17c("", "");
+                String codigo = ArkanoidFrontera.getArkanoidFrontera().enviarEmail(correo);
+                new Fig17c(correo, codigo);
             }
         });
         return volver;
@@ -90,9 +91,20 @@ public class Fig17c extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Aceptar");
-                //Comprobar
-                new Fig17a();
+                JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarCodigo(correo, codigo, codigoIntroducido.getText(), String.valueOf(contrasena1.getPassword()), String.valueOf(contrasena2.getPassword()));
+//                * Definición de JSON:
+//                { : boolean, : String }
+//                    Si es True, String = vacío
+//                    Si es False, String = mensaje de error correspondiente
+
+                if (!resultado.getBoolean("estado")) {
+
+                    new MensajeError((String) resultado.get("mensaje"), false);
+
+                } else {
+
+                    new Fig17a();
+                }
             }
         });
         return aceptar;
@@ -106,7 +118,6 @@ public class Fig17c extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Cancelar");
                 new Fig17b();
             }
         });
