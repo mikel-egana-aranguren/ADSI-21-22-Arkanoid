@@ -71,8 +71,7 @@ public class Fig20 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Cancelar");
-                //new Fig18("");
+                new Fig18(nombreUsuario);
             }
         });
         return cancelar;
@@ -86,9 +85,8 @@ public class Fig20 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Crear cuenta");
                 //Comprobar
-                //new Fig18("");
+                new Fig18(nombreUsuario);
             }
         });
         return aceptar;

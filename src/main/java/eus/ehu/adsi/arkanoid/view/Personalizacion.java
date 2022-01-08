@@ -1,5 +1,7 @@
 package eus.ehu.adsi.arkanoid.view;
  
+import eus.ehu.adsi.arkanoid.view.game.Config;
+
 import javax.swing.JFrame;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,8 +10,6 @@ import javax.swing.JLabel;
 
 import javax.swing.JPanel;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
-
-import eus.ehu.adsi.arkanoid.Arkanoid;
 
 import javax.swing.JButton;
 

@@ -26,13 +26,14 @@ public class GestorUsuarios {
         return null;
     }
 
+    public boolean esContrasena(Usuario U, String contrasena) {
+        return U.esContrasena(contrasena);
+    }
+
 
     /*MÉTODOS PARA PRUEBAS*/
     public void anadir(Usuario u) {
         this.lUsuarios.add(u);
     }
 
-    public boolean esContrasena(Usuario U, String pContrasena) {
-        return U.esContrasena(pContrasena);
-    }
 }

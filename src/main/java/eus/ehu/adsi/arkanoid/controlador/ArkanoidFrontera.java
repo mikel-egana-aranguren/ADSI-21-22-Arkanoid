@@ -27,4 +27,28 @@ public class ArkanoidFrontera {
         Random r = new Random();
         return r.nextInt(i - j + 1) + j;
     }
+
+    public JSONObject comprobarInicio(String nombreUsuario, String contrasena) {
+
+        boolean correcto = false;
+        JSONObject resultado = new JSONObject();
+
+        Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
+
+        if (U != null) {
+            correcto = GestorUsuarios.getGestorUsuarios().esContrasena(U, contrasena);
+
+            if (!correcto) {
+                resultado.put("mensaje","Contraseña incorrecta.");
+            } else {
+                resultado.put("mensaje", nombreUsuario);
+            }
+        } else {
+            resultado.put("mensaje", "El usuario no está registrado.");
+        }
+
+        resultado.put("estado", correcto);
+
+        return resultado;
+    }
 }

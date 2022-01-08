@@ -68,8 +68,7 @@ public class Fig17d extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Cancelar");
-                //new Fig16();
+                new Fig16();
             }
         });
         return cancelar;
@@ -83,7 +82,6 @@ public class Fig17d extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Crear cuenta");
                 //Comprobar
                 //new Fig18("");
             }
