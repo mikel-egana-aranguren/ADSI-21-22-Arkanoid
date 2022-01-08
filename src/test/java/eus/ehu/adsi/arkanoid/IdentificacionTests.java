@@ -1,5 +1,8 @@
 package eus.ehu.adsi.arkanoid;
 
+import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
+import org.json.JSONObject;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class IdentificacionTests {
@@ -11,43 +14,50 @@ public class IdentificacionTests {
 	public void F2P1() {
 		//Descripción: Nombre de usuario correcto y contraseña correcta, se pulsa “Iniciar sesión”
 		//Resultado Esperado: Inicio de sesión correcto, se accede al Menú Principal
-
-
+		ArkanoidFrontera.getArkanoidFrontera().comprobarRegistro("usuario", "correo", "contrasena", "contrasena");
+		JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarInicio("usuario", "contrasena");
+		assertTrue(resultado.getBoolean("estado"));
 	}
 
 	@Test
 	public void F2P2() {
 		//Descripción: Nombre de usuario correcto y contraseña incorrecta o vacía, se pulsa “Iniciar sesión”
 		//Resultado Esperado: Mensaje de error
-
+		ArkanoidFrontera.getArkanoidFrontera().comprobarRegistro("usuario", "correo", "contrasena", "contrasena");
+		JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarInicio("usuario", "incorrecto");
+		assertEquals(resultado.get("mensaje"), "Contraseña incorrecta.");
 	}
 
 	@Test
 	public void F2P3() {
 		//Descripción: Nombre de usuario incorrecto o vacío y contraseña correcta, se pulsa “Iniciar sesión”
 		//Resultado Esperado: Mensaje de error
-
+		ArkanoidFrontera.getArkanoidFrontera().comprobarRegistro("usuario", "correo", "contrasena", "contrasena");
+		JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarInicio("incorrecto", "contrasena");
+		assertEquals(resultado.get("mensaje"), "El usuario no está registrado.");
 	}
 
 	@Test
 	public void F2P4() {
 		//Descripción: Nombre de usuario incorrecto o vacío y contraseña incorrecta o vacía, se pulsa “Iniciar sesión”
 		//Resultado Esperado: Mensaje de error
-
+		ArkanoidFrontera.getArkanoidFrontera().comprobarRegistro("usuario", "correo", "contrasena", "contrasena");
+		JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarInicio("incorrecto", "incorrecto");
+		assertFalse(resultado.getBoolean("estado"));
 	}
 
 	@Test
 	public void F2P5() {
 		//Descripción: Se pulsa “Cancelar”
 		//Resultado Esperado: Se vuelve a la página de Inicio
-
+		fail();
 	}
 
 	@Test
 	public void F2P6() {
 		//Descripción: Se pulsa “He olvidado mi contraseña”
 		//Resultado Esperado: Se pasa a la página para introducir el correo de recuperación
-
+		fail();
 	}
 
 	//Subcaso de uso Recuperar Contraseña
@@ -57,21 +67,21 @@ public class IdentificacionTests {
 	public void F2P7() {
 		//Descripción: En la página para introducir el correo se pulsa “Cancelar”
 		//Resultado Esperado: Se vuelve a la página de inicio de sesión
-
+		fail();
 	}
 
 	@Test
 	public void F2P8() {
 		//Descripción: En la página para introducir el correo se pulsa “Enviar correo” sin haber puesto ningún correo
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
 	public void F2P9() {
 		//Descripción: En la página para introducir el correo se pulsa “Enviar correo” habiendo puesto un correo no válido
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
@@ -79,7 +89,7 @@ public class IdentificacionTests {
 		//Descripción: En la página para introducir el correo se pulsa “Enviar correo” habiendo puesto un correo válido
 		//Resultado Esperado: Se envía al correo un código de recuperación y se pasa a la página de recuperación de
 		// contraseña
-
+		fail();
 	}
 
 	@Test
@@ -88,7 +98,7 @@ public class IdentificacionTests {
 		// pulsa “Cancelar”
 		//Resultado Esperado: Se vuelve a la página para introducir el correo de recuperación y el usuario puede
 		// introducir otro correo
-
+		fail();
 	}
 
 	@Test
@@ -96,7 +106,7 @@ public class IdentificacionTests {
 		//Descripción: Tras la prueba F2P10 (ahora nos encontramos en la página de recuperación de contraseña), se pulsa
 		// “Volver a enviar”
 		//Resultado Esperado: Se envía al correo un nuevo código de recuperación
-
+		fail();
 	}
 
 	@Test
@@ -104,7 +114,7 @@ public class IdentificacionTests {
 		//Descripción: Tras la prueba F2P10 (ahora nos encontramos en la página de recuperación de contraseña), se
 		// introduce un código incorrecto, se pulsa “Aceptar”
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
@@ -112,7 +122,7 @@ public class IdentificacionTests {
 		//Descripción: Tras la prueba F2P10 (ahora nos encontramos en la página de recuperación de contraseña), se
 		// introduce el código correcto y falta la contraseña en uno o dos de los campos, se pulsa “Aceptar”
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
@@ -121,7 +131,7 @@ public class IdentificacionTests {
 		// introduce el código correcto y los dos campos de contraseña están completados, pero la contraseña de cada
 		// uno es distinta, se pulsa “Aceptar”
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
@@ -130,7 +140,7 @@ public class IdentificacionTests {
 		// introduce el código correcto y los dos campos de contraseña están completados y con la misma contraseña,
 		// pero el formato de la contraseña no es válido, se pulsa “Aceptar”
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
@@ -139,7 +149,7 @@ public class IdentificacionTests {
 		// introduce el código correcto y los dos campos de contraseña están completados y con la misma contraseña,
 		// pero es igual a la contraseña anterior del usuario, se pulsa “Aceptar”
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
@@ -148,7 +158,7 @@ public class IdentificacionTests {
 		// introduce el código correcto y los dos campos de contraseña están completados y con la misma contraseña, con
 		// formato adecuado, se pulsa “Aceptar”
 		//Resultado Esperado: Se almacena la nueva contraseña del usuario. Se vuelve a la página de inicio de sesión
-
+		fail();
 	}
 
 	//Caso de uso Registrarse
@@ -158,14 +168,14 @@ public class IdentificacionTests {
 	public void F2P11() {
 		//Descripción: Se pulsa “Cancelar”
 		//Resultado Esperado: Se vuelve a la página de Inicio
-
+		fail();
 	}
 
 	@Test
 	public void F2P12() {
 		//Descripción: Hay algún campo sin completar, se pulsa “Crear cuenta”
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
@@ -173,7 +183,7 @@ public class IdentificacionTests {
 		//Descripción: Todos los campos están completados, nombre de usuario y correo válidos, pero los dos campos de
 		// contraseña no coinciden, se pulsa “Crear cuenta”
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
@@ -181,7 +191,7 @@ public class IdentificacionTests {
 		//Descripción: Todos los campos están completados, nombre de usuario válido y los dos campos de contraseña
 		// coinciden, pero el correo no es válido, se pulsa “Crear cuenta”
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
@@ -189,7 +199,7 @@ public class IdentificacionTests {
 		//Descripción: Todos los campos están completados, correo válido y los dos campos de contraseña coinciden, pero
 		// el nombre de usuario no tiene un formato válido, se pulsa “Crear cuenta”
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
@@ -197,7 +207,7 @@ public class IdentificacionTests {
 		//Descripción: Todos los campos están completados, correo válido y los dos campos de contraseña coinciden, pero
 		// el nombre de usuario ya está registrado, se pulsa “Crear cuenta”
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
@@ -205,7 +215,7 @@ public class IdentificacionTests {
 		//Descripción: Todos los campos están completados, correo válido y los dos campos de contraseña coinciden, pero
 		// el nombre de usuario no tiene un formato válido, se pulsa “Crear cuenta”
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
@@ -213,7 +223,7 @@ public class IdentificacionTests {
 		//Descripción: Todos los campos están completados, nombre de usuario y correo válidos y los dos campos de
 		// contraseña coinciden, pero el formato de la contraseña no es válido, se pulsa “Crear cuenta”
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
@@ -221,7 +231,7 @@ public class IdentificacionTests {
 		//Descripción: Todos los campos están completados, nombre de usuario y correo válidos y los dos campos de
 		// contraseña coinciden y su formato es válido, se pulsa “Crear cuenta”
 		//Resultado Esperado: Se crea la cuenta y se almacena su información. El usuario pasa al Menú Principal
-
+		fail();
 	}
 
 	//Caso de uso Cambiar Contraseña
@@ -230,21 +240,21 @@ public class IdentificacionTests {
 	public void F2P20() {
 		//Descripción: Se pulsa “Cancelar”
 		//Resultado Esperado: Se vuelve al Menú Principal
-
+		fail();
 	}
 
 	@Test
 	public void F2P21() {
 		//Descripción: Hay algún campo sin completar, se pulsa “Aceptar”
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
 	public void F2P22() {
 		//Descripción: Todos los campos están completados, pero la contraseña actual no es correcta, se pulsa “Aceptar”
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
@@ -252,7 +262,7 @@ public class IdentificacionTests {
 		//Descripción: Todos los campos están completados, la contraseña actual es correcta, pero los dos campos de la
 		// nueva contraseña no coinciden, se pulsa “Aceptar”
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
@@ -260,7 +270,7 @@ public class IdentificacionTests {
 		//Descripción: Todos los campos están completados, la contraseña actual es correcta, los dos campos de la nueva
 		// contraseña coinciden, pero su formato no es válido, se pulsa “Aceptar”
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
@@ -268,7 +278,7 @@ public class IdentificacionTests {
 		//Descripción: Todos los campos están completados, la contraseña actual es correcta, los dos campos de la nueva
 		// contraseña coinciden, pero la nueva contraseña es igual a la actual, se pulsa “Aceptar”
 		//Resultado Esperado: Mensaje de error
-
+		fail();
 	}
 
 	@Test
@@ -277,6 +287,6 @@ public class IdentificacionTests {
 		// contraseña coinciden y su formato es válido, se pulsa “Aceptar”
 		//Resultado Esperado: Se cambia y se almacena la nueva contraseña del usuario. El usuario vuelve al Menú
 		// Principal
-
+		fail();
 	}
 }

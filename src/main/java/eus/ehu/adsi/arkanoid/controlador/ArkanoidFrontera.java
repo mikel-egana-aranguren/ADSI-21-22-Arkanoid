@@ -46,7 +46,6 @@ public class ArkanoidFrontera {
         } else {
             resultado.put("mensaje", "El usuario no está registrado.");
         }
-
         resultado.put("estado", correcto);
 
         return resultado;

@@ -2,15 +2,15 @@ package eus.ehu.adsi.arkanoid.modelo;
 
 public class Usuario {
     private String nombreUsuario;
-    private String contrasena;
     private String correo;
+    private String contrasena;
 
     //Faltan más atributos
-    public Usuario(String pNombreUsuario, String pContrasena, String pCorreo) {
+    public Usuario(String pNombreUsuario, String pCorreo, String pContrasena) {
 
         nombreUsuario = pNombreUsuario;
-        contrasena = pContrasena;
         correo = pCorreo;
+        contrasena = pContrasena;
     }
 
     public boolean esNombre(String pNombreUsuario) {
