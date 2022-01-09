@@ -8,12 +8,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Fig17a extends JFrame {
+public class IniciarSesion17a extends JFrame {
 
     private JTextField nombre;
     private JPasswordField contrasena;
 
-    public Fig17a() {
+    public IniciarSesion17a() {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setUndecorated(false);
@@ -56,7 +56,7 @@ public class Fig17a extends JFrame {
             public void actionPerformed(ActionEvent e)
             {
                 System.out.println("Olvidar");
-                new Fig17b();
+                new CorreoRecuperacion17b();
             }
         });
         return olvidar;

@@ -8,20 +8,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Fig17d extends JFrame {
+public class CorreoRecuperacion17b extends JFrame {
 
-    private JTextField nombre;
     private JTextField correo;
-    private JPasswordField contrasena1;
-    private JPasswordField contrasena2;
 
-    public Fig17d() {
+    public CorreoRecuperacion17b() {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setUndecorated(false);
         this.setResizable(false);
         this.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
-        this.setTitle("Registrarse");
+        this.setTitle("Recuperar Contraseña");
         drawScene();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
@@ -32,32 +29,15 @@ public class Fig17d extends JFrame {
         this.getContentPane().setBackground(Config.BACKGROUND_COLOR);
         this.setLayout(new FlowLayout());
 
-        JLabel textoNombre = new JLabel("Nombre:");
-        textoNombre.setForeground(Config.FONT_COLOR);
-        this.add(textoNombre);
-        nombre = new JTextField("", 10);
-        this.add(nombre);
-
-        JLabel textoCorreo = new JLabel("Correo:");
+        JLabel textoCorreo = new JLabel("Introduce el correo asociado a tu cuenta para recuperar la contraseña:");
         textoCorreo.setForeground(Config.FONT_COLOR);
         this.add(textoCorreo);
+
         correo = new JTextField("", 10);
         this.add(correo);
 
-        JLabel textoContrasena1 = new JLabel("Contraseña:");
-        textoContrasena1.setForeground(Config.FONT_COLOR);
-        this.add(textoContrasena1);
-        contrasena1 = new JPasswordField("", 10);
-        this.add(contrasena1);
-
-        JLabel textoContrasena2 = new JLabel("Confirmar contraseña:");
-        textoContrasena2.setForeground(Config.FONT_COLOR);
-        this.add(textoContrasena2);
-        contrasena2 = new JPasswordField("", 10);
-        this.add(contrasena2);
-
         this.add(botonCancelar());
-        this.add(botonCrear());
+        this.add(botonEnviar());
     }
 
     private JButton botonCancelar() {
@@ -75,19 +55,26 @@ public class Fig17d extends JFrame {
         return cancelar;
     }
 
-    private JButton botonCrear() {
+    private JButton botonEnviar() {
 
-        JButton crear = new JButton("Crear cuenta");
-        crear.addActionListener(new ActionListener()
+        JButton enviar = new JButton("Enviar correo");
+        enviar.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Crear cuenta");
-                //Comprobar
-                //new Fig18("");
+                System.out.println("Enviar correo");
+
+
+
+               //Enviar email
+
+
+
+
+                new RecuperarContraseña17c("", "");
             }
         });
-        return crear;
+        return enviar;
     }
 }

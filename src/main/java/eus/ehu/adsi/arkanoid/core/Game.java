@@ -5,8 +5,6 @@ import java.util.List;
 import org.json.JSONObject;
 
 import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
-import eus.ehu.adsi.arkanoid.modelo.Arkanoid;
-import eus.ehu.adsi.arkanoid.view.*;
 import eus.ehu.adsi.arkanoid.view.game.Ball;
 import eus.ehu.adsi.arkanoid.view.game.Brick;
 import eus.ehu.adsi.arkanoid.view.game.Config;

@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 
 import javax.swing.JPanel;
 
-import eus.ehu.adsi.arkanoid.App;
 import eus.ehu.adsi.arkanoid.modelo.Arkanoid;
 import eus.ehu.adsi.arkanoid.view.game.Config;
 
@@ -22,7 +21,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Font;
 
-public class SelectNivel {
+public class SeleccionarNivel19 {
 
 	private JFrame frame;
 	private JPanel panelCentro;
@@ -31,7 +30,7 @@ public class SelectNivel {
 	private JLabel lblNivel;
 	private JComboBox<String> comboBoxNivel;
 	
-	public SelectNivel() {
+	public SeleccionarNivel19() {
 		initialize();
 	}
 	

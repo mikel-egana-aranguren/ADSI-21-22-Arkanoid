@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Fig17c extends JFrame {
+public class RecuperarContraseña17c extends JFrame {
 
     private String correo;
     private String codigo;
@@ -16,7 +16,7 @@ public class Fig17c extends JFrame {
     private JPasswordField contrasena1;
     private JPasswordField contrasena2;
 
-    public Fig17c(String pCorreo, String pCodigo) {
+    public RecuperarContraseña17c(String pCorreo, String pCodigo) {
 
         this.correo = pCorreo;
         this.codigo = pCodigo;
@@ -76,7 +76,7 @@ public class Fig17c extends JFrame {
             {
                 System.out.println("Volver a enviar");
                 //Enviar correo
-                new Fig17c("", "");
+                new RecuperarContraseña17c("", "");
             }
         });
         return volver;
@@ -92,7 +92,7 @@ public class Fig17c extends JFrame {
             {
                 System.out.println("Aceptar");
                 //Comprobar
-                new Fig17a();
+                new IniciarSesion17a();
             }
         });
         return aceptar;
@@ -107,7 +107,7 @@ public class Fig17c extends JFrame {
             public void actionPerformed(ActionEvent e)
             {
                 System.out.println("Cancelar");
-                new Fig17b();
+                new CorreoRecuperacion17b();
             }
         });
         return cancelar;
