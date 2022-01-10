@@ -2,7 +2,9 @@ package eus.ehu.adsi.arkanoid.view;
 
 import javax.swing.*;
 
+import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
 import eus.ehu.adsi.arkanoid.view.game.Config;
+import org.json.JSONObject;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -71,8 +73,7 @@ public class CambiarContraseña20 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Cancelar");
-                //new Fig18("");
+                new Fig18(nombreUsuario);
             }
         });
         return cancelar;
@@ -86,9 +87,16 @@ public class CambiarContraseña20 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Crear cuenta");
-                //Comprobar
-                //new Fig18("");
+                JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarCambio(nombreUsuario, String.valueOf(contrasenaOriginal.getPassword()), String.valueOf(contrasena1.getPassword()), String.valueOf(contrasena2.getPassword()));
+
+                if (!resultado.getBoolean("estado")) {
+
+                    new MensajeError((String) resultado.get("mensaje"), false);
+
+                } else {
+
+                    new Fig18((String) resultado.get("mensaje"));
+                }
             }
         });
         return aceptar;
