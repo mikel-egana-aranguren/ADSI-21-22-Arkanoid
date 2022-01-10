@@ -1,4 +1,4 @@
-package eus.ehu.adsi.arkanoid;
+package eus.ehu.adsi.arkanoid.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -7,6 +7,8 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,24 +16,24 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import eus.ehu.adsi.arkanoid.core.Game;
-import eus.ehu.adsi.arkanoid.view.Config;
-
-public class Premios extends JFrame{
-	private static Premios miPremios;
+public class Descripciones extends JFrame{
+	private static Descripciones miDescripciones;
+	
 	private JPanel contentPane;
 	private JPanel fondo;
 	private JPanel sur;
     private JLabel titulo;
     private JButton salir;
-    private JButton desc;
+    
+    //Controlador
+    private Controlador controlador = null;
     
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Premios frame = new Premios();
-					frame.setTitle("Premios");
+					Descripciones frame = new Descripciones();
+					frame.setTitle("Descripciones");
 					frame.setVisible(true);
 					frame.setResizable(false);
 				} catch (Exception e) {
@@ -40,15 +42,15 @@ public class Premios extends JFrame{
 			}
 		});
 	}
-	
-	public static Premios getMiPremios() {
-		if(Premios.miPremios==null) {
-			Premios.miPremios = new Premios();
+    
+	public static Descripciones getMiDescripciones() {
+		if(Descripciones.miDescripciones==null) {
+			Descripciones.miDescripciones = new Descripciones();
 		}
-		return Premios.miPremios;
+		return Descripciones.miDescripciones;
 	}
-
-	private Premios() {				
+	
+	private Descripciones() {				
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 600);
 		setLocationRelativeTo(null);
@@ -59,42 +61,44 @@ public class Premios extends JFrame{
 		contentPane.setBackground(Color.black);
 		
 		titulo = new JLabel();
-		titulo.setText("Premios:");
+		titulo.setText("Descripciones:");
 		titulo.setFont(new Font("Impact", Font.PLAIN, 40));
 		titulo.setForeground(Color.YELLOW);
 		contentPane.add(titulo, BorderLayout.NORTH);
 		
 		fondo = new JPanel();
-		fondo.setLayout(new GridLayout());
+		fondo.setLayout(new GridLayout(5,2));
 		fondo.setOpaque(false);
 		contentPane.add(fondo, BorderLayout.CENTER);
 		JLabel obt = new JLabel();
-		obt.setText("Premios obtenidos: ");
-		obt.setFont(new Font("Consolas", Font.PLAIN, 20));
-		obt.setForeground(Color.WHITE);
-		fondo.add(obt);
-		JLabel nObt = new JLabel();
-		nObt.setText("Premios no obtenidos: ");
-		nObt.setFont(new Font("Consolas", Font.PLAIN, 20));
-		nObt.setForeground(Color.WHITE);
-		fondo.add(nObt);
 		
 		sur = new JPanel();
 		sur.setLayout(new FlowLayout());
 		sur.setOpaque(false);
 		contentPane.add(sur, BorderLayout.SOUTH);
-		
-		desc = new JButton();
-		desc.setText("DESCRIPCIONES");
-		desc.setPreferredSize(new Dimension(150, 20));
-		sur.add(desc);
 
 		salir = new JButton();
+		salir.addActionListener(getControlador());
 		salir.setText("SALIR");
 		salir.setPreferredSize(new Dimension(150, 20));
 		sur.add(salir);
+	}	
+	
+    //Controlador
+	private Controlador getControlador() {
+		if (controlador == null) {
+			controlador = new Controlador();
+		}
+		return controlador;
 	}
 	
-	void run() {
+	private class Controlador implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JButton btn = (JButton)e.getSource();
+			if(btn.getText().equals("SALIR")) {
+				Descripciones.this.dispose();
+			}
+		}
 	}
 }
