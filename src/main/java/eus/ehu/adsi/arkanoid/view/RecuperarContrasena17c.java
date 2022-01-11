@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class RecuperarContraseña17c extends JFrame {
+public class RecuperarContrasena17c extends JFrame {
 
     private String correo;
     private String codigo;
@@ -18,7 +18,7 @@ public class RecuperarContraseña17c extends JFrame {
     private JPasswordField contrasena1;
     private JPasswordField contrasena2;
 
-    public RecuperarContraseña17c(String pCorreo, String pCodigo) {
+    public RecuperarContrasena17c(String pCorreo, String pCodigo) {
 
         this.correo = pCorreo;
         this.codigo = pCodigo;
@@ -76,14 +76,8 @@ public class RecuperarContraseña17c extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-<<<<<<< HEAD:src/main/java/eus/ehu/adsi/arkanoid/view/RecuperarContraseña17c.java
-                System.out.println("Volver a enviar");
-                //Enviar correo
-                new RecuperarContraseña17c("", "");
-=======
                 String codigo = ArkanoidFrontera.getArkanoidFrontera().enviarEmail(correo);
-                new Fig17c(correo, codigo);
->>>>>>> origin/feature-identificacion:src/main/java/eus/ehu/adsi/arkanoid/view/Fig17c.java
+                new RecuperarContrasena17c(correo, codigo);
             }
         });
         return volver;
@@ -109,7 +103,7 @@ public class RecuperarContraseña17c extends JFrame {
 
                 } else {
 
-                    new Fig17a();
+                    new IniciarSesion17a();
                 }
             }
         });
@@ -124,7 +118,7 @@ public class RecuperarContraseña17c extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                new Fig17b();
+                new CorreoRecuperacion17b();
             }
         });
         return cancelar;

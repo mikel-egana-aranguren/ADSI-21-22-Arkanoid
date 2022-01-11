@@ -48,7 +48,7 @@ public class Fig16 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                new Fig17a();
+                new IniciarSesion17a();
             }
         });
         return iniciar;
@@ -62,7 +62,7 @@ public class Fig16 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                new Fig17d();
+                new CrearCuenta17d();
             }
         });
         return registrar;

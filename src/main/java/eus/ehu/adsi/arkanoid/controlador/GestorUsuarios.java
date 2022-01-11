@@ -52,4 +52,7 @@ public class GestorUsuarios {
         this.lUsuarios.add(u);
     }
 
+    public void borrarUsuarios() {
+        this.lUsuarios.clear();
+    }
 }

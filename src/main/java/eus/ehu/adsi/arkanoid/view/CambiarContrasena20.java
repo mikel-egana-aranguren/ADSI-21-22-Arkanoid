@@ -10,14 +10,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CambiarContraseña20 extends JFrame {
+public class CambiarContrasena20 extends JFrame {
 
     private String nombreUsuario;
     private JPasswordField contrasenaOriginal;
     private JPasswordField contrasena1;
     private JPasswordField contrasena2;
 
-    public CambiarContraseña20(String pNombreUsuario) {
+    public CambiarContrasena20(String pNombreUsuario) {
 
         this.nombreUsuario = pNombreUsuario;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -1,6 +1,8 @@
 package eus.ehu.adsi.arkanoid.controlador;
 
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 
@@ -53,21 +55,40 @@ public class ArkanoidFrontera {
 
     public JSONObject recuperarContrasena(String correo) {
 
+        boolean correcto = false;
         JSONObject resultado = new JSONObject();
 
-        Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuarioCorreo(correo);
+        if (!correo.equals("")) {
 
-        if (U != null) {
+            if (emailValido(correo)) {
 
-            resultado.put("mensaje", enviarEmail(correo));
+                Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuarioCorreo(correo);
 
+                if (U != null) {
+
+                    resultado.put("mensaje", enviarEmail(correo));
+                    correcto = true;
+
+                } else {
+                    resultado.put("mensaje", "El usuario no está registrado.");
+                }
+            } else {
+                resultado.put("mensaje", "Correo no válido.");
+            }
         } else {
-            resultado.put("mensaje", "El usuario no está registrado.");
+            resultado.put("mensaje", "Introduce un correo.");
         }
-
-        resultado.put("estado", U != null);
+        resultado.put("estado", correcto);
 
         return resultado;
+    }
+
+    private boolean emailValido(String correo) {
+
+        String regex = "^(.+)@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(correo);
+        return matcher.matches();
     }
 
     public String enviarEmail(String correo) {
@@ -79,25 +100,38 @@ public class ArkanoidFrontera {
 
         boolean correcto = false;
         JSONObject resultado = new JSONObject();
-        Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuarioCorreo(correo);
 
-        if (U != null) {
+        if (!(correo.equals("") || codigo.equals("") || codigoIntroducido.equals("") || cNueva1.equals("") || cNueva2.equals(""))) {
+            Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuarioCorreo(correo);
 
-            if (codigo.equals(codigoIntroducido)) {
+            if (U != null) {
 
-                if (cNueva1.equals(cNueva2)) {
+                if (codigo.equals(codigoIntroducido)) {
 
-                    GestorUsuarios.getGestorUsuarios().cambiarContrasena(U, cNueva1);
-                    correcto = true;
+                    if (cNueva1.equals(cNueva2)) {
 
+                        if (contrasenaValida(cNueva1)) {
+
+                            if (!GestorUsuarios.getGestorUsuarios().esContrasena(U, cNueva1)) {
+                                GestorUsuarios.getGestorUsuarios().cambiarContrasena(U, cNueva1);
+                                correcto = true;
+                            } else {
+                                resultado.put("mensaje", "La contraseña nueva no puede ser igual a la anterior.");
+                            }
+                        } else {
+                            resultado.put("mensaje", "Formato de contraseña no válido (longitud máxima 20 caracteres).");
+                        }
+                    } else {
+                        resultado.put("mensaje", "Las contraseñas no coinciden.");
+                    }
                 } else {
-                    resultado.put("mensaje", "Las contraseñas no coinciden.");
+                    resultado.put("mensaje", "Código incorrecto.");
                 }
             } else {
-                resultado.put("mensaje", "Código incorrecto.");
+                resultado.put("mensaje", "El usuario no está registrado.");
             }
         } else {
-            resultado.put("mensaje", "El usuario no está registrado.");
+            resultado.put("mensaje", "Rellena todos los campos.");
         }
 
         resultado.put("estado", correcto);
@@ -108,27 +142,46 @@ public class ArkanoidFrontera {
 
         boolean correcto = false;
         JSONObject resultado = new JSONObject();
-        Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
 
-        if (U == null) {
-
-            U = GestorUsuarios.getGestorUsuarios().buscarUsuarioCorreo(correo);
+        if (!(nombreUsuario.equals("") || correo.equals("") || contrasena1.equals("") || contrasena2.equals(""))) {
+            Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
 
             if (U == null) {
 
-                if (contrasena1.equals(contrasena2)) {
+                U = GestorUsuarios.getGestorUsuarios().buscarUsuarioCorreo(correo);
 
-                    GestorUsuarios.getGestorUsuarios().registrarUsuario(nombreUsuario, correo, contrasena1);
-                    correcto = true;
-                    resultado.put("mensaje", nombreUsuario);
+                if (U == null) {
+
+                    if (emailValido(correo)) {
+
+                        if (nombreUsuario.length() <= 20) {
+
+                            if (contrasena1.equals(contrasena2)) {
+
+                                if (contrasenaValida(contrasena1)) {
+                                    GestorUsuarios.getGestorUsuarios().registrarUsuario(nombreUsuario, correo, contrasena1);
+                                    correcto = true;
+                                    resultado.put("mensaje", nombreUsuario);
+                                } else {
+                                    resultado.put("mensaje", "Formato de contraseña no válido (longitud máxima 20 caracteres).");
+                                }
+                            } else {
+                                resultado.put("mensaje", "Las contraseñas no coinciden.");
+                            }
+                        } else {
+                            resultado.put("mensaje", "Formato de nombre de usuario no válido (longitud máxima 20 caracteres).");
+                        }
+                    } else {
+                        resultado.put("mensaje", "Correo no válido.");
+                    }
                 } else {
-                    resultado.put("mensaje", "Las contraseñas no coinciden.");
+                    resultado.put("mensaje", "Correo no disponible.");
                 }
             } else {
-                resultado.put("mensaje", "Correo no disponible.");
+                resultado.put("mensaje", "Nombre de usuario no disponible.");
             }
         } else {
-            resultado.put("mensaje", "Nombre de usuario no disponible.");
+            resultado.put("mensaje", "Rellena todos los campos.");
         }
         resultado.put("estado", correcto);
 
@@ -139,22 +192,46 @@ public class ArkanoidFrontera {
 
         boolean correcto = false;
         JSONObject resultado = new JSONObject();
-        Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
 
-        if (GestorUsuarios.getGestorUsuarios().esContrasena(U, cAnterior)) {
+        if (!(nombreUsuario.equals("") || cAnterior.equals("") || cNueva1.equals("") || cNueva2.equals(""))) {
+            Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
 
-            if (cNueva1.equals(cNueva2)) {
-                GestorUsuarios.getGestorUsuarios().cambiarContrasena(U, cNueva1);
-                correcto = true;
-                resultado.put("mensaje", nombreUsuario);
+            if (GestorUsuarios.getGestorUsuarios().esContrasena(U, cAnterior)) {
+
+                if (!cAnterior.equals(cNueva1)) {
+
+                    if (cNueva1.equals(cNueva2)) {
+
+                        if (contrasenaValida(cNueva1)) {
+                            GestorUsuarios.getGestorUsuarios().cambiarContrasena(U, cNueva1);
+                            correcto = true;
+                            resultado.put("mensaje", nombreUsuario);
+                        } else {
+                            resultado.put("mensaje", "Formato de contraseña no válido (longitud máxima 20 caracteres).");
+                        }
+                    } else {
+                        resultado.put("mensaje", "Las contraseñas no coinciden.");
+                    }
+                } else {
+                    resultado.put("mensaje", "La contraseña nueva no puede ser igual a la anterior.");
+                }
             } else {
-                resultado.put("mensaje", "Las contraseñas no coinciden.");
+                resultado.put("mensaje", "Contraseña incorrecta.");
             }
         } else {
-            resultado.put("mensaje", "Contraseña incorrecta.");
+            resultado.put("mensaje", "Rellena todos los campos.");
         }
         resultado.put("estado", correcto);
 
         return resultado;
+    }
+
+    private boolean contrasenaValida(String contrasena) {
+        return contrasena.length() <= 20;
+    }
+
+    /*MÉTODOS PARA PRUEBAS*/
+    public void borrarUsuarios() {
+        GestorUsuarios.getGestorUsuarios().borrarUsuarios();
     }
 }

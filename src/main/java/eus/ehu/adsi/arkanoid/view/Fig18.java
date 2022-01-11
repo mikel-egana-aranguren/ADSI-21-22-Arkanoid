@@ -1,8 +1,6 @@
 package eus.ehu.adsi.arkanoid.view;
 
-import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
 import eus.ehu.adsi.arkanoid.view.game.Config;
-import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,7 +48,7 @@ public class Fig18 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                new SelectNivel();
+                new SeleccionarNivel19();
             }
         });
         return jugar;
@@ -106,7 +104,7 @@ public class Fig18 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                new Fig20(nombreUsuario);
+                new CambiarContrasena20(nombreUsuario);
             }
         });
         return cambiar;

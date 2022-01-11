@@ -57,7 +57,6 @@ public class IniciarSesion17a extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Olvidar");
                 new CorreoRecuperacion17b();
             }
         });

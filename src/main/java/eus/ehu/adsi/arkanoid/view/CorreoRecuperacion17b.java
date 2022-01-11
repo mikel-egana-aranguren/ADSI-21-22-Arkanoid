@@ -76,7 +76,7 @@ public class CorreoRecuperacion17b extends JFrame {
 
                 } else {
 
-                    new Fig17c(correo.getText(), (String) resultado.get("mensaje"));
+                    new RecuperarContrasena17c(correo.getText(), (String) resultado.get("mensaje"));
                 }
             }
         });
