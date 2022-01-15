@@ -9,11 +9,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Fig18 extends JFrame {
+public class MenuPrincipal18 extends JFrame {
 
     private String nombreUsuario;
 
-    public Fig18(String pNombreUsuario) {
+    public MenuPrincipal18(String pNombreUsuario) {
 
         this.nombreUsuario = pNombreUsuario;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,7 +50,7 @@ public class Fig18 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                new SelectNivel();
+                new SeleccionarNivel19();
             }
         });
         return jugar;
@@ -106,7 +106,7 @@ public class Fig18 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                new Fig20(nombreUsuario);
+                new CambiarContraseña20(nombreUsuario);
             }
         });
         return cambiar;

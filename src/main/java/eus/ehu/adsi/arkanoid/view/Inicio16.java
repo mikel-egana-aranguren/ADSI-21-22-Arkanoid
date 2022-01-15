@@ -6,9 +6,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Fig16 extends JFrame {
+public class Inicio16 extends JFrame {
 
-    public Fig16() {
+    public Inicio16() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setUndecorated(false);
         this.setResizable(false);
@@ -48,7 +48,7 @@ public class Fig16 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                new Fig17a();
+                new IniciarSesion17a();
             }
         });
         return iniciar;
@@ -62,7 +62,8 @@ public class Fig16 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                new Fig17d();
+                new CrearCuenta17d();
+                dispose();
             }
         });
         return registrar;

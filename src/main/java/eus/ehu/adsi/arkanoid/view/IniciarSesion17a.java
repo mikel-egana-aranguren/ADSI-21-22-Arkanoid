@@ -72,7 +72,8 @@ public class IniciarSesion17a extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                new Fig16();
+                dispose();
+                new Inicio16();
             }
         });
         return cancelar;
@@ -98,7 +99,7 @@ public class IniciarSesion17a extends JFrame {
 
                 } else {
 
-                    new Fig18((String) resultado.get("mensaje"));
+                    new MenuPrincipal18((String) resultado.get("mensaje"));
                 }
 
             }

@@ -76,14 +76,8 @@ public class RecuperarContraseña17c extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-<<<<<<< HEAD:src/main/java/eus/ehu/adsi/arkanoid/view/RecuperarContraseña17c.java
-                System.out.println("Volver a enviar");
-                //Enviar correo
-                new RecuperarContraseña17c("", "");
-=======
                 String codigo = ArkanoidFrontera.getArkanoidFrontera().enviarEmail(correo);
-                new Fig17c(correo, codigo);
->>>>>>> origin/feature-identificacion:src/main/java/eus/ehu/adsi/arkanoid/view/Fig17c.java
+                new RecuperarContraseña17c(correo, codigo);
             }
         });
         return volver;
@@ -109,7 +103,7 @@ public class RecuperarContraseña17c extends JFrame {
 
                 } else {
 
-                    new Fig17a();
+                    new IniciarSesion17a();
                 }
             }
         });
@@ -124,7 +118,7 @@ public class RecuperarContraseña17c extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                new Fig17b();
+                new CorreoRecuperacion17b();
             }
         });
         return cancelar;

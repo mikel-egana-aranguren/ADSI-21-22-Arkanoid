@@ -1,11 +1,11 @@
 package eus.ehu.adsi.arkanoid;
 
-import eus.ehu.adsi.arkanoid.view.Fig16;
+import eus.ehu.adsi.arkanoid.view.Inicio16;
 
 public class App {
 
 	public static void main(String[] args) {
 		//new Arkanoid(1).run();
-		new Fig16();
+		new Inicio16();
 	}
 }

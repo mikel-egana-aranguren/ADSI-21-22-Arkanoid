@@ -50,7 +50,8 @@ public class CorreoRecuperacion17b extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                new Fig16();
+                new Inicio16();
+                dispose();
             }
         });
         return cancelar;
@@ -76,7 +77,8 @@ public class CorreoRecuperacion17b extends JFrame {
 
                 } else {
 
-                    new Fig17c(correo.getText(), (String) resultado.get("mensaje"));
+                    new RecuperarContraseña17c(correo.getText(), (String) resultado.get("mensaje"));
+                    dispose();
                 }
             }
         });

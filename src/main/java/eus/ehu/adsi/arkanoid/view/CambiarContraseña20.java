@@ -73,7 +73,7 @@ public class CambiarContraseña20 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                new Fig18(nombreUsuario);
+                new MenuPrincipal18(nombreUsuario);
             }
         });
         return cancelar;
@@ -95,7 +95,8 @@ public class CambiarContraseña20 extends JFrame {
 
                 } else {
 
-                    new Fig18((String) resultado.get("mensaje"));
+                    new MenuPrincipal18((String) resultado.get("mensaje"));
+                    dispose();
                 }
             }
         });

@@ -70,7 +70,7 @@ public class CrearCuenta17d extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                new Fig16();
+                new Inicio16();
             }
         });
         return cancelar;
@@ -96,7 +96,7 @@ public class CrearCuenta17d extends JFrame {
 
                 } else {
 
-                    new Fig18((String) resultado.get("mensaje"));
+                    new MenuPrincipal18((String) resultado.get("mensaje"));
                 }
             }
         });
