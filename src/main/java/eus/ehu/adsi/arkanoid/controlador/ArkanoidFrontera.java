@@ -1,5 +1,6 @@
 package eus.ehu.adsi.arkanoid.controlador;
 
+import java.util.Properties;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,8 +9,21 @@ import org.json.JSONObject;
 
 import eus.ehu.adsi.arkanoid.modelo.Usuario;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 public class ArkanoidFrontera {
+
     private static ArkanoidFrontera mArkanoidFrontera = null;
+    private Properties propiedad = null;
+    private Session sesion = null;
+    private String enviador = "arkanoidrecovery@gmail.com";
+    private String contra = "ARKpassword";
 
     private ArkanoidFrontera() {}
 
@@ -92,8 +106,48 @@ public class ArkanoidFrontera {
     }
 
     public String enviarEmail(String correo) {
-        //TODO
-        return "CODIGO";
+
+        //Fuente: https://www.youtube.com/watch?v=Dj1t53SH7nk&t=703s
+
+        if (propiedad == null) {
+            propiedad = new Properties();
+            propiedad.put("mail.smtp.host", "smtp.gmail.com");
+            propiedad.put("mail.smtp.starttls.enable", "true");
+            propiedad.put("mail.smtp.port", "587");
+            propiedad.put("mail.smtp.auth", "true");
+
+            sesion = Session.getDefaultInstance(propiedad);
+        }
+
+        MimeMessage mail = new MimeMessage(sesion);
+        String codigo = "";
+
+        try {
+            mail.setFrom(new InternetAddress(enviador));
+            mail.addRecipient(Message.RecipientType.TO, new InternetAddress(correo));
+            mail.setSubject("[Arkanoid] Recuperar Contraseña");
+            codigo = generarCodigo();
+            mail.setText("El código de recuperación es: " + codigo);
+
+            Transport transporte = sesion.getTransport("smtp");
+            transporte.connect(enviador, contra);
+            transporte.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
+            transporte.close();
+
+        } catch (AddressException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
+        return codigo;
+    }
+
+    public String generarCodigo() {
+        Random rnd = new Random();
+        int number = rnd.nextInt(999999);
+        // this will convert any number sequence into 6 character.
+        return String.format("%06d", number);
     }
 
     public JSONObject comprobarCodigo(String correo, String codigo, String codigoIntroducido, String cNueva1, String cNueva2) {

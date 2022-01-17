@@ -33,6 +33,12 @@
 			<version>4.13.2</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- Java Mail -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>javax.mail-api</artifactId>
+			<version>1.6.1</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
