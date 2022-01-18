@@ -7,7 +7,7 @@ public class App {
 
 	public static void main(String[] args) {
 		//new Arkanoid(1).run();
-		ArkanoidFrontera.getArkanoidFrontera().comprobarRegistro("usuario", "jon.garbe5@gmail.com", "contrasena", "contrasena");
+		ArkanoidFrontera.getArkanoidFrontera().comprobarRegistro("usuario", "correo@ehu.eus", "contrasena", "contrasena");
 		new Fig16();
 	}
 }
