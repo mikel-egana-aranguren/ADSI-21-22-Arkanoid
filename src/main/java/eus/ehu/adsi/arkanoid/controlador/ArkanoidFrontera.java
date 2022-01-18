@@ -27,4 +27,9 @@ public class ArkanoidFrontera {
         Random r = new Random();
         return r.nextInt(i - j + 1) + j;
     }
+
+    public void cambiarAjustes(String colorBola, String colorPadel, String colorLadrillo, String colorFondo, boolean sonido, String nombreUsuario) {
+        Usuario u = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
+        u.cambiarAjustes(colorBola, colorPadel, colorLadrillo, colorFondo, sonido);
+    }
 }

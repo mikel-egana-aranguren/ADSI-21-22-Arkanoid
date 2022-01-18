@@ -2,13 +2,12 @@ package eus.ehu.adsi.arkanoid.view;
  
 import javax.swing.JFrame;
 import java.awt.Color;
-import java.awt.Dimension;
 
 import javax.swing.JLabel;
 
 import javax.swing.JPanel;
-import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
+import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
 import eus.ehu.adsi.arkanoid.view.game.Config;
 
 import javax.swing.JButton;
@@ -42,9 +41,11 @@ public class Personalizacion {
     private JComboBox<String> comboBoxPaddle;
     private JComboBox<String> comboBoxLadrillo;
 	private boolean sonido;
+	private String nombreUsuario;
 	
-	public Personalizacion() {
+	public Personalizacion(String nombre) {
 		initialize();
+		nombreUsuario = nombre;
 	}
 	
 	
@@ -174,7 +175,12 @@ public class Personalizacion {
 			btnAceptar.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					frame.dispose();
+					//frame.dispose();
+					String colorBola = comboBoxBall.getSelectedItem().toString();
+					String colorPadel = comboBoxPaddle.getSelectedItem().toString();
+					String colorLadrillo = comboBoxLadrillo.getSelectedItem().toString();
+					String colorFondo = comboBoxBackGround.getSelectedItem().toString();
+					ArkanoidFrontera.getArkanoidFrontera().cambiarAjustes(colorBola, colorPadel, colorLadrillo, colorFondo, sonido, nombreUsuario);
 				}
 				@Override
 				public void mouseEntered(MouseEvent e){
@@ -296,7 +302,7 @@ public class Personalizacion {
 		if (btnSonido == null) {
             btnSonido = new JButton("");
 			try {
-                ImageIcon imgIcon = new ImageIcon("/home/bosco/git/ADSI-21-22-Arkanoid/src/main/resources/unmuted.png");
+                ImageIcon imgIcon = new ImageIcon("src/main/resources/unmuted.png");
                 Image image = imgIcon.getImage();
 				Image imageReszie = image.getScaledInstance(100,80, java.awt.Image.SCALE_SMOOTH);
 				imgIcon = new ImageIcon(imageReszie);
