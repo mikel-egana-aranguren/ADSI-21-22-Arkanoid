@@ -228,7 +228,7 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 	//PRUEBAS
 
 	private void prepararPartida() {
-		Usuario u = new Usuario("null");
+		Usuario u = new Usuario("null", "null", "null");
 		GestorUsuarios.getGestorUsuarios().anadir(u);
 		Partida p = new Partida(u);
 		GestorPartidas.getGestorPartidas().anadir(p);
