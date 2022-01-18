@@ -1,8 +1,9 @@
 package eus.ehu.adsi.arkanoid.view;
  
+import eus.ehu.adsi.arkanoid.view.game.Config;
+
 import javax.swing.JFrame;
 import java.awt.Color;
-
 import javax.swing.JLabel;
 
 import javax.swing.JPanel;
@@ -25,7 +26,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Font;
 
-public class Personalizacion {
+public class Personalizacion21 {
 
 	private JFrame frame;
 	private JPanel panelCentro;
@@ -43,7 +44,8 @@ public class Personalizacion {
 	private boolean sonido;
 	private String nombreUsuario;
 	
-	public Personalizacion(String nombre) {
+	
+	public Personalizacion21() {
 		initialize();
 		nombreUsuario = nombre;
 	}

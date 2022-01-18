@@ -2,6 +2,7 @@ package eus.ehu.adsi.arkanoid.modelo;
 
 public class Usuario {
     private String nombreUsuario;
+    private String correo;
     private String contrasena;
     private ColorBola colorBola;
     private ColorPadel colorPadel;
@@ -9,12 +10,19 @@ public class Usuario {
     private ColorLadrillos colorLadrillos;
     private AjusteSonido sonido;
     //Faltan más atributos
-    public Usuario(String nombre) {
-        nombreUsuario = nombre;
+    public Usuario(String pNombreUsuario, String pCorreo, String pContrasena) {
+
+        nombreUsuario = pNombreUsuario;
+        correo = pCorreo;
+        contrasena = pContrasena;
     }
 
     public boolean esNombre(String pNombreUsuario) {
-        return nombreUsuario == pNombreUsuario;
+        return nombreUsuario.equals(pNombreUsuario);
+    }
+
+    public boolean esCorreo(String pCorreo) {
+        return pCorreo.equals(correo);
     }
     
     public boolean esContrasena(String pContrasena) {
@@ -27,5 +35,9 @@ public class Usuario {
         this.colorFondo = new ColorFondo(colorFondo);
         this.colorLadrillos = new ColorLadrillos(colorLadrillos);
         this.sonido = new AjusteSonido(sonido);
+    }
+    
+    public void setContrasena(String pContrasena) {
+        this.contrasena = pContrasena;
     }
 }
