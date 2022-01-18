@@ -48,7 +48,6 @@ public class Fig18 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                cerrarActual();
                 new SeleccionarNivel19();
             }
         });
@@ -63,7 +62,6 @@ public class Fig18 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                //cerrarActual();
                 System.out.println("Ranking, añadir fig");
             }
         });
@@ -78,7 +76,6 @@ public class Fig18 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                //cerrarActual();
                 System.out.println("Ajustes, añadir fig");
             }
         });
@@ -87,13 +84,12 @@ public class Fig18 extends JFrame {
 
     private JButton botonCerrar() {
 
-        final JButton cerrar = new JButton("Cerrar sesión");
+        JButton cerrar = new JButton("Cerrar sesión");
         cerrar.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                //cerrarActual();
                 System.out.println("Cerrar sesión, añadir fig");
             }
         });
@@ -108,14 +104,9 @@ public class Fig18 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                cerrarActual();
                 new CambiarContrasena20(nombreUsuario);
             }
         });
         return cambiar;
-    }
-
-    private void cerrarActual() {
-        this.dispose();
     }
 }

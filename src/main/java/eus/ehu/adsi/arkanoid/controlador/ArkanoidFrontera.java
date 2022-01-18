@@ -143,7 +143,7 @@ public class ArkanoidFrontera {
         return codigo;
     }
 
-    private String generarCodigo() {
+    public String generarCodigo() {
         Random rnd = new Random();
         int number = rnd.nextInt(999999);
         // this will convert any number sequence into 6 character.

@@ -32,96 +32,60 @@ public class RecuperarContrasena17c extends JFrame {
         this.setLocationRelativeTo(null);
     }
 
-    //Método para dibujar el contenido de la pantalla
     private void drawScene() {
 
-        this.setLayout(new BorderLayout());
+        this.getContentPane().setBackground(Config.BACKGROUND_COLOR);
+        this.setLayout(new FlowLayout());
 
         JLabel textoCorreo = new JLabel("Se ha enviado un correo con el código para cambiar la contraseña");
         textoCorreo.setForeground(Config.FONT_COLOR);
-        JPanel titulo = new JPanel();
-        titulo.setBackground(Config.BACKGROUND_COLOR);
-        titulo.add(textoCorreo);
-        this.add(titulo, BorderLayout.PAGE_START);
-
-        JPanel campos = new JPanel();
-        campos.setBackground(Config.BACKGROUND_COLOR);
-        campos.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
+        this.add(textoCorreo);
 
         JLabel textoCodigo = new JLabel("Código:");
         textoCodigo.setForeground(Config.FONT_COLOR);
-        c.gridx = 0;
-        c.gridy = 0;
-        campos.add(textoCodigo, c);
-        codigoIntroducido = new JTextField("", 20);
-        c.gridx = 1;
-        c.gridy = 0;
-        campos.add(codigoIntroducido, c);
+        this.add(textoCodigo);
+        codigoIntroducido = new JTextField("", 10);
+        this.add(codigoIntroducido);
 
         JLabel textoContrasena1 = new JLabel("Nueva contraseña:");
         textoContrasena1.setForeground(Config.FONT_COLOR);
-        c.gridx = 0;
-        c.gridy = 1;
-        campos.add(textoContrasena1, c);
-        contrasena1 = new JPasswordField("", 20);
-        c.gridx = 1;
-        c.gridy = 1;
-        campos.add(contrasena1, c);
+        this.add(textoContrasena1);
+        contrasena1 = new JPasswordField("", 10);
+        this.add(contrasena1);
 
         JLabel textoContrasena2 = new JLabel("Confirmar contraseña:");
         textoContrasena2.setForeground(Config.FONT_COLOR);
-        c.gridx = 0;
-        c.gridy = 2;
-        campos.add(textoContrasena2, c);
-        contrasena2 = new JPasswordField("", 20);
-        c.gridx = 1;
-        c.gridy = 2;
-        campos.add(contrasena2, c);
+        this.add(textoContrasena2);
+        contrasena2 = new JPasswordField("", 10);
+        this.add(contrasena2);
 
         JLabel textoVolver = new JLabel("¿No te ha llegado el código?:");
         textoVolver.setForeground(Config.FONT_COLOR);
-        JPanel enviar = new JPanel();
-        enviar.setBackground(Config.BACKGROUND_COLOR);
-        enviar.add(textoVolver);
-        enviar.add(botonVolver());
-        c.gridx = 0;
-        c.gridy = 3;
-        c.gridwidth = 2;
-        campos.add(enviar, c);
+        this.add(textoVolver);
+        this.add(botonVolver());
 
-        this.add(campos, BorderLayout.CENTER);
-
-        JPanel botones = new JPanel();
-        botones.setBackground(Config.BACKGROUND_COLOR);
-        botones.add(botonAceptar());
-        botones.add(botonCancelar());
-        this.add(botones, BorderLayout.PAGE_END);
+        this.add(botonAceptar());
+        this.add(botonCancelar());
     }
 
-    //Método para crear el botón de volver a enviar, que mandará un nuevo correo
     private JButton botonVolver() {
 
         JButton volver = new JButton("Volver a enviar");
-        volver.setFont(Font.getFont(Config.FONT));
         volver.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
                 String codigo = ArkanoidFrontera.getArkanoidFrontera().enviarEmail(correo);
-                cerrarActual();
                 new RecuperarContrasena17c(correo, codigo);
             }
         });
         return volver;
     }
 
-    //Método para crear el botón de aceptar, que mandará a comprobar los datos
     private JButton botonAceptar() {
 
         JButton aceptar = new JButton("Aceptar");
-        aceptar.setFont(Font.getFont(Config.FONT));
         aceptar.addActionListener(new ActionListener()
         {
             @Override
@@ -133,15 +97,12 @@ public class RecuperarContrasena17c extends JFrame {
 //                    Si es True, String = vacío
 //                    Si es False, String = mensaje de error correspondiente
 
-                //Comprobar el estado de la recuperación
                 if (!resultado.getBoolean("estado")) {
-                    //Si ha sido incorrecto mostrar mensaje de error, con el mensaje que corresponda
+
                     new MensajeError((String) resultado.get("mensaje"), false);
 
                 } else {
-                    //Si ha sido exitoso, cerrar pantalla actual
-                    cerrarActual();
-                    //Abrir pantalla de Inicio de Sesión
+
                     new IniciarSesion17a();
                 }
             }
@@ -149,25 +110,17 @@ public class RecuperarContrasena17c extends JFrame {
         return aceptar;
     }
 
-    //Método para crear el botón de cancelar, que abrirá la pantalla de Recuperación
     private JButton botonCancelar() {
 
         JButton cancelar = new JButton("Cancelar");
-        cancelar.setFont(Font.getFont(Config.FONT));
         cancelar.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                cerrarActual();
                 new CorreoRecuperacion17b();
             }
         });
         return cancelar;
-    }
-
-    //Método para poder cerrar la pantalla actual, útil cuando se trata con clases anónimas
-    private void cerrarActual() {
-        this.dispose();
     }
 }
