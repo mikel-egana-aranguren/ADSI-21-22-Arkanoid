@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import eus.ehu.adsi.arkanoid.modelo.DataBase;
 import eus.ehu.adsi.arkanoid.view.game.Config;
 
 import javax.swing.JLabel;
@@ -19,6 +20,8 @@ import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.util.List;
 
 public class Ranking22 {
 
@@ -37,8 +40,6 @@ public class Ranking22 {
 	private JButton btnVolver;
 	private JLabel lblJugador;
 	private JPanel panelSeparador;
-    private int nJugadoresGlobal;
-    private int nJugadoresIndividual;
     private String jugador;
     private Font impact = AddFont.createFont();
 
@@ -223,11 +224,11 @@ public class Ranking22 {
 			panelGlobal = new JPanel();
 			panelGlobal.setBackground(Color.BLACK);
 			panelGlobal.setLayout(new GridLayout(10, 0, 0, 0));
-            //nJugadoresGlobal = llamada a BD para ver cuantos jugadores hay guardados (necesario si hay menos de 10)
-            for (int i=0; i<nJugadoresGlobal || i<10; i++){
-                //llamada a BD para obtener el nombre y puntuación de jugador en posición i
-                String nombre = "Bosco";
-                int puntos = 100;
+            int nPartidas = DataBase.getmDataBase().nPartidasGlobal(comboBoxNiveles.getSelectedIndex());
+            for (int i=0; i<nPartidas || i<10; i++){
+				List<String> jugadorPuntuacion = DataBase.getmDataBase().jugadorPosGlobal(i, comboBoxNiveles.getSelectedIndex());
+                String nombre = jugadorPuntuacion.get(0);
+                String puntos = jugadorPuntuacion.get(1);
 			    panelGlobal.add(getLblJugador(nombre, puntos));
             }
 		}
@@ -239,19 +240,18 @@ public class Ranking22 {
 			panelIndividual = new JPanel();
 			panelIndividual.setBackground(Color.BLACK);
 			panelIndividual.setLayout(new GridLayout(10, 0, 0, 0));
-            for (int i=0; i<nJugadoresGlobal || i<10; i++){
-                //llamada a BD para obtener el nombre y puntuación de jugador en posición i y nivel x
-                String nombre = "Bosco";
-                int puntos = 100;
-			    panelIndividual.add(getLblJugador(nombre, puntos));
+			int nPartidas = DataBase.getmDataBase().nPartidasIndividual(jugador, comboBoxNiveles.getSelectedIndex());
+            for (int i=0; i<nPartidas || i<10; i++){
+                String puntos = DataBase.getmDataBase().jugadorPosIndividual(i, jugador, comboBoxNiveles.getSelectedIndex());
+			    panelIndividual.add(getLblJugador(jugador, puntos));
             }
 		}
 		return panelIndividual;
 	}
 
-    private JLabel getLblJugador(String nombre, int puntos) {
+    private JLabel getLblJugador(String nombre, String puntos) {
             String p = ".";
-            String separacion = p.repeat(60 - nombre.length()- Integer.toString(puntos).length());
+            String separacion = p.repeat(60 - nombre.length()- puntos.length());
             lblJugador = new JLabel(nombre + separacion + puntos);
 			lblJugador.setForeground(Color.WHITE);
             lblJugador.setFont(impact.deriveFont(20.0f));
