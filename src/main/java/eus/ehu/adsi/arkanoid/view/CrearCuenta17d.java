@@ -7,8 +7,8 @@ import eus.ehu.adsi.arkanoid.view.game.Config;
 import org.json.JSONObject;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CrearCuenta17d extends JFrame {
 
@@ -16,6 +16,8 @@ public class CrearCuenta17d extends JFrame {
     private JTextField correo;
     private JPasswordField contrasena1;
     private JPasswordField contrasena2;
+    private JButton cancelar;
+    private JButton crear;
     private Font impact = AddFont.createFont();
 
     public CrearCuenta17d() {
@@ -41,6 +43,7 @@ public class CrearCuenta17d extends JFrame {
 
         JLabel textoNombre = new JLabel("Nombre:");
         textoNombre.setForeground(Config.FONT_COLOR);
+        textoNombre.setFont(impact.deriveFont(20.0f));
         c.gridx = 0;
         c.gridy = 0;
         campos.add(textoNombre, c);
@@ -51,6 +54,7 @@ public class CrearCuenta17d extends JFrame {
 
         JLabel textoCorreo = new JLabel("Correo:");
         textoCorreo.setForeground(Config.FONT_COLOR);
+        textoCorreo.setFont(impact.deriveFont(20.0f));
         c.gridx = 0;
         c.gridy = 1;
         campos.add(textoCorreo, c);
@@ -61,6 +65,7 @@ public class CrearCuenta17d extends JFrame {
 
         JLabel textoContrasena1 = new JLabel("Contraseña:");
         textoContrasena1.setForeground(Config.FONT_COLOR);
+        textoContrasena1.setFont(impact.deriveFont(20.0f));
         c.gridx = 0;
         c.gridy = 2;
         campos.add(textoContrasena1, c);
@@ -71,6 +76,7 @@ public class CrearCuenta17d extends JFrame {
 
         JLabel textoContrasena2 = new JLabel("Confirmar contraseña:");
         textoContrasena2.setForeground(Config.FONT_COLOR);
+        textoContrasena2.setFont(impact.deriveFont(20.0f));
         c.gridx = 0;
         c.gridy = 3;
         campos.add(textoContrasena2, c);
@@ -90,50 +96,74 @@ public class CrearCuenta17d extends JFrame {
 
     //Método para crear el botón de cancelar, que abrirá la pantalla de Inicio
     private JButton botonCancelar() {
+        if (cancelar == null) {
+            cancelar = new JButton("Cancelar");
+            cancelar.setFont(impact.deriveFont(20.0f));
+            cancelar.setBorderPainted(false);
+            cancelar.setFocusPainted(false);
+            cancelar.setContentAreaFilled(false);
+            cancelar.setForeground(Color.WHITE);
 
-        JButton cancelar = new JButton("Cancelar");
-        cancelar.setFont(impact.deriveFont(10.0f));
-        cancelar.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                cerrarActual();
-                new Fig16();
-            }
-        });
+            cancelar.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    cerrarActual();
+                    new Fig16();
+                }
+                @Override
+                public void mouseEntered(MouseEvent e){
+                    cancelar.setForeground(Color.RED);
+                }
+                @Override
+                public void mouseExited(MouseEvent e){
+                    cancelar.setForeground(Color.WHITE);
+                }
+            });
+        }
         return cancelar;
     }
 
     //Método para crear el botón de crear cuenta, que mandará a comprobar los datos
     private JButton botonCrear() {
+        if (crear == null) {
+            crear = new JButton("Crear cuenta");
+            crear.setFont(impact.deriveFont(20.0f));
+            crear.setBorderPainted(false);
+            crear.setFocusPainted(false);
+            crear.setContentAreaFilled(false);
+            crear.setForeground(Color.WHITE);
 
-        JButton crear = new JButton("Crear cuenta");
-        crear.setFont(impact.deriveFont(10.0f));
-        crear.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarRegistro(nombre.getText(), correo.getText(), String.valueOf(contrasena1.getPassword()), String.valueOf(contrasena2.getPassword()));
+            crear.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarRegistro(nombre.getText(), correo.getText(), String.valueOf(contrasena1.getPassword()), String.valueOf(contrasena2.getPassword()));
 //                * Definición de JSON:
 //                { : boolean, : String }
 //                    Si es True, String = nombreUsuario
 //                    Si es False, String = mensaje de error correspondiente
 
-                //Comprobar el estado del registro
-                if (!resultado.getBoolean("estado")) {
-                    //Si ha sido incorrecto mostrar mensaje de error, con el mensaje que corresponda
-                    new MensajeError((String) resultado.get("mensaje"), false);
+                    //Comprobar el estado del registro
+                    if (!resultado.getBoolean("estado")) {
+                        //Si ha sido incorrecto mostrar mensaje de error, con el mensaje que corresponda
+                        new MensajeError((String) resultado.get("mensaje"), false);
 
-                } else {
-                    //Si ha sido exitoso, cerrar pantalla actual
-                    cerrarActual();
-                    //Abrir pantalla de Menú Principal con el nombre de usuario del jugador
-                    new Fig18((String) resultado.get("mensaje"));
+                    } else {
+                        //Si ha sido exitoso, cerrar pantalla actual
+                        cerrarActual();
+                        //Abrir pantalla de Menú Principal con el nombre de usuario del jugador
+                        new Fig18((String) resultado.get("mensaje"));
+                    }
                 }
-            }
-        });
+                @Override
+                public void mouseEntered(MouseEvent e){
+                    crear.setForeground(Color.RED);
+                }
+                @Override
+                public void mouseExited(MouseEvent e){
+                    crear.setForeground(Color.WHITE);
+                }
+            });
+        }
         return crear;
     }
 

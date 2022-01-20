@@ -7,12 +7,14 @@ import eus.ehu.adsi.arkanoid.view.game.Config;
 import org.json.JSONObject;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CorreoRecuperacion17b extends JFrame {
 
     private JTextField correo;
+    private JButton cancelar;
+    private JButton enviar;
     private Font impact = AddFont.createFont();
 
     public CorreoRecuperacion17b() {
@@ -35,6 +37,7 @@ public class CorreoRecuperacion17b extends JFrame {
 
         JLabel textoCorreo = new JLabel("Introduce el correo asociado a tu cuenta para recuperar la contraseña:");
         textoCorreo.setForeground(Config.FONT_COLOR);
+        textoCorreo.setFont(impact.deriveFont(20.0f));
         JPanel texto = new JPanel();
         texto.setLayout(new GridBagLayout());
         texto.setBackground(Config.BACKGROUND_COLOR);
@@ -56,50 +59,74 @@ public class CorreoRecuperacion17b extends JFrame {
 
     //Método para crear el botón de cancelar, que abrirá la pantalla de Inicio
     private JButton botonCancelar() {
+        if (cancelar == null) {
+            cancelar = new JButton("Cancelar");
+            cancelar.setFont(impact.deriveFont(20.0f));
+            cancelar.setBorderPainted(false);
+            cancelar.setFocusPainted(false);
+            cancelar.setContentAreaFilled(false);
+            cancelar.setForeground(Color.WHITE);
 
-        JButton cancelar = new JButton("Cancelar");
-        cancelar.setFont(impact.deriveFont(10.0f));
-        cancelar.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                cerrarActual();
-                new Fig16();
-            }
-        });
+            cancelar.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    cerrarActual();
+                    new Fig16();
+                }
+                @Override
+                public void mouseEntered(MouseEvent e){
+                    cancelar.setForeground(Color.RED);
+                }
+                @Override
+                public void mouseExited(MouseEvent e){
+                    cancelar.setForeground(Color.WHITE);
+                }
+            });
+        }
         return cancelar;
     }
 
     //Método para crear el botón de enviar, que mandará a comprobar los datos
     private JButton botonEnviar() {
+        if (enviar == null) {
+            enviar = new JButton("Enviar correo");
+            enviar.setFont(impact.deriveFont(20.0f));
+            enviar.setBorderPainted(false);
+            enviar.setFocusPainted(false);
+            enviar.setContentAreaFilled(false);
+            enviar.setForeground(Color.WHITE);
 
-        JButton enviar = new JButton("Enviar correo");
-        enviar.setFont(impact.deriveFont(10.0f));
-        enviar.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().recuperarContrasena(correo.getText());
+            enviar.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().recuperarContrasena(correo.getText());
 //              * Definición de JSON:
 //              { : boolean, : String }
 //                  Si es True, String = código que se ha enviado al correo
 //                  Si es False, String = mensaje de error correspondiente
 
-                //Comprobar el estado de la recuperación
-                if (!resultado.getBoolean("estado")) {
-                    //Si ha sido incorrecto mostrar mensaje de error, con el mensaje que corresponda
-                    new MensajeError((String) resultado.get("mensaje"), false);
+                    //Comprobar el estado de la recuperación
+                    if (!resultado.getBoolean("estado")) {
+                        //Si ha sido incorrecto mostrar mensaje de error, con el mensaje que corresponda
+                        new MensajeError((String) resultado.get("mensaje"), false);
 
-                } else {
-                    //Si ha sido exitoso, cerrar pantalla actual
-                    cerrarActual();
-                    //Abrir pantalla de Recuperar contraseña con el correo del usuario, y pasando el código que se ha mandado al email
-                    new RecuperarContrasena17c(correo.getText(), (String) resultado.get("mensaje"));
+                    } else {
+                        //Si ha sido exitoso, cerrar pantalla actual
+                        cerrarActual();
+                        //Abrir pantalla de Recuperar contraseña con el correo del usuario, y pasando el código que se ha mandado al email
+                        new RecuperarContrasena17c(correo.getText(), (String) resultado.get("mensaje"));
+                    }
                 }
-            }
-        });
+                @Override
+                public void mouseEntered(MouseEvent e){
+                    enviar.setForeground(Color.RED);
+                }
+                @Override
+                public void mouseExited(MouseEvent e){
+                    enviar.setForeground(Color.WHITE);
+                }
+            });
+        }
         return enviar;
     }
 

@@ -7,8 +7,8 @@ import eus.ehu.adsi.arkanoid.view.game.Config;
 import org.json.JSONObject;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CambiarContrasena20 extends JFrame {
 
@@ -16,6 +16,8 @@ public class CambiarContrasena20 extends JFrame {
     private JPasswordField contrasenaOriginal;
     private JPasswordField contrasena1;
     private JPasswordField contrasena2;
+    private JButton cancelar;
+    private JButton aceptar;
     private Font impact = AddFont.createFont();
 
     public CambiarContrasena20(String pNombreUsuario) {
@@ -42,10 +44,12 @@ public class CambiarContrasena20 extends JFrame {
 
         JLabel textoCambiarContrasena = new JLabel("Cambiar contraseña");
         textoCambiarContrasena.setForeground(Config.FONT_COLOR);
+        textoCambiarContrasena.setFont(impact.deriveFont(20.0f));
         titulo.add(textoCambiarContrasena);
 
         JLabel textoNombreUsuario = new JLabel(nombreUsuario);
         textoNombreUsuario.setForeground(Color.RED);
+        textoNombreUsuario.setFont(impact.deriveFont(20.0f));
         titulo.add(textoNombreUsuario);
 
         JPanel contenedor = new JPanel();
@@ -62,6 +66,7 @@ public class CambiarContrasena20 extends JFrame {
 
         JLabel textoContrasenaOriginal = new JLabel("Antigua contraseña:");
         textoContrasenaOriginal.setForeground(Config.FONT_COLOR);
+        textoContrasenaOriginal.setFont(impact.deriveFont(20.0f));
         c.gridx = 0;
         c.gridy = 0;
         campos.add(textoContrasenaOriginal, c);
@@ -72,6 +77,7 @@ public class CambiarContrasena20 extends JFrame {
 
         JLabel textoContrasena1 = new JLabel("Nueva contraseña:");
         textoContrasena1.setForeground(Config.FONT_COLOR);
+        textoContrasena1.setFont(impact.deriveFont(20.0f));
         c.gridx = 0;
         c.gridy = 1;
         campos.add(textoContrasena1, c);
@@ -82,6 +88,7 @@ public class CambiarContrasena20 extends JFrame {
 
         JLabel textoContrasena2 = new JLabel("Confirmar contraseña:");
         textoContrasena2.setForeground(Config.FONT_COLOR);
+        textoContrasena2.setFont(impact.deriveFont(20.0f));
         c.gridx = 0;
         c.gridy = 2;
         campos.add(textoContrasena2, c);
@@ -100,46 +107,70 @@ public class CambiarContrasena20 extends JFrame {
     }
     //Método para crear el botón de cancelar, que abrirá la pantalla de Inicio
     private JButton botonCancelar() {
+        if (cancelar == null) {
+            cancelar = new JButton("Cancelar");
+            cancelar.setFont(impact.deriveFont(20.0f));
+            cancelar.setBorderPainted(false);
+            cancelar.setFocusPainted(false);
+            cancelar.setContentAreaFilled(false);
+            cancelar.setForeground(Color.WHITE);
 
-        JButton cancelar = new JButton("Cancelar");
-        cancelar.setFont(impact.deriveFont(10.0f));
-        cancelar.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                cerrarActual();
-                new Fig18(nombreUsuario);
-            }
-        });
+            cancelar.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    cerrarActual();
+                    new Fig18(nombreUsuario);
+                }
+                @Override
+                public void mouseEntered(MouseEvent e){
+                    cancelar.setForeground(Color.RED);
+                }
+                @Override
+                public void mouseExited(MouseEvent e){
+                    cancelar.setForeground(Color.WHITE);
+                }
+            });
+        }
         return cancelar;
     }
 
     //Método para crear el botón de aceptar, que mandará a comprobar los datos
     private JButton botonAceptar() {
+        if (aceptar == null) {
+            aceptar = new JButton("Aceptar");
+            aceptar.setFont(impact.deriveFont(20.0f));
+            aceptar.setBorderPainted(false);
+            aceptar.setFocusPainted(false);
+            aceptar.setContentAreaFilled(false);
+            aceptar.setForeground(Color.WHITE);
 
-        JButton aceptar = new JButton("Aceptar");
-        aceptar.setFont(impact.deriveFont(10.0f));
-        aceptar.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarCambio(nombreUsuario, String.valueOf(contrasenaOriginal.getPassword()), String.valueOf(contrasena1.getPassword()), String.valueOf(contrasena2.getPassword()));
+            aceptar.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarCambio(nombreUsuario, String.valueOf(contrasenaOriginal.getPassword()), String.valueOf(contrasena1.getPassword()), String.valueOf(contrasena2.getPassword()));
 
-                //Comprobar el estado del cambio de contraseña
-                if (!resultado.getBoolean("estado")) {
-                    //Si ha sido incorrecto mostrar mensaje de error, con el mensaje que corresponda
-                    new MensajeError((String) resultado.get("mensaje"), false);
+                    //Comprobar el estado del cambio de contraseña
+                    if (!resultado.getBoolean("estado")) {
+                        //Si ha sido incorrecto mostrar mensaje de error, con el mensaje que corresponda
+                        new MensajeError((String) resultado.get("mensaje"), false);
 
-                } else {
-                    //Si ha sido exitoso, cerrar pantalla actual
-                    cerrarActual();
-                    //Abrir pantalla de Menú Principal con el nombre de usuario del jugador
-                    new Fig18((String) resultado.get("mensaje"));
+                    } else {
+                        //Si ha sido exitoso, cerrar pantalla actual
+                        cerrarActual();
+                        //Abrir pantalla de Menú Principal con el nombre de usuario del jugador
+                        new Fig18((String) resultado.get("mensaje"));
+                    }
                 }
-            }
-        });
+                @Override
+                public void mouseEntered(MouseEvent e){
+                    aceptar.setForeground(Color.RED);
+                }
+                @Override
+                public void mouseExited(MouseEvent e){
+                    aceptar.setForeground(Color.WHITE);
+                }
+            });
+        }
         return aceptar;
     }
 

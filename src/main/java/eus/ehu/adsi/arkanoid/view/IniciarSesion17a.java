@@ -7,13 +7,16 @@ import eus.ehu.adsi.arkanoid.view.game.Config;
 import org.json.JSONObject;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class IniciarSesion17a extends JFrame {
 
     private JTextField nombre;
     private JPasswordField contrasena;
+    private JButton olvidar;
+    private JButton cancelar;
+    private JButton iniciar;
     private Font impact = AddFont.createFont();
 
     public IniciarSesion17a() {
@@ -75,67 +78,103 @@ public class IniciarSesion17a extends JFrame {
 
     //Método para crear el botón de contrasena olvidada, que abrirá la pantalla de Recuperación
     private JButton botonOlvidar() {
+        if (olvidar == null) {
+            olvidar = new JButton("He olvidado mi contraseña");
+            olvidar.setFont(impact.deriveFont(20.0f));
+            olvidar.setBorderPainted(false);
+            olvidar.setFocusPainted(false);
+            olvidar.setContentAreaFilled(false);
+            olvidar.setForeground(Color.WHITE);
 
-        JButton olvidar = new JButton("He olvidado mi contraseña");
-        olvidar.setFont(impact.deriveFont(20.0f));
-        olvidar.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                cerrarActual();
-                new CorreoRecuperacion17b();
-            }
-        });
+            olvidar.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    cerrarActual();
+                    new CorreoRecuperacion17b();
+                }
+                @Override
+                public void mouseEntered(MouseEvent e){
+                    olvidar.setForeground(Color.RED);
+                }
+                @Override
+                public void mouseExited(MouseEvent e){
+                    olvidar.setForeground(Color.WHITE);
+                }
+            });
+        }
         return olvidar;
     }
 
     //Método para crear el botón de cancelar, que abrirá la pantalla de Inicio
     private JButton botonCancelar() {
+        if (cancelar == null) {
+            cancelar = new JButton("Cancelar");
+            cancelar.setFont(impact.deriveFont(20.0f));
+            cancelar.setBorderPainted(false);
+            cancelar.setFocusPainted(false);
+            cancelar.setContentAreaFilled(false);
+            cancelar.setForeground(Color.WHITE);
 
-        JButton cancelar = new JButton("Cancelar");
-        cancelar.setFont(impact.deriveFont(20.0f));
-        cancelar.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                cerrarActual();
-                new Fig16();
-            }
-        });
+            cancelar.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    cerrarActual();
+                    new Fig16();
+                }
+                @Override
+                public void mouseEntered(MouseEvent e){
+                    cancelar.setForeground(Color.RED);
+                }
+                @Override
+                public void mouseExited(MouseEvent e){
+                    cancelar.setForeground(Color.WHITE);
+                }
+            });
+        }
         return cancelar;
     }
 
     //Método para crear el botón de iniciar sesión, que mandará a comprobar los datos
     private JButton botonIniciar() {
+        if (iniciar == null) {
+            iniciar = new JButton("Iniciar Sesión");
+            iniciar.setFont(impact.deriveFont(20.0f));
+            iniciar.setBorderPainted(false);
+            iniciar.setFocusPainted(false);
+            iniciar.setContentAreaFilled(false);
+            iniciar.setForeground(Color.WHITE);
 
-        JButton iniciar = new JButton("Iniciar Sesión");
-        iniciar.setFont(impact.deriveFont(20.0f));
-        iniciar.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarInicio(nombre.getText(), String.valueOf(contrasena.getPassword()));
+            iniciar.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarInicio(nombre.getText(), String.valueOf(contrasena.getPassword()));
 //                * Definición de JSON:
 //                { : boolean, : String }
 //                    Si es True, String = nombreUsuario
 //                    Si es False, String = mensaje de error correspondiente
 
-                //Comprobar el estado del inicio de sesión
-                if (!resultado.getBoolean("estado")) {
-                    //Si ha sido incorrecto mostrar mensaje de error, con el mensaje que corresponda
-                    new MensajeError((String) resultado.get("mensaje"), false);
+                    //Comprobar el estado del inicio de sesión
+                    if (!resultado.getBoolean("estado")) {
+                        //Si ha sido incorrecto mostrar mensaje de error, con el mensaje que corresponda
+                        new MensajeError((String) resultado.get("mensaje"), false);
 
-                } else {
-                    //Si ha sido exitoso, cerrar pantalla actual
-                    cerrarActual();
-                    //Abrir pantalla de Menú Principal con el nombre de usuario del jugador
-                    new Fig18((String) resultado.get("mensaje"));
+                    } else {
+                        //Si ha sido exitoso, cerrar pantalla actual
+                        cerrarActual();
+                        //Abrir pantalla de Menú Principal con el nombre de usuario del jugador
+                        new Fig18((String) resultado.get("mensaje"));
+                    }
                 }
-            }
-        });
+                @Override
+                public void mouseEntered(MouseEvent e){
+                    iniciar.setForeground(Color.RED);
+                }
+                @Override
+                public void mouseExited(MouseEvent e){
+                    iniciar.setForeground(Color.WHITE);
+                }
+            });
+        }
         return iniciar;
     }
 

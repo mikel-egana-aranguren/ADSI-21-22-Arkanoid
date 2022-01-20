@@ -40,6 +40,7 @@ public class RecuperarContrasena17c extends JFrame {
 
         JLabel textoCorreo = new JLabel("Se ha enviado un correo con el código para cambiar la contraseña");
         textoCorreo.setForeground(Config.FONT_COLOR);
+        textoCorreo.setFont(impact.deriveFont(20.0f));
         JPanel titulo = new JPanel();
         titulo.setBackground(Config.BACKGROUND_COLOR);
         titulo.add(textoCorreo);
@@ -52,6 +53,7 @@ public class RecuperarContrasena17c extends JFrame {
 
         JLabel textoCodigo = new JLabel("Código:");
         textoCodigo.setForeground(Config.FONT_COLOR);
+        textoCodigo.setFont(impact.deriveFont(20.0f));
         c.gridx = 0;
         c.gridy = 0;
         campos.add(textoCodigo, c);
@@ -62,6 +64,7 @@ public class RecuperarContrasena17c extends JFrame {
 
         JLabel textoContrasena1 = new JLabel("Nueva contraseña:");
         textoContrasena1.setForeground(Config.FONT_COLOR);
+        textoContrasena1.setFont(impact.deriveFont(20.0f));
         c.gridx = 0;
         c.gridy = 1;
         campos.add(textoContrasena1, c);
@@ -72,6 +75,7 @@ public class RecuperarContrasena17c extends JFrame {
 
         JLabel textoContrasena2 = new JLabel("Confirmar contraseña:");
         textoContrasena2.setForeground(Config.FONT_COLOR);
+        textoContrasena2.setFont(impact.deriveFont(20.0f));
         c.gridx = 0;
         c.gridy = 2;
         campos.add(textoContrasena2, c);
@@ -82,6 +86,7 @@ public class RecuperarContrasena17c extends JFrame {
 
         JLabel textoVolver = new JLabel("¿No te ha llegado el código?:");
         textoVolver.setForeground(Config.FONT_COLOR);
+        textoVolver.setFont(impact.deriveFont(20.0f));
         JPanel enviar = new JPanel();
         enviar.setBackground(Config.BACKGROUND_COLOR);
         enviar.add(textoVolver);
@@ -104,7 +109,7 @@ public class RecuperarContrasena17c extends JFrame {
     private JButton botonVolver() {
 
         JButton volver = new JButton("Volver a enviar");
-        volver.setFont(impact.deriveFont(10.0f));
+        volver.setFont(impact.deriveFont(20.0f));
         volver.addActionListener(new ActionListener()
         {
             @Override
@@ -122,7 +127,7 @@ public class RecuperarContrasena17c extends JFrame {
     private JButton botonAceptar() {
 
         JButton aceptar = new JButton("Aceptar");
-        aceptar.setFont(impact.deriveFont(10.0f));
+        aceptar.setFont(impact.deriveFont(20.0f));
         aceptar.addActionListener(new ActionListener()
         {
             @Override
@@ -154,7 +159,7 @@ public class RecuperarContrasena17c extends JFrame {
     private JButton botonCancelar() {
 
         JButton cancelar = new JButton("Cancelar");
-        cancelar.setFont(impact.deriveFont(10.0f));
+        cancelar.setFont(impact.deriveFont(20.0f));
         cancelar.addActionListener(new ActionListener()
         {
             @Override
