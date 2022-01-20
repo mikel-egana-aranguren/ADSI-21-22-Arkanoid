@@ -16,6 +16,7 @@ public class CrearCuenta17d extends JFrame {
     private JTextField correo;
     private JPasswordField contrasena1;
     private JPasswordField contrasena2;
+    private Font impact = AddFont.createFont();
 
     public CrearCuenta17d() {
 
@@ -91,7 +92,7 @@ public class CrearCuenta17d extends JFrame {
     private JButton botonCancelar() {
 
         JButton cancelar = new JButton("Cancelar");
-        cancelar.setFont(Font.getFont(Config.FONT));
+        cancelar.setFont(impact.deriveFont(10.0f));
         cancelar.addActionListener(new ActionListener()
         {
             @Override
@@ -108,7 +109,7 @@ public class CrearCuenta17d extends JFrame {
     private JButton botonCrear() {
 
         JButton crear = new JButton("Crear cuenta");
-        crear.setFont(Font.getFont(Config.FONT));
+        crear.setFont(impact.deriveFont(10.0f));
         crear.addActionListener(new ActionListener()
         {
             @Override

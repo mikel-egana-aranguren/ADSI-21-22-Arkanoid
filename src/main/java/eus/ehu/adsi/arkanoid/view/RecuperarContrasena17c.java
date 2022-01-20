@@ -17,6 +17,7 @@ public class RecuperarContrasena17c extends JFrame {
     private JTextField codigoIntroducido;
     private JPasswordField contrasena1;
     private JPasswordField contrasena2;
+    private Font impact = AddFont.createFont();
 
     public RecuperarContrasena17c(String pCorreo, String pCodigo) {
 
@@ -103,7 +104,7 @@ public class RecuperarContrasena17c extends JFrame {
     private JButton botonVolver() {
 
         JButton volver = new JButton("Volver a enviar");
-        volver.setFont(Font.getFont(Config.FONT));
+        volver.setFont(impact.deriveFont(10.0f));
         volver.addActionListener(new ActionListener()
         {
             @Override
@@ -121,7 +122,7 @@ public class RecuperarContrasena17c extends JFrame {
     private JButton botonAceptar() {
 
         JButton aceptar = new JButton("Aceptar");
-        aceptar.setFont(Font.getFont(Config.FONT));
+        aceptar.setFont(impact.deriveFont(10.0f));
         aceptar.addActionListener(new ActionListener()
         {
             @Override
@@ -153,7 +154,7 @@ public class RecuperarContrasena17c extends JFrame {
     private JButton botonCancelar() {
 
         JButton cancelar = new JButton("Cancelar");
-        cancelar.setFont(Font.getFont(Config.FONT));
+        cancelar.setFont(impact.deriveFont(10.0f));
         cancelar.addActionListener(new ActionListener()
         {
             @Override

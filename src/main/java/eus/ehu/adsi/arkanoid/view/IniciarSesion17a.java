@@ -38,7 +38,7 @@ public class IniciarSesion17a extends JFrame {
         GridBagConstraints c = new GridBagConstraints();
 
         JLabel textoNombre = new JLabel("Nombre:");
-        textoNombre.setFont(Font.getFont(Config.FONT));
+        textoNombre.setFont(impact.deriveFont(20.0f));
         textoNombre.setForeground(Config.FONT_COLOR);
         c.gridx = 0;
         c.gridy = 0;
@@ -49,7 +49,7 @@ public class IniciarSesion17a extends JFrame {
         campos.add(nombre,c);
 
         JLabel textoContrasena = new JLabel("Contraseña:");
-        textoContrasena.setFont(Font.getFont(Config.FONT));
+        textoContrasena.setFont(impact.deriveFont(20.0f));
         textoContrasena.setForeground(Config.FONT_COLOR);
         c.gridx = 0;
         c.gridy = 1;
@@ -77,7 +77,7 @@ public class IniciarSesion17a extends JFrame {
     private JButton botonOlvidar() {
 
         JButton olvidar = new JButton("He olvidado mi contraseña");
-        olvidar.setFont(Font.getFont(Config.FONT));
+        olvidar.setFont(impact.deriveFont(20.0f));
         olvidar.addActionListener(new ActionListener()
         {
             @Override
@@ -94,7 +94,7 @@ public class IniciarSesion17a extends JFrame {
     private JButton botonCancelar() {
 
         JButton cancelar = new JButton("Cancelar");
-        cancelar.setFont(Font.getFont(Config.FONT));
+        cancelar.setFont(impact.deriveFont(20.0f));
         cancelar.addActionListener(new ActionListener()
         {
             @Override
@@ -111,7 +111,7 @@ public class IniciarSesion17a extends JFrame {
     private JButton botonIniciar() {
 
         JButton iniciar = new JButton("Iniciar Sesión");
-        iniciar.setFont(Font.getFont(Config.FONT));
+        iniciar.setFont(impact.deriveFont(20.0f));
         iniciar.addActionListener(new ActionListener()
         {
             @Override

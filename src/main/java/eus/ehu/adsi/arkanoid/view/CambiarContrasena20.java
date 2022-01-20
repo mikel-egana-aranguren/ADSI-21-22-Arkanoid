@@ -16,6 +16,7 @@ public class CambiarContrasena20 extends JFrame {
     private JPasswordField contrasenaOriginal;
     private JPasswordField contrasena1;
     private JPasswordField contrasena2;
+    private Font impact = AddFont.createFont();
 
     public CambiarContrasena20(String pNombreUsuario) {
 
@@ -101,7 +102,7 @@ public class CambiarContrasena20 extends JFrame {
     private JButton botonCancelar() {
 
         JButton cancelar = new JButton("Cancelar");
-        cancelar.setFont(Font.getFont(Config.FONT));
+        cancelar.setFont(impact.deriveFont(10.0f));
         cancelar.addActionListener(new ActionListener()
         {
             @Override
@@ -118,7 +119,7 @@ public class CambiarContrasena20 extends JFrame {
     private JButton botonAceptar() {
 
         JButton aceptar = new JButton("Aceptar");
-        aceptar.setFont(Font.getFont(Config.FONT));
+        aceptar.setFont(impact.deriveFont(10.0f));
         aceptar.addActionListener(new ActionListener()
         {
             @Override

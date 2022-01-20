@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 public class CorreoRecuperacion17b extends JFrame {
 
     private JTextField correo;
+    private Font impact = AddFont.createFont();
 
     public CorreoRecuperacion17b() {
 
@@ -57,7 +58,7 @@ public class CorreoRecuperacion17b extends JFrame {
     private JButton botonCancelar() {
 
         JButton cancelar = new JButton("Cancelar");
-        cancelar.setFont(Font.getFont(Config.FONT));
+        cancelar.setFont(impact.deriveFont(10.0f));
         cancelar.addActionListener(new ActionListener()
         {
             @Override
@@ -74,7 +75,7 @@ public class CorreoRecuperacion17b extends JFrame {
     private JButton botonEnviar() {
 
         JButton enviar = new JButton("Enviar correo");
-        enviar.setFont(Font.getFont(Config.FONT));
+        enviar.setFont(impact.deriveFont(10.0f));
         enviar.addActionListener(new ActionListener()
         {
             @Override
