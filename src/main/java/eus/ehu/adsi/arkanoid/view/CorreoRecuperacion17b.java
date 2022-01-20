@@ -108,7 +108,7 @@ public class CorreoRecuperacion17b extends JFrame {
                     //Comprobar el estado de la recuperación
                     if (!resultado.getBoolean("estado")) {
                         //Si ha sido incorrecto mostrar mensaje de error, con el mensaje que corresponda
-                        new MensajeError((String) resultado.get("mensaje"), false);
+                        new MensajeError((String) resultado.get("mensaje"));
 
                     } else {
                         //Si ha sido exitoso, cerrar pantalla actual

@@ -26,6 +26,11 @@ public class GestorUsuarios {
         return null;
     }
 
+    /**
+     * Buscar un usuario dado su correo
+     * @param correo correo del usuario en String
+     * @return si existe, el objeto Usuario que tenga el correo | si no existe, null
+     */
     public Usuario buscarUsuarioCorreo(String correo) {
         for (Usuario u : lUsuarios) {
             if (u.esCorreo(correo))
@@ -34,14 +39,31 @@ public class GestorUsuarios {
         return null;
     }
 
+    /**
+     * Comprobar si la contraseña es del usuario
+     * @param U objeto del usuario que se quiere comprobar la contraseña
+     * @param contrasena contraseña a comprobar
+     * @return true si es su contraseña | false sino
+     */
     public boolean esContrasena(Usuario U, String contrasena) {
         return U.esContrasena(contrasena);
     }
 
+    /**
+     * Cambiar la contraseña del usuario
+     * @param U usuario cuya contraseña se quiere cambiar
+     * @param contrasena nueva contraseña del usuario
+     */
     public void cambiarContrasena(Usuario U, String contrasena) {
         U.setContrasena(contrasena);
     }
 
+    /**
+     * Registrar un nuevo usuario en el sistema
+     * @param nombreUsuario nombre del usuario
+     * @param correo correo del usuario
+     * @param contrasena1 contraseña del usuario
+     */
     public void registrarUsuario(String nombreUsuario, String correo, String contrasena1) {
         Usuario U = new Usuario(nombreUsuario, correo, contrasena1);
         this.lUsuarios.add(U);
@@ -52,6 +74,9 @@ public class GestorUsuarios {
         this.lUsuarios.add(u);
     }
 
+    /**
+     * Borra todos los usuarios registrados
+     */
     public void borrarUsuarios() {
         this.lUsuarios.clear();
     }

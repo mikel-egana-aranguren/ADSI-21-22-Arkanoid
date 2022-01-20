@@ -152,7 +152,7 @@ public class CambiarContrasena20 extends JFrame {
                     //Comprobar el estado del cambio de contraseña
                     if (!resultado.getBoolean("estado")) {
                         //Si ha sido incorrecto mostrar mensaje de error, con el mensaje que corresponda
-                        new MensajeError((String) resultado.get("mensaje"), false);
+                        new MensajeError((String) resultado.get("mensaje"));
 
                     } else {
                         //Si ha sido exitoso, cerrar pantalla actual
