@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.apache.logging.log4j.core.config.builder.api.Component;
 import org.json.JSONObject;
 
 import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
@@ -21,6 +22,8 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -37,7 +40,9 @@ public class Ranking22 {
 	private JComboBox comboBoxNiveles;
 	private JPanel panelRankings;
 	private JPanel panelGlobal;
+	private JPanel panelGlobalUpdate;
 	private JPanel panelIndividual;
+	private JPanel panelIndividualUpdate;
 	private JLabel lblRanking;
 	private JPanel panelVolver;
 	private JButton btnVolver;
@@ -45,6 +50,9 @@ public class Ranking22 {
 	private JPanel panelSeparador;
     private String jugador;
     private Font impact = AddFont.createFont();
+	private GridBagConstraints gbc_panelGlobal = new GridBagConstraints();
+	private GridBagConstraints gbc_panelIndividual = new GridBagConstraints();
+	private GridBagConstraints gbc_panelSeparador = new GridBagConstraints();
 
 	
 	public Ranking22(String nombre) {
@@ -183,6 +191,21 @@ public class Ranking22 {
 			comboBoxNiveles.setModel(new DefaultComboBoxModel(new String[] {"Todos", "Fácil", "Medio", "Difícil"}));
             comboBoxNiveles.setFont(impact.deriveFont(30.0f));
             comboBoxNiveles.setForeground(Color.BLACK);
+			comboBoxNiveles.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					panelRankings.remove(panelGlobal);
+					panelRankings.remove(panelIndividual);
+					panelRankings.remove(panelSeparador);
+					panelRankings.add(getPanelGlobal(), gbc_panelGlobal);
+					panelRankings.add(getPanelSeparador(), gbc_panelSeparador);
+					panelRankings.add(getPanelIndividual(), gbc_panelIndividual);
+					panelRankings.revalidate();
+					panelRankings.repaint();
+				}
+				
+			});
 		}
 		return comboBoxNiveles;
 	}
@@ -199,19 +222,16 @@ public class Ranking22 {
 			gbl_panelRankings.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 			gbl_panelRankings.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 			panelRankings.setLayout(gbl_panelRankings);
-			GridBagConstraints gbc_panelGlobal = new GridBagConstraints();
 			gbc_panelGlobal.fill = GridBagConstraints.BOTH;
 			gbc_panelGlobal.insets = new Insets(0, 0, 0, 35);
 			gbc_panelGlobal.gridx = 1;
 			gbc_panelGlobal.gridy = 0;
 			panelRankings.add(getPanelGlobal(), gbc_panelGlobal);
-			GridBagConstraints gbc_panel = new GridBagConstraints();
-			gbc_panel.insets = new Insets(0, 10, 0, 5);
-			gbc_panel.fill = GridBagConstraints.BOTH;
-			gbc_panel.gridx = 2;
-			gbc_panel.gridy = 0;
-			panelRankings.add(getPanelSeparador(), gbc_panel);
-			GridBagConstraints gbc_panelIndividual = new GridBagConstraints();
+			gbc_panelSeparador.insets = new Insets(0, 10, 0, 5);
+			gbc_panelSeparador.fill = GridBagConstraints.BOTH;
+			gbc_panelSeparador.gridx = 2;
+			gbc_panelSeparador.gridy = 0;
+			panelRankings.add(getPanelSeparador(), gbc_panelSeparador);
 			gbc_panelIndividual.insets = new Insets(0, 60, 0, 5);
 			gbc_panelIndividual.fill = GridBagConstraints.BOTH;
 			gbc_panelIndividual.gridx = 3;
@@ -223,39 +243,61 @@ public class Ranking22 {
 	}
 
 	private JPanel getPanelGlobal() {
-		if (panelGlobal == null) {
-			panelGlobal = new JPanel();
-			panelGlobal.setBackground(Color.BLACK);
-			panelGlobal.setLayout(new GridLayout(10, 0, 0, 0));
-            int nPartidas = ArkanoidFrontera.getArkanoidFrontera().nPartidas(null, comboBoxNiveles.getSelectedIndex());
-            for (int i=0; /* i<nPartidas && */ i<10; i++){
-				JSONObject jugadorPuntuacion = ArkanoidFrontera.getArkanoidFrontera().jugadorPos(i, comboBoxNiveles.getSelectedIndex(), null);
-			    panelGlobal.add(getLblJugador(jugadorPuntuacion.getString("nombre"), jugadorPuntuacion.getString("puntos")));
-            }
-		}
+		panelGlobal = new JPanel();
+		panelGlobal.setBackground(Color.BLACK);
+		panelGlobal.setLayout(new GridLayout(10, 0, 0, 0));
+        int nPartidas = ArkanoidFrontera.getArkanoidFrontera().nPartidas(null, comboBoxNiveles.getSelectedIndex());
+        for (int i=1; i<=nPartidas &&  i<10; i++){
+			JSONObject jugadorPuntuacion = ArkanoidFrontera.getArkanoidFrontera().jugadorPos(i, comboBoxNiveles.getSelectedIndex(), null);
+		    panelGlobal.add(getLblJugador(jugadorPuntuacion.getString("nombre"), jugadorPuntuacion.getInt("puntos")));
+        }
 		return panelGlobal;
 	}
 
+	private JPanel updatePanelGlobal() {
+		panelGlobalUpdate = new JPanel();
+		panelGlobalUpdate.setBackground(Color.BLACK);
+		panelGlobalUpdate.setLayout(new GridLayout(10, 0, 0, 0));
+        int nPartidas = ArkanoidFrontera.getArkanoidFrontera().nPartidas(null, comboBoxNiveles.getSelectedIndex());
+        for (int i=1; i<=nPartidas &&  i<10; i++){
+			JSONObject jugadorPuntuacion = ArkanoidFrontera.getArkanoidFrontera().jugadorPos(i, comboBoxNiveles.getSelectedIndex(), null);
+		    panelGlobalUpdate.add(getLblJugador(jugadorPuntuacion.getString("nombre"), jugadorPuntuacion.getInt("puntos")));
+        }
+		return panelGlobalUpdate;
+	}
+
 	private JPanel getPanelIndividual() {
-		if (panelIndividual == null) {
-			panelIndividual = new JPanel();
-			panelIndividual.setBackground(Color.BLACK);
-			panelIndividual.setLayout(new GridLayout(10, 0, 0, 0));
-			int nPartidas = ArkanoidFrontera.getArkanoidFrontera().nPartidas(jugador, comboBoxNiveles.getSelectedIndex());
-            for (int i=0; /*i<nPartidas &&*/ i<10; i++){
-				JSONObject jugadorPuntuacion = ArkanoidFrontera.getArkanoidFrontera().jugadorPos(i, comboBoxNiveles.getSelectedIndex(), jugador);
-			    panelIndividual.add(getLblJugador(jugadorPuntuacion.getString("nombre"), jugadorPuntuacion.getString("puntos")));
-            }
-		}
+		panelIndividual = new JPanel();
+		panelIndividual.setBackground(Color.BLACK);
+		panelIndividual.setLayout(new GridLayout(10, 0, 0, 0));
+		int nPartidas = ArkanoidFrontera.getArkanoidFrontera().nPartidas(jugador, comboBoxNiveles.getSelectedIndex());
+        for (int i=1; i<=nPartidas && i<10; i++){
+			JSONObject jugadorPuntuacion = ArkanoidFrontera.getArkanoidFrontera().jugadorPos(i, comboBoxNiveles.getSelectedIndex(), jugador);
+		    panelIndividual.add(getLblJugador(jugadorPuntuacion.getString("nombre"), jugadorPuntuacion.getInt("puntos")));
+        }
 		return panelIndividual;
 	}
 
-    private JLabel getLblJugador(String nombre, String puntos) {
+	private JPanel updatePanelIndividual() {
+		panelIndividualUpdate = new JPanel();
+		panelIndividualUpdate.setBackground(Color.BLACK);
+		panelIndividualUpdate.setLayout(new GridLayout(10, 0, 0, 0));
+		int nPartidas = ArkanoidFrontera.getArkanoidFrontera().nPartidas(jugador, comboBoxNiveles.getSelectedIndex());
+        for (int i=1; i<=nPartidas && i<10; i++){
+			JSONObject jugadorPuntuacion = ArkanoidFrontera.getArkanoidFrontera().jugadorPos(i, comboBoxNiveles.getSelectedIndex(), jugador);
+		    panelIndividualUpdate.add(getLblJugador(jugadorPuntuacion.getString("nombre"), jugadorPuntuacion.getInt("puntos")));
+        }
+		return panelIndividualUpdate;
+	}
+
+    private JLabel getLblJugador(String nombre, Integer puntos) {
             String p = ".";
-            String separacion = p.repeat(60 - nombre.length()- puntos.length());
+			String puntosStr = Integer.toString(puntos);
+            String separacion = p.repeat(60 - nombre.length()-puntosStr.length()*(puntosStr.length()));
             lblJugador = new JLabel(nombre + separacion + puntos);
 			lblJugador.setForeground(Color.WHITE);
             lblJugador.setFont(impact.deriveFont(20.0f));
+			System.out.println(lblJugador.getText());
 		return lblJugador;
 	}
 

@@ -23,6 +23,7 @@ public class DataBase {
 
     public JSONObject jugadorPosGlobal(int p, int nivel) throws SQLException{
         Connection con = null;
+        JSONObject jugadorPuntuacion = new JSONObject();
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://sql4.freesqldatabase.com/sql4466495", "sql4466495","NKihfwtwiR");
@@ -33,14 +34,12 @@ public class DataBase {
         ResultSet rs1;
 		if (nivel == 0){
             rs1 = s.executeQuery("SELECT nombreUsuario, puntuacion FROM partida ORDER BY puntuacion DESC, fechaFin ASC LIMIT 1 OFFSET " + (p-1));
-            System.out.println("query");
         }else{
-            System.out.println("query nivel");
             rs1 = s.executeQuery("SELECT nombreUsuario, puntuacion FROM partida WHERE nivel=\""+ nivel + "\" ORDER BY puntuacion DESC, fechaFin ASC LIMIT 1 OFFSET " + (p-1));
         }
-        JSONObject jugadorPuntuacion = new JSONObject();
+        rs1.next(); //TO DO: Arreglar esto, que sino peta
         jugadorPuntuacion.put("nombre", rs1.getString(1));
-        jugadorPuntuacion.put("puntos", Integer.toString(rs1.getInt(2)));
+        jugadorPuntuacion.put("puntos", rs1.getInt(2));
         return jugadorPuntuacion;
     }
 
@@ -60,8 +59,9 @@ public class DataBase {
         }else{
             rs1 = s.executeQuery("SELECT puntuacion FROM partida WHERE nombreUsuario=\""+ nombre +"\" AND nivel=\""+ nivel +"\" ORDER BY puntuacion DESC, fechaFin ASC LIMIT 1 OFFSET " + (p-1));
         }
+        rs1.next();
         puntuacion.put("nombre", nombre);
-        puntuacion.put("puntos", Integer.toString(rs1.getInt(1)));
+        puntuacion.put("puntos", rs1.getInt(1));
         return puntuacion;
     }
 
@@ -77,8 +77,10 @@ public class DataBase {
         ResultSet rs1;
         if (nivel == 0){
 		    rs1 = s.executeQuery("SELECT count(*) FROM partida WHERE victoria=1");
+            rs1.next();
         } else {
             rs1 = s.executeQuery("SELECT count(*) FROM partida WHERE victoria=1 AND nivel=\""+nivel+"\"");
+            rs1.next();
         }
         return rs1.getInt(1);
     }
@@ -95,8 +97,10 @@ public class DataBase {
         ResultSet rs1;
         if (nivel == 0){
 		    rs1 = s.executeQuery("SELECT count(*) FROM partida WHERE victoria=1 AND nombreUsuario=\"" + nombre + "\"");
+            rs1.next();
         }else{
             rs1 = s.executeQuery("SELECT count(*) FROM partida WHERE victoria=1 AND nombreUsuario=\"" + nombre + "\" AND nivel=\""+ nivel +"\"");
+            rs1.next();
         }
         return rs1.getInt(1);
     }

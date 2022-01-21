@@ -165,14 +165,14 @@ public class ArkanoidFrontera {
             try {
 				return DataBase.getmDataBase().jugadorPosGlobal(pos, nivel);
 			} catch (SQLException e) {
-				System.out.println("Error ArkanoidFrontera.jugadorPos()");
+                System.err.println(e);
                 return null;
             }
         } else {
             try {
                 return DataBase.getmDataBase().jugadorPosIndividual(pos, jugador, nivel);
             } catch (SQLException e) {
-                System.out.println("Error ArkanoidFrontera.jugadorPosIndividual");
+                System.err.println(e);
                 return null;
             }
         }
@@ -183,12 +183,14 @@ public class ArkanoidFrontera {
             try {
 				return DataBase.getmDataBase().nPartidasGlobal(nivel);
 			} catch (SQLException e) {
+                System.err.println(e);
 				return 0;
 			}
         }else{
             try {
                 return DataBase.getmDataBase().nPartidasIndividual(jugador, nivel);
             } catch (SQLException e) {
+                System.err.println(e);
                 return 0;
             }
         }
