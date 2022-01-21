@@ -1,9 +1,11 @@
 package eus.ehu.adsi.arkanoid.controlador;
 
+import java.sql.SQLException;
 import java.util.Random;
 
 import org.json.JSONObject;
 
+import eus.ehu.adsi.arkanoid.modelo.DataBase;
 import eus.ehu.adsi.arkanoid.modelo.Usuario;
 
 public class ArkanoidFrontera {
@@ -156,5 +158,39 @@ public class ArkanoidFrontera {
         resultado.put("estado", correcto);
 
         return resultado;
+    }
+
+    public JSONObject jugadorPos(int pos, int nivel, String jugador){
+        if (jugador == null){
+            try {
+				return DataBase.getmDataBase().jugadorPosGlobal(pos, nivel);
+			} catch (SQLException e) {
+				System.out.println("Error ArkanoidFrontera.jugadorPos()");
+                return null;
+            }
+        } else {
+            try {
+                return DataBase.getmDataBase().jugadorPosIndividual(pos, jugador, nivel);
+            } catch (SQLException e) {
+                System.out.println("Error ArkanoidFrontera.jugadorPosIndividual");
+                return null;
+            }
+        }
+    }
+
+    public int nPartidas(String jugador, int nivel) {
+        if (jugador == null){
+            try {
+				return DataBase.getmDataBase().nPartidasGlobal(nivel);
+			} catch (SQLException e) {
+				return 0;
+			}
+        }else{
+            try {
+                return DataBase.getmDataBase().nPartidasIndividual(jugador, nivel);
+            } catch (SQLException e) {
+                return 0;
+            }
+        }
     }
 }

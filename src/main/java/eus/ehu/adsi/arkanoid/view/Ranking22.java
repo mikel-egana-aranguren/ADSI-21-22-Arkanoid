@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.json.JSONObject;
+
+import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
 import eus.ehu.adsi.arkanoid.modelo.DataBase;
 import eus.ehu.adsi.arkanoid.view.game.Config;
 
@@ -224,12 +227,10 @@ public class Ranking22 {
 			panelGlobal = new JPanel();
 			panelGlobal.setBackground(Color.BLACK);
 			panelGlobal.setLayout(new GridLayout(10, 0, 0, 0));
-            int nPartidas = DataBase.getmDataBase().nPartidasGlobal(comboBoxNiveles.getSelectedIndex());
-            for (int i=0; i<nPartidas || i<10; i++){
-				List<String> jugadorPuntuacion = DataBase.getmDataBase().jugadorPosGlobal(i, comboBoxNiveles.getSelectedIndex());
-                String nombre = jugadorPuntuacion.get(0);
-                String puntos = jugadorPuntuacion.get(1);
-			    panelGlobal.add(getLblJugador(nombre, puntos));
+            int nPartidas = ArkanoidFrontera.getArkanoidFrontera().nPartidas(null, comboBoxNiveles.getSelectedIndex());
+            for (int i=0; /* i<nPartidas && */ i<10; i++){
+				JSONObject jugadorPuntuacion = ArkanoidFrontera.getArkanoidFrontera().jugadorPos(i, comboBoxNiveles.getSelectedIndex(), null);
+			    panelGlobal.add(getLblJugador(jugadorPuntuacion.getString("nombre"), jugadorPuntuacion.getString("puntos")));
             }
 		}
 		return panelGlobal;
@@ -240,10 +241,10 @@ public class Ranking22 {
 			panelIndividual = new JPanel();
 			panelIndividual.setBackground(Color.BLACK);
 			panelIndividual.setLayout(new GridLayout(10, 0, 0, 0));
-			int nPartidas = DataBase.getmDataBase().nPartidasIndividual(jugador, comboBoxNiveles.getSelectedIndex());
-            for (int i=0; i<nPartidas || i<10; i++){
-                String puntos = DataBase.getmDataBase().jugadorPosIndividual(i, jugador, comboBoxNiveles.getSelectedIndex());
-			    panelIndividual.add(getLblJugador(jugador, puntos));
+			int nPartidas = ArkanoidFrontera.getArkanoidFrontera().nPartidas(jugador, comboBoxNiveles.getSelectedIndex());
+            for (int i=0; /*i<nPartidas &&*/ i<10; i++){
+				JSONObject jugadorPuntuacion = ArkanoidFrontera.getArkanoidFrontera().jugadorPos(i, comboBoxNiveles.getSelectedIndex(), jugador);
+			    panelIndividual.add(getLblJugador(jugadorPuntuacion.getString("nombre"), jugadorPuntuacion.getString("puntos")));
             }
 		}
 		return panelIndividual;
