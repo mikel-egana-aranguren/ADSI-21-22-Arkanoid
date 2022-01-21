@@ -4,7 +4,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 
-public class ScoreBoard { //.
+public class ScoreBoard { //.sss
 
 	public int score = 0;
 	public int lives = Config.PLAYER_LIVES;
