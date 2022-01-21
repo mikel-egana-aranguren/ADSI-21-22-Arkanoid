@@ -26,7 +26,7 @@ public class Premios extends JFrame{
     private JLabel titulo;
     private JButton salir;
     private JButton desc;
-    
+    //Prueba
     //Controlador
     private Controlador controlador = null;
     
