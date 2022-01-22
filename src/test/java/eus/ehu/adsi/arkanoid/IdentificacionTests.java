@@ -9,6 +9,8 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Test;
 
+import javax.mail.internet.AddressException;
+
 public class IdentificacionTests {
 
 	@After
@@ -587,53 +589,78 @@ public class IdentificacionTests {
 	//Clase ArkanoidFrontera
 
 	//Método comprobarInicio(String nombreUsuario, String contrasena)
+	// Todas las posibilidades de ejecución se consideran en el plan de pruebas (F2P1 - F2P4)
+
+	//Método recuperarContrasena(String correo)
+	// Todas las demás posibilidades de ejecución se consideran en el plan de pruebas (F2P8 - F2P10)
 
 	@Test
-	public void comprobarInicioValido() {
+	public void recuperarContrasenaUsuarioNoRegistrado() {
+		//Intentar recuperar contraseña de un usuario no registrado
+		JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().recuperarContrasena("correo@ehu.eus");
+		//Comprobar que el mensaje es el que corresponde
+		assertEquals("El usuario no está registrado.", resultado.get("mensaje"));
+	}
+
+	//Método emailValido(String correo)
+	// Considerado para plan de pruebas donde se comprueba el formato del correo (F2P14)
+
+	//Método enviarEmail(String correo)
+
+	@Test
+	public void emailValidoCorrecto() {
+		//Intentar enviar email a un correo válido Y comprobar que se devuelve un String
+		assertTrue(ArkanoidFrontera.getArkanoidFrontera().enviarEmail("correo@ehu.eus") instanceof String);
+	}
+
+	//Las excepciones AddressException y MessagingException nunca se van a dar porque los parámetros clave como
+	// los que tienen que ver con las propiedades (Ej. "mail.smtp.host") y los de transporte se han definido en el
+	// código y no dependen de lo que introduzca el usuario
+
+	//Método comprobarCodigo(String correo, String codigo, String codigoIntroducido, String cNueva1, String cNueva2)
+	// Todas las demás posibilidades de ejecución se consideran en el plan de pruebas (F2P10.3 - F2P10.8)
+
+	@Test
+	public void comprobarCodigoUsuarioNoRegistrado() {
+		//Intentar recuperar contraseña de un usuario no registrado
+		JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarCodigo("correo@ehu.eus", "000000", "000000", "contrasena", "contrasena");
+		//Comprobar que el mensaje es el que corresponde
+		assertEquals("El usuario no está registrado.", resultado.get("mensaje"));
+	}
+
+	//Método comprobarRegistro(String nombreUsuario, String correo, String contrasena1, String contrasena2)
+	// Todas las demás posibilidades de ejecución se consideran en el plan de pruebas (F2P12 - F2P19)
+
+	@Test
+	public void comprobarRegistroCorreoNoDisponible() {
 		//Crear un usuario de prueba
 		Usuario u = new Usuario("usuario", "correo@ehu.eus", "contrasena");
 		//Añadir el usuario a la lista
 		GestorUsuarios.getGestorUsuarios().anadir(u);
-		//Intentar que un usuario válido inicie
-		JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarInicio("usuario", "contrasena");
-		//Comprobar que el resultado ha sido correcto
-		assertTrue(resultado.getBoolean("estado"));
+		//Intentar registrarse con un correo que no está disponible
+		JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarRegistro("otroUsuario", "correo@ehu.eus", "contrasena", "contrasena");
+		//Comprobar que el mensaje es el que corresponde
+		assertEquals("Correo no disponible.", resultado.get("mensaje"));
 	}
 
-	//Método recuperarContrasena(String correo)
-
-
-
-	//Método emailValido(String correo)
-
-
-
-	//Método enviarEmail(String correo)
-
-
-
-	//Método generarCodigo() - ???
-
-
-
-	//Método comprobarCodigo(String correo, String codigo, String codigoIntroducido, String cNueva1, String cNueva2)
-
-
-
-	//Método comprobarRegistro(String nombreUsuario, String correo, String contrasena1, String contrasena2)
-
-
-
 	//Método comprobarCambio(String nombreUsuario, String cAnterior, String cNueva1, String cNueva2)
-
+	// Todas las posibilidades de ejecución se consideran en el plan de pruebas (F2P21 - F2P26)
 
 
 	//Método contrasenaValida(String contrasena)
-
-
+	// Posibilidades de ejecución consideradas en el plan de pruebas (F2P18 (incorrecto) - F2P19 (correcto))
 
 	//Método borrarUsuarios()
 
-
-
+	@Test
+	public void borrarUsuariosAF() {
+		//Crear un usuario de prueba
+		Usuario u = new Usuario("usuario", "correo@ehu.eus", "incorrecto");
+		//Añadir el usuario a la lista
+		GestorUsuarios.getGestorUsuarios().anadir(u);
+		//Borrar los usuarios de la lista
+		ArkanoidFrontera.getArkanoidFrontera().borrarUsuarios();
+		//Comprobar que no esté en la lista
+		assertNull(GestorUsuarios.getGestorUsuarios().buscarUsuario("usuario"));
+	}
 }

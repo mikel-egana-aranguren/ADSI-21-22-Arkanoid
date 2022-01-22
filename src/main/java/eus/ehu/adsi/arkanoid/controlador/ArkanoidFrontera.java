@@ -94,7 +94,9 @@ public class ArkanoidFrontera {
                     correcto = true;
 
                 } else {
+                    //
                     resultado.put("mensaje", "El usuario no está registrado.");
+                    //
                 }
             } else {
                 resultado.put("mensaje", "Correo no válido.");
@@ -136,7 +138,7 @@ public class ArkanoidFrontera {
             mail.setFrom(new InternetAddress(enviador));
             mail.addRecipient(Message.RecipientType.TO, new InternetAddress(correo));
             mail.setSubject("[Arkanoid] Recuperar Contraseña");
-            codigo = generarCodigo();
+            codigo = String.format("%06d", generarNumeroAleatorio(999999,100000));
             mail.setText("El código de recuperación es: " + codigo);
 
             Transport transporte = sesion.getTransport("smtp");
@@ -145,19 +147,11 @@ public class ArkanoidFrontera {
             transporte.close();
 
         } catch (AddressException e) {
-            e.printStackTrace();
+            return "0";
         } catch (MessagingException e) {
-            e.printStackTrace();
+            return "0";
         }
-
         return codigo;
-    }
-
-    private String generarCodigo() {
-        Random rnd = new Random();
-        int number = rnd.nextInt(999999);
-        // this will convert any number sequence into 6 character.
-        return String.format("%06d", number);
     }
 
     public JSONObject comprobarCodigo(String correo, String codigo, String codigoIntroducido, String cNueva1, String cNueva2) {
