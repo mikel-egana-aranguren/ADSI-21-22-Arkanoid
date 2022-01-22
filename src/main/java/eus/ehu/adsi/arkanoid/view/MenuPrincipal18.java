@@ -42,6 +42,7 @@ public class MenuPrincipal18 extends JFrame {
         this.add(botonCambiar());
     }
 
+
     private JButton botonJugar() {
 
         JButton jugar = new JButton("JUGAR");
@@ -78,7 +79,8 @@ public class MenuPrincipal18 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Ajustes, añadir fig");
+                dispose();
+                new Personalizacion21(nombreUsuario);
             }
         });
         return ajustes;

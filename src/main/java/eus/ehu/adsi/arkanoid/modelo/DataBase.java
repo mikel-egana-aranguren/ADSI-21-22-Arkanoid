@@ -144,5 +144,26 @@ public class DataBase {
         s.executeUpdate("UPDATE usuario SET sonidoAct=\"" + son + "\", colorLadrillo=\"" + colorLadrillo + "\", colorBola =\"" + colorBola + "\", colorPaddle =\"" + colorPadel + "\" , colorFondo =\"" + colorFondo + "\" WHERE nombreUsuario = \"" + nombreUsuario + "\"");
     }
 
+    public JSONObject getColoresBola() {
+        JSONObject colores = new JSONObject();
+        Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://sql4.freesqldatabase.com/sql4466495", "sql4466495","NKihfwtwiR");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error al registrar el dirver de MySQL:" + e); 
+		}
+        int son;
+        Statement s = con.createStatement();
+        ResultSet rs;
+        rs = s.executeQuery("SELECT * FROM colorBola");
+        rs.next();
+        while (rs.next()){
+            
+        }
+
+        return rs;
+    }
+
     
 }

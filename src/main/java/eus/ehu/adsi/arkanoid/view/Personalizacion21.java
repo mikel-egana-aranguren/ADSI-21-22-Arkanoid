@@ -191,13 +191,14 @@ public class Personalizacion21 {
 			btnAceptar.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					//frame.dispose();
+					
 					String colorBola = comboBoxBall.getSelectedItem().toString();
 					String colorPadel = comboBoxPaddle.getSelectedItem().toString();
 					String colorLadrillo = comboBoxLadrillo.getSelectedItem().toString();
 					String colorFondo = comboBoxBackGround.getSelectedItem().toString();
-					System.out.println(sonido);
 					ArkanoidFrontera.getArkanoidFrontera().cambiarAjustes(colorBola, colorPadel, colorLadrillo, colorFondo, sonido, nombreUsuario);
+					frame.dispose();
+					new MenuPrincipal18(nombreUsuario);
 				}
 				@Override
 				public void mouseEntered(MouseEvent e){
@@ -223,8 +224,8 @@ public class Personalizacion21 {
 			btnCancelar.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					//new menu principal
 					frame.dispose();
+					new MenuPrincipal18(nombreUsuario);
 				}
 				@Override
 				public void mouseEntered(MouseEvent e){
@@ -286,7 +287,8 @@ public class Personalizacion21 {
     private JComboBox<String> getComboBoxBackGround(String s) {
 		if (comboBoxBackGround == null) {
 			comboBoxBackGround = new JComboBox<String>();
-			comboBoxBackGround.setModel(new DefaultComboBoxModel<String>(new String[] {s , "Color2", "Color3"}));
+			String[] colores = ArkanoidFrontera.getArkanoidFrontera().getColores("Fondo");
+			comboBoxBackGround.setModel(new DefaultComboBoxModel<String>(colores));
 			comboBoxBackGround.setForeground(Color.BLACK);
 			comboBoxBackGround.setFont(impact);
 		}
