@@ -215,7 +215,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 	}
 	public static void mostrarRankingGlobalNivel() {
 		//llamar a bd
-		//
+		
 	}
 	
 	public static void ordenarPorPuntos() {
