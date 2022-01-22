@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import eus.ehu.adsi.arkanoid.Arkanoid;
 import eus.ehu.adsi.arkanoid.core.Game;
 
 public class Premios extends JFrame{
@@ -26,6 +27,7 @@ public class Premios extends JFrame{
     private JLabel titulo;
     private JButton salir;
     private JButton desc;
+    private String usuarioAct;
     //Prueba
     //Controlador
     private Controlador controlador = null;
@@ -69,19 +71,43 @@ public class Premios extends JFrame{
 		contentPane.add(titulo, BorderLayout.NORTH);
 		
 		fondo = new JPanel();
-		fondo.setLayout(new GridLayout(5,2));
+		fondo.setLayout(new GridLayout(10,1));
 		fondo.setOpaque(false);
 		contentPane.add(fondo, BorderLayout.CENTER);
 		JLabel obt = new JLabel();
 		obt.setText("Premios obtenidos: ");
 		obt.setFont(new Font("Consolas", Font.PLAIN, 20));
 		obt.setForeground(Color.WHITE);
+		String rs = Arkanoid.obtenerPremiosObtenidos("anegda");
+		//No se usar JSON
 		fondo.add(obt);
+		String[] lineas = rs.split("8");
+		for (String linea : lineas) {
+			JLabel l = new JLabel();
+			System.out.println(linea);
+			l.setText(linea);
+			l.setForeground(Color.BLUE);
+			l.setFont(new Font("Consolas", Font.PLAIN, 16));
+			fondo.add(l);
+		}	
+
 		JLabel nObt = new JLabel();
 		nObt.setText("Premios no obtenidos: ");
 		nObt.setFont(new Font("Consolas", Font.PLAIN, 20));
 		nObt.setForeground(Color.WHITE);
 		fondo.add(nObt);
+		String rs2 = Arkanoid.obtenerPremiosNoObtenidos("anegda");
+		//No se usar JSON
+		String[] lineas2 = rs2.split("8");
+		for (String linea2 : lineas2) {
+			JLabel l2 = new JLabel(); 
+			System.out.println(linea2);
+			l2.setText(linea2);
+			l2.setForeground(Color.RED);
+			l2.setFont(new Font("Consolas", Font.PLAIN, 16));
+			fondo.add(l2);
+		}
+
 		
 		sur = new JPanel();
 		sur.setLayout(new FlowLayout());

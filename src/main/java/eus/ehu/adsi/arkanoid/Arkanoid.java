@@ -217,5 +217,35 @@ public class Arkanoid extends JFrame implements KeyListener {
 		}
 		return resultado;
 	}
+	
+	public static String obtenerPremiosObtenidos(String usuario) {
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT nombre FROM premiosJugador WHERE username='" + usuario+"'");
+		String resultado = "";
+		try {
+			while (rs.next()) {
+				String nombre = rs.getString("nombre");
+				resultado = resultado+nombre+"8";
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resultado;
+	}
+
+	public static String obtenerPremiosNoObtenidos(String usuario) {
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT nombre FROM premio WHERE nombre NOT IN (SELECT nombre FROM premiosJugador WHERE username='" + usuario+ "')");
+		String resultado = "";
+		try {
+			while (rs.next()) {
+				String nombre = rs.getString("nombre");
+				resultado = resultado+nombre+"8";
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resultado;
+	}
 
 }

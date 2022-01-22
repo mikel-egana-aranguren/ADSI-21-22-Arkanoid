@@ -84,6 +84,7 @@ public class Descripciones extends JFrame{
 			System.out.println(linea);
 			l.setText(linea);
 			l.setForeground(Color.WHITE);
+			l.setFont(new Font("Consolas", Font.PLAIN, 16));
 			fondo.add(l);
 		}
 		contentPane.add(fondo, BorderLayout.CENTER);
