@@ -29,10 +29,7 @@ package eus.ehu.adsi.arkanoid.view;
 			private static RankingAbsoluto mRanking;
 			private JPanel contentPane;
 		    private JPanel fondo ;
-			private JPanel este;
-			private JPanel centro;
-//			private JComboBox nvl;
-//			private JComboBox dfclt;
+			private JPanel centro;			
 			private JTextArea ayudatxt= new JTextArea("\tNombre \tNivel\tPuntos \tFecha", 50, 60);
 
 		    

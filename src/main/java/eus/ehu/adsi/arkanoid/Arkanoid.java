@@ -249,6 +249,86 @@ public class Arkanoid extends JFrame implements KeyListener {
 		return resultado;
 
 	}
+	
+	////////////////////////////////	RANKING 	/////////////////////////////////////////	
+	
+	public static String obtenerRankingPA(String usuario) {
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM PartidaNormal WHERE username='" + usuario+ "'");
+		String resultado = "";
+		try {
+			while (rs.next()) {
+				String nlvl = rs.getString("numNivel");
+				String user = rs.getString("username");
+				Date fecha = rs.getDate("fecha");
+				int ptos = rs.getInt("fecha");
+
+				resultado = nlvl+user+fecha+ptos+"$";
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resultado;
+
+	}
+	
+	public static String obtenerRankingPN(String usuario, int nivel) {
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM PartidaNormal WHERE username='" + usuario+ "' AND numNivel='" + nivel+ "'");
+		String resultado = "";
+		try {
+			while (rs.next()) {
+				String user = rs.getString("username");
+				Date fecha = rs.getDate("fecha");
+				int ptos = rs.getInt("puntos");
+
+				resultado = user+fecha+ptos+"$";
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resultado;
+
+	}
+	
+	public static String obtenerRankingGA() {
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM PartidaNormal");
+		String resultado = "";
+		try {
+			while (rs.next()) {
+				String user = rs.getString("username");
+				Date fecha = rs.getDate("fecha");
+				int ptos = rs.getInt("puntos");
+
+				resultado = user+fecha+ptos+"$";
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resultado;
+
+	}
+	
+	public static String obtenerRankingGN(int nivel) {
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM PartidaNormal WHERE AND numNivel='" + nivel+ "'");
+		String resultado = "";
+		try {
+			while (rs.next()) {
+				String nlvl = rs.getString("numNivel");
+				String user = rs.getString("username");
+				Date fecha = rs.getDate("fecha");
+				int ptos = rs.getInt("puntos");
+
+				resultado = nlvl+user+fecha+ptos+"$";
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resultado;
+
+	}
 
 }
 
