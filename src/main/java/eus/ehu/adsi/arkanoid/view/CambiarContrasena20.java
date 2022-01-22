@@ -147,8 +147,8 @@ public class CambiarContrasena20 extends JFrame {
             aceptar.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    //Intentar cambiar contraseña cuenta con los datos proporcionados
                     JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarCambio(nombreUsuario, String.valueOf(contrasenaOriginal.getPassword()), String.valueOf(contrasena1.getPassword()), String.valueOf(contrasena2.getPassword()));
-
                     //Comprobar el estado del cambio de contraseña
                     if (!resultado.getBoolean("estado")) {
                         //Si ha sido incorrecto mostrar mensaje de error, con el mensaje que corresponda

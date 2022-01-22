@@ -133,12 +133,8 @@ public class RecuperarContrasena17c extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                //Intentar recuperar contraseña con los datos proporcionados
                 JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarCodigo(correo, codigo, codigoIntroducido.getText(), String.valueOf(contrasena1.getPassword()), String.valueOf(contrasena2.getPassword()));
-//                * Definición de JSON:
-//                { : boolean, : String }
-//                    Si es True, String = vacío
-//                    Si es False, String = mensaje de error correspondiente
-
                 //Comprobar el estado de la recuperación
                 if (!resultado.getBoolean("estado")) {
                     //Si ha sido incorrecto mostrar mensaje de error, con el mensaje que corresponda

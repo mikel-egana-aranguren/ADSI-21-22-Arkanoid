@@ -136,12 +136,8 @@ public class CrearCuenta17d extends JFrame {
             crear.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    //Intentar crear una cuenta con los datos proporcionados
                     JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarRegistro(nombre.getText(), correo.getText(), String.valueOf(contrasena1.getPassword()), String.valueOf(contrasena2.getPassword()));
-//                * Definición de JSON:
-//                { : boolean, : String }
-//                    Si es True, String = nombreUsuario
-//                    Si es False, String = mensaje de error correspondiente
-
                     //Comprobar el estado del registro
                     if (!resultado.getBoolean("estado")) {
                         //Si ha sido incorrecto mostrar mensaje de error, con el mensaje que corresponda
