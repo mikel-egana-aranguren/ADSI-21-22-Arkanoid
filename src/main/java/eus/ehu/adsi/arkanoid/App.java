@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import eus.ehu.adsi.arkanoid.modelo.Arkanoid;
 import eus.ehu.adsi.arkanoid.view.Personalizacion21;
+import eus.ehu.adsi.arkanoid.view.PublicarResultados24a;
 import eus.ehu.adsi.arkanoid.view.SeleccionarNivel19;
 
 public class App {
@@ -14,7 +15,7 @@ public class App {
 			EventQueue.invokeAndWait(new Runnable() {
 				public void run(){
 					try {
-						new SeleccionarNivel19();
+						new PublicarResultados24a("Bosco");
 					} catch (Exception e){
 						System.err.println(e);
 						e.printStackTrace();

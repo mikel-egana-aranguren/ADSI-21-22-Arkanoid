@@ -40,4 +40,8 @@ public class Usuario {
     public void setContrasena(String pContrasena) {
         this.contrasena = pContrasena;
     }
+
+    public String getNombre() {
+    	return nombreUsuario;
+    }
 }
