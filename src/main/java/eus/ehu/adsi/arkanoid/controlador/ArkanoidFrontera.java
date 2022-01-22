@@ -224,4 +224,13 @@ public class ArkanoidFrontera {
     public int getLvl(){
         return lvl;
     }
+
+    public JSONObject cargarDatosPersonalizacion(String nombre) {
+        try {
+            return DataBase.getmDataBase().cargarDatosPersonalizacion(nombre);
+        } catch (SQLException e) {
+            System.err.println(e);
+            return null;
+        }
+    }
 }
