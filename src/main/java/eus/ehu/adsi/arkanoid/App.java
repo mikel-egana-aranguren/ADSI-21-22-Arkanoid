@@ -8,7 +8,7 @@ public class App {
 
 	public static void main(String[] args) {
 		//new Arkanoid(1).run();
-		Personalizacion(null);
+		new SelectNivel();
 	}
+
 }
- 

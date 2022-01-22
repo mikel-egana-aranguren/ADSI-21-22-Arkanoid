@@ -36,6 +36,7 @@ public class Ball extends GameObject {
 			x = paddle.x;
 			y = paddle.y - 50;
 			scoreBoard.die();
+			
 		}
 
 	}

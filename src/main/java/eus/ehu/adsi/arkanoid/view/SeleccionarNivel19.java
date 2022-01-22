@@ -97,16 +97,16 @@ public class SeleccionarNivel19 {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					frame.dispose();
-					Arkanoid.getArkanoid(comboBoxNivel.getSelectedIndex()-1).run();
+					new Arkanoid(comboBoxNivel.getSelectedIndex()+1).run();
 				}
-				@Override
+				/*@Override
 				public void mouseEntered(MouseEvent e){
 					btnComenzar.setForeground(Color.RED);
 				}
 				@Override
 				public void mouseExited(MouseEvent e){
 					btnComenzar.setForeground(Color.WHITE);
-				}
+				}*/
 			});
 		}
 		return btnComenzar;
