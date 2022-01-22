@@ -40,6 +40,7 @@ public class ScoreBoard {
 			updateScoreboard();
 		}
 	}
+	public void aumentarVidas(){lives++;}
 
 	public void updateScoreboard() {
 		text = "Score: " + score + "  Lives: " + lives;
