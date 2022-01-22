@@ -6,8 +6,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
+import javax.swing.SwingUtilities;
+
 import org.json.JSONObject;
 
+import eus.ehu.adsi.arkanoid.core.ArkanoidThread;
 import eus.ehu.adsi.arkanoid.modelo.Arkanoid;
 import eus.ehu.adsi.arkanoid.modelo.DataBase;
 import eus.ehu.adsi.arkanoid.modelo.Usuario;
@@ -16,6 +19,7 @@ public class ArkanoidFrontera {
     private static ArkanoidFrontera mArkanoidFrontera = null;
     private LocalDateTime fechaHoraInicio;
     private String fechaHoraInicioStr;
+    private int lvl;
 
     private ArkanoidFrontera() {}
 
@@ -211,6 +215,12 @@ public class ArkanoidFrontera {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
         LocalDateTime fechaHoraInicio = LocalDateTime.now();
         fechaHoraInicioStr = dtf.format(fechaHoraInicio);
-        Arkanoid.getArkanoid(nivel).run();
+        lvl = nivel;
+        ArkanoidThread arkanoidThread = new ArkanoidThread();
+        arkanoidThread.start();
+    }
+
+    public int getLvl(){
+        return lvl;
     }
 }
