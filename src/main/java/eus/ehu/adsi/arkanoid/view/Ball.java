@@ -37,10 +37,7 @@ public class Ball extends GameObject {
 			velocityY = -Config.getBallVelocity(nivel);
 			x = paddle.x;
 			y = paddle.y - 50;
-			if (Arkanoid.getArkanoid().getNumBolas() == 1) {
-				scoreBoard.die();
-				Arkanoid.getArkanoid().actNumBolas();
-			}
+			scoreBoard.die();
 			
 		}
 

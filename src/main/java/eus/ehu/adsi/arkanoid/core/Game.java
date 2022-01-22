@@ -60,13 +60,13 @@ public class Game {
 				scoreboard.updateLives(vidas);
 				System.out.println(descrip);
 			} else if (!j.isNull("bola")) {
-				Arkanoid.getArkanoid().duplicarBola();
+				//Arkanoid.getArkanoid().duplicarBola();
 				System.out.println(descrip);
 			} else if (!j.isNull("paddle")) {
 				System.out.println(descrip);
 			} else if (!j.isNull("ladrillos")) {
 				int ladrillos = j.getInt("ladrillos");
-				Arkanoid.getArkanoid().eliminarLadrillos(ladrillos, mBrick);
+				//Arkanoid.getArkanoid().eliminarLadrillos(ladrillos, mBrick);
 				System.out.println(descrip);
 			}
 		}

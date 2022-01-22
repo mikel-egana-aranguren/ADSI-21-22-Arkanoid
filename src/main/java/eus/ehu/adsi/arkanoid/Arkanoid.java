@@ -52,14 +52,6 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 	private double lastFt;
 	private double currentSlice;
 
-	
-	public static Arkanoid getArkanoid() {
-		if (mArkanoid == null) mArkanoid = new Arkanoid();
-		return mArkanoid;
-	}
-	
-	private Arkanoid() {
-
 
 	private int nivel;
 	
@@ -83,7 +75,7 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 	}
 	
 
-	void run() {
+	public void run() {
 		
 		this.prepararPartida();
 
@@ -97,7 +89,6 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 		while (game.isRunning()) {
 
 			long time1 = System.currentTimeMillis();
-
 			if (!scoreboard.gameOver && !scoreboard.win) {
 				//logger.info("Playing");
 				game.setTryAgain(false);
@@ -153,15 +144,15 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 			ball.update(scoreboard, paddle, nivel);
 			paddle.update();
 
-			Game.testCollision(paddle, ball);
-			if (ball2 != null) Game.testCollision(paddle, ball2);
+			Game.testCollision(paddle, ball, nivel);
+			//if (ball2 != null) Game.testCollision(paddle, ball2);
 
 
 			Iterator<Brick> it = bricks.iterator();
 			while (it.hasNext()) {
 				Brick brick = it.next();
-				Game.testCollision(brick, ball, scoreboard);
-				if (ball2 != null )Game.testCollision(brick, ball2, scoreboard);
+				Game.testCollision(brick, ball, scoreboard, nivel);
+				//if (ball2 != null )Game.testCollision(brick, ball2, scoreboard);
 
 				if (brick.destroyed) {
 					it.remove();
@@ -209,9 +200,11 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 		switch (event.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
 			paddle.moveLeft();
+			System.out.println("hola");
 			break;
 		case KeyEvent.VK_RIGHT:
 			paddle.moveRight();
+			System.out.println("adios");
 			break;
 		default:
 			break;
