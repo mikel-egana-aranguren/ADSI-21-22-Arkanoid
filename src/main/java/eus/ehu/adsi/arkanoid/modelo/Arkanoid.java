@@ -1,4 +1,4 @@
-package eus.ehu.adsi.arkanoid;
+package eus.ehu.adsi.arkanoid.modelo;
 
 // Adapted from https://gist.github.com/Miretz/f10b18df01f9f9ebfad5
 
@@ -15,17 +15,20 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager; //TEMAS DEL LOGGER POR LA VULNERABILIDAD
 import org.apache.logging.log4j.Logger;
 
-import eus.ehu.adsi.arkanoid.view.Ball;
-import eus.ehu.adsi.arkanoid.view.Config;
-import eus.ehu.adsi.arkanoid.view.Paddle;
-import eus.ehu.adsi.arkanoid.view.ScoreBoard;
-import eus.ehu.adsi.arkanoid.view.Brick;
-import eus.ehu.adsi.arkanoid.core.Game;
+import eus.ehu.adsi.arkanoid.controlador.GestorPartidas;
+import eus.ehu.adsi.arkanoid.controlador.GestorUsuarios;
 
-public class Arkanoid extends JFrame implements KeyListener {
+import eus.ehu.adsi.arkanoid.core.Game;
+import eus.ehu.adsi.arkanoid.view.game.Ball;
+import eus.ehu.adsi.arkanoid.view.game.Brick;
+import eus.ehu.adsi.arkanoid.view.game.Config;
+import eus.ehu.adsi.arkanoid.view.game.Paddle;
+import eus.ehu.adsi.arkanoid.view.game.ScoreBoard;
+
+public class Arkanoid extends JFrame implements KeyListener { //No se si se podrá hacer MAE esta clase
 
 	// Housekeeping
 	private static final long serialVersionUID = 1L;
@@ -35,16 +38,23 @@ public class Arkanoid extends JFrame implements KeyListener {
 	private Game game;
 	private Paddle paddle = new Paddle(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT - 50);
 	private Ball ball = new Ball(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT / 2);
+	private Ball ball2 = null;
 	private List<Brick> bricks = new ArrayList<Brick>();
 	private ScoreBoard scoreboard = new ScoreBoard();
 
+	private int numBolas = 1;
+	private static Arkanoid mArkanoid; 
+
 	private double lastFt;
-	private double currentSlice;	
+	private double currentSlice;
 	
-	public Arkanoid() {
+	private int nivel;
+	
+	public Arkanoid(int lvl) {
+
 		
 		game = new Game ();
-
+		nivel = lvl;
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setUndecorated(false);
 		this.setResizable(false);
@@ -54,12 +64,16 @@ public class Arkanoid extends JFrame implements KeyListener {
 		this.addKeyListener(this);
 		this.setLocationRelativeTo(null);
 		this.createBufferStrategy(2);
+		this.setFocusable(true);
 
-		bricks = Game.initializeBricks(bricks);
+		bricks = Game.initializeBricks(bricks, nivel);
 
 	}
-	
-	void run() {
+		
+
+	public void run() {
+		
+		this.prepararPartida();
 
 		BufferStrategy bf = this.getBufferStrategy();
 		Graphics g = bf.getDrawGraphics();
@@ -71,7 +85,6 @@ public class Arkanoid extends JFrame implements KeyListener {
 		while (game.isRunning()) {
 
 			long time1 = System.currentTimeMillis();
-
 			if (!scoreboard.gameOver && !scoreboard.win) {
 				logger.info("Playing");
 				game.setTryAgain(false);
@@ -89,7 +102,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 				if (game.isTryAgain()) {
 					logger.info("Trying again");
 					game.setTryAgain(false);
-					bricks = Game.initializeBricks(bricks);
+					bricks = Game.initializeBricks(bricks, nivel);
 					scoreboard.lives = Config.PLAYER_LIVES;
 					scoreboard.score = 0;
 					scoreboard.win = false;
@@ -124,14 +137,19 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 		for (; currentSlice >= Config.FT_SLICE; currentSlice -= Config.FT_SLICE) {
 
-			ball.update(scoreboard, paddle);
+			ball.update(scoreboard, paddle, nivel);
 			paddle.update();
-			Game.testCollision(paddle, ball);
+
+			Game.testCollision(paddle, ball, nivel);
+			//if (ball2 != null) Game.testCollision(paddle, ball2);
+
 
 			Iterator<Brick> it = bricks.iterator();
 			while (it.hasNext()) {
 				Brick brick = it.next();
-				Game.testCollision(brick, ball, scoreboard);
+				Game.testCollision(brick, ball, scoreboard, nivel);
+				//if (ball2 != null )Game.testCollision(brick, ball2, scoreboard);
+
 				if (brick.destroyed) {
 					it.remove();
 				}
@@ -178,9 +196,11 @@ public class Arkanoid extends JFrame implements KeyListener {
 		switch (event.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
 			paddle.moveLeft();
+			System.out.println("hola");
 			break;
 		case KeyEvent.VK_RIGHT:
 			paddle.moveRight();
+			System.out.println("adios");
 			break;
 		default:
 			break;
@@ -200,4 +220,35 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 	public void keyTyped(KeyEvent arg0) {}
 
+	//PRUEBAS
+
+	private void prepararPartida() {
+		Usuario u = new Usuario("null", "null", "null");
+		GestorUsuarios.getGestorUsuarios().anadir(u);
+		Partida p = new Partida(u);
+		GestorPartidas.getGestorPartidas().anadir(p);
+	}
+
+	public void duplicarBola() {
+		this.ball2 = new Ball(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT / 2);
+		drawScene(ball2, bricks, scoreboard);
+		numBolas++;
+	}
+
+	public int getNumBolas() {
+		return numBolas;
+	}
+
+	public void actNumBolas() {
+		numBolas--;
+	}
+
+	public void eliminarLadrillos(int ladrillos, Brick mBrick) {
+		int i = 0;
+		boolean enc = false;
+		while (i < bricks.size() && !enc) {
+			
+		}
+	}
 }
+

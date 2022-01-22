@@ -1,4 +1,4 @@
-package eus.ehu.adsi.arkanoid.view;
+package eus.ehu.adsi.arkanoid.view.game;
 
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -19,9 +19,9 @@ public class ScoreBoard {
 		text = "Welcome to Arkanoid";
 	}
 
-	public void increaseScore() {
+	public void increaseScore(int nivel) {
 		score++;
-		if (score == (Config.COUNT_BLOCKS_X * Config.COUNT_BLOCKS_Y)) {
+		if (score == (Config.getCountBlocksX(nivel) * Config.getCountBlocksY(nivel))) {
 			win = true;
 			text = "You have won! \nYour score was: " + score
 					+ "\n\nPress Enter to restart";
@@ -39,6 +39,12 @@ public class ScoreBoard {
 		} else {
 			updateScoreboard();
 		}
+	}
+
+	//Actualizar vidas
+	public void updateLives(int l) {
+		this.lives = lives + l;
+		updateScoreboard();
 	}
 
 	public void updateScoreboard() {

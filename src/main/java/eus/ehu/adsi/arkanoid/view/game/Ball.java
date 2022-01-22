@@ -1,4 +1,4 @@
-package eus.ehu.adsi.arkanoid.view;
+package eus.ehu.adsi.arkanoid.view.game;
 
 import java.awt.Graphics;
 
@@ -7,8 +7,8 @@ public class Ball extends GameObject {
 	public double x;
 	public double y;
 	double radius = Config.BALL_RADIUS;
-	public double velocityX = Config.BALL_VELOCITY;
-	public double velocityY = Config.BALL_VELOCITY;
+	public double velocityX = 0.2;
+	public double velocityY = 0.2;
 
 	public Ball(int x, int y) {
 		this.x = x;
@@ -21,21 +21,22 @@ public class Ball extends GameObject {
 				(int) radius * 2);
 	}
 
-	public void update(ScoreBoard scoreBoard, Paddle paddle) {
+	public void update(ScoreBoard scoreBoard, Paddle paddle, int nivel) {
 		x += velocityX * Config.FT_STEP;
 		y += velocityY * Config.FT_STEP;
 
 		if (left() < 0)
-			velocityX = Config.BALL_VELOCITY;
+			velocityX = Config.getBallVelocity(nivel);
 		else if (right() > Config.SCREEN_WIDTH)
-			velocityX = -Config.BALL_VELOCITY;
+			velocityX = -Config.getBallVelocity(nivel);
 		if (top() < 0) {
-			velocityY = Config.BALL_VELOCITY;
+			velocityY = Config.getBallVelocity(nivel);
 		} else if (bottom() > Config.SCREEN_HEIGHT) {
-			velocityY = -Config.BALL_VELOCITY;
+			velocityY = -Config.getBallVelocity(nivel);
 			x = paddle.x;
 			y = paddle.y - 50;
 			scoreBoard.die();
+			
 		}
 
 	}
