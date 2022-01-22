@@ -44,4 +44,7 @@ public class Paddle extends Rectangle {
 		g.fillRect((int) (left()), (int) (top()), (int) sizeX, (int) sizeY);
 	}
 
+	public void aumentarTamaño() throws InterruptedException {
+		sizeX = Config.PADDLE_WIDTH*2;
+	}
 }

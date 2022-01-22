@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+import eus.ehu.adsi.arkanoid.core.Bonus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,14 +34,14 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 	// Game variables
 	private Game game;
-	private Paddle paddle = new Paddle(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT - 50);
-	private Ball ball = new Ball(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT / 2);
+	private static Paddle paddle = new Paddle(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT - 50);
+	private static Ball ball = new Ball(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT / 2);
 	private List<Brick> bricks = new ArrayList<Brick>();
-	private ScoreBoard scoreboard = new ScoreBoard();
+	private static ScoreBoard scoreboard = new ScoreBoard();
 
 	private double lastFt;
-	private double currentSlice;	
-	
+	private double currentSlice;
+
 	public Arkanoid() {
 		
 		game = new Game ();
@@ -58,8 +59,16 @@ public class Arkanoid extends JFrame implements KeyListener {
 		bricks = Game.initializeBricks(bricks);
 
 	}
-	
-	void run() {
+
+	private Paddle getPaddle() {
+		return paddle;
+	}
+
+	private ScoreBoard getScoreBoard() {
+		return this.scoreboard;
+	}
+
+	void run() throws InterruptedException {
 
 		BufferStrategy bf = this.getBufferStrategy();
 		Graphics g = bf.getDrawGraphics();
@@ -76,6 +85,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 				logger.info("Playing");
 				game.setTryAgain(false);
 				update();
+
 				drawScene(ball, bricks, scoreboard);
 
 				// to simulate low FPS
@@ -95,6 +105,8 @@ public class Arkanoid extends JFrame implements KeyListener {
 					scoreboard.win = false;
 					scoreboard.gameOver = false;
 					scoreboard.updateScoreboard();
+					paddle = new Paddle(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT - 50);
+					ball = new Ball(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT / 2);
 					ball.x = Config.SCREEN_WIDTH / 2;
 					ball.y = Config.SCREEN_HEIGHT / 2;
 					paddle.x = Config.SCREEN_WIDTH / 2;
@@ -118,7 +130,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 	}
 
-	private void update() {
+	private void update() throws InterruptedException {
 
 		currentSlice += lastFt;
 
@@ -196,6 +208,18 @@ public class Arkanoid extends JFrame implements KeyListener {
 		default:
 			break;
 		}
+	}
+	public static void aplicarBonus(Bonus bonus) throws InterruptedException {
+		if(bonus.getNombre().equals("Mas vidas")){
+			scoreboard.aumentarVidas();
+		}
+		else if(bonus.getNombre().equals("Paddle grande")){
+			paddle.aumentarTamaño();
+		}
+		else if(bonus.getNombre().equals("Bola grande")){
+			ball.aumentarTamañoBola();
+		}
+
 	}
 
 	public void keyTyped(KeyEvent arg0) {}

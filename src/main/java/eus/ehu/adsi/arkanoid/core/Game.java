@@ -2,12 +2,15 @@ package eus.ehu.adsi.arkanoid.core;
 
 import java.util.List;
 
+import eus.ehu.adsi.arkanoid.Arkanoid;
 import eus.ehu.adsi.arkanoid.view.Ball;
 import eus.ehu.adsi.arkanoid.view.Brick;
 import eus.ehu.adsi.arkanoid.view.Config;
 import eus.ehu.adsi.arkanoid.view.GameObject;
 import eus.ehu.adsi.arkanoid.view.Paddle;
 import eus.ehu.adsi.arkanoid.view.ScoreBoard;
+
+import static eus.ehu.adsi.arkanoid.Arkanoid.aplicarBonus;
 
 public class Game {
 	private boolean running;
@@ -44,13 +47,17 @@ public class Game {
 			mBall.velocityX = Config.BALL_VELOCITY;
 	}
 	
-	public static void testCollision(Brick mBrick, Ball mBall, ScoreBoard scoreboard) {
+	public static void testCollision(Brick mBrick, Ball mBall, ScoreBoard scoreboard) throws InterruptedException {
 		if (!Game.isIntersecting(mBrick, mBall))
 			return;
 
 		mBrick.destroyed = true;
+		if(mBrick.esEspecial()){
+			Bonus bonus=mBrick.getBonus();
+			aplicarBonus(bonus);}
 
 		scoreboard.increaseScore();
+
 
 		double overlapLeft = mBall.right() - mBrick.left();
 		double overlapRight = mBrick.right() - mBall.left();
