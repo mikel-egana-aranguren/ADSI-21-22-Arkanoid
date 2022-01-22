@@ -65,7 +65,9 @@ public class GestorUsuarios {
      * @param contrasena1 contraseña del usuario
      */
     public void registrarUsuario(String nombreUsuario, String correo, String contrasena1) {
+        //Crear el usuario
         Usuario U = new Usuario(nombreUsuario, correo, contrasena1);
+        //Añadirlo a la lista
         this.lUsuarios.add(U);
     }
 

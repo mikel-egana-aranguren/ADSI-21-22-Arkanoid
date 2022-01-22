@@ -22,6 +22,7 @@ public class ArkanoidFrontera {
     private static ArkanoidFrontera mArkanoidFrontera = null;
     private Properties propiedad = null;
     private Session sesion = null;
+    //Datos para JavaxMail
     private String enviador = "arkanoidrecovery@gmail.com";
     private String contra = "ARKpassword";
 
@@ -44,6 +45,15 @@ public class ArkanoidFrontera {
         return r.nextInt(i - j + 1) + j;
     }
 
+    /**
+     * Verificar el estado del inicio de sesión
+     * @param nombreUsuario el usuario que intenta iniciar sesión
+     * @param contrasena contraseña con la intenta iniciar sesión
+     * @return un JSON con la forma:
+     *  { estado : boolean, mensaje : String }
+     *  Si es True, String = nombreUsuario
+     *  Si es False, String = mensaje de error correspondiente
+     */
     public JSONObject comprobarInicio(String nombreUsuario, String contrasena) {
 
         boolean correcto = false;

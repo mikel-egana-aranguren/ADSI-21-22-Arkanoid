@@ -147,12 +147,8 @@ public class IniciarSesion17a extends JFrame {
             iniciar.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    //Intentar iniciar sesión con los datos proporcionados
                     JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarInicio(nombre.getText(), String.valueOf(contrasena.getPassword()));
-//                * Definición de JSON:
-//                { : boolean, : String }
-//                    Si es True, String = nombreUsuario
-//                    Si es False, String = mensaje de error correspondiente
-
                     //Comprobar el estado del inicio de sesión
                     if (!resultado.getBoolean("estado")) {
                         //Si ha sido incorrecto mostrar mensaje de error, con el mensaje que corresponda

@@ -1,6 +1,8 @@
 package eus.ehu.adsi.arkanoid;
 
 import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
+import eus.ehu.adsi.arkanoid.controlador.GestorUsuarios;
+import eus.ehu.adsi.arkanoid.modelo.Usuario;
 import org.json.JSONObject;
 import static org.junit.Assert.*;
 
@@ -15,6 +17,8 @@ public class IdentificacionTests {
 		// Antes de cada prueba se registrará un usuario con los datos que interesen
 		ArkanoidFrontera.getArkanoidFrontera().borrarUsuarios();
 	}
+
+	//PRUEBAS DE UNIDAD DE CAJA NEGRA (definidas en el plan de pruebas por Jon Ander López de Ahumada)
 
 	//Caso de uso Iniciar Sesión
 	// Antes de empezar las pruebas nos encontramos en la página de inicio de sesión.
@@ -437,4 +441,199 @@ public class IdentificacionTests {
 		//Comprobar que el resultado es correcto (se cambia la contraseña)
 		assertTrue(resultado.getBoolean("estado"));
 	}
+
+	//PRUEBAS DE UNIDAD DE CAJA BLANCA
+
+	//Clase Usuario
+
+	//Método esCorreo(String pCorreo)
+
+	@Test
+	public void esCorreoCorrecto() {
+		//Crear un usuario de prueba
+		Usuario u = new Usuario("usuario", "correo@ehu.eus", "contrasena");
+		//Comprobar que el mismo correo devuelve True
+		assertTrue(u.esCorreo("correo@ehu.eus"));
+	}
+
+	@Test
+	public void esCorreoIncorrecto() {
+		//Crear un usuario de prueba
+		Usuario u = new Usuario("usuario", "correo@ehu.eus", "contrasena");
+		//Comprobar que un correo incorrecto devuelve False
+		assertFalse(u.esCorreo("incorrecto"));
+	}
+
+	//Método esContrasena(String pContrasena)
+
+	@Test
+	public void esContrasenaCorrecta() {
+		//Crear un usuario de prueba
+		Usuario u = new Usuario("usuario", "correo@ehu.eus", "contrasena");
+		//Comprobar que la misma contraseña devuelve True
+		assertTrue(u.esContrasena("contrasena"));
+	}
+
+	@Test
+	public void esContrasenaIncorrecta() {
+		//Crear un usuario de prueba
+		Usuario u = new Usuario("usuario", "correo@ehu.eus", "contrasena");
+		//Comprobar que una contraseña incorrecta devuelve False
+		assertFalse(u.esContrasena("incorrecto"));
+	}
+
+	//Método setContrasena(String pContrasena)
+
+	@Test
+	public void setContrasena() {
+		//Crear un usuario de prueba
+		Usuario u = new Usuario("usuario", "correo@ehu.eus", "incorrecto");
+		//Cambiar su contraseña
+		u.setContrasena("contrasena");
+		//Comprobar que la contraseña es la definida con el cambio
+		assertTrue(u.esContrasena("contrasena"));
+	}
+
+	//Clase GestorUsuarios
+
+	//Método buscarUsuarioCorreo(String correo)
+
+	@Test
+	public void buscarUsuarioCorreoExiste() {
+		//Crear un usuario de prueba
+		Usuario u = new Usuario("usuario", "correo@ehu.eus", "contrasena");
+		//Añadir el usuario a la lista
+		GestorUsuarios.getGestorUsuarios().anadir(u);
+		//Comprobar que se ha encontrado el Usuario (el método no ha devuelto NULL)
+		assertNotNull(GestorUsuarios.getGestorUsuarios().buscarUsuarioCorreo("correo@ehu.eus"));
+	}
+
+	@Test
+	public void buscarUsuarioCorreoNoExiste() {
+		//Crear un usuario de prueba
+		Usuario u = new Usuario("usuario", "correo@ehu.eus", "contrasena");
+		//Añadir el usuario a la lista
+		GestorUsuarios.getGestorUsuarios().anadir(u);
+		//Comprobar que no se ha encontrado el Usuario (el método ha devuelto NULL)
+		assertNull(GestorUsuarios.getGestorUsuarios().buscarUsuarioCorreo("incorrecto"));
+	}
+
+	@Test
+	public void buscarUsuarioCorreoListaVacia() {
+		//Comprobar que no se ha encontrado el Usuario (el método ha devuelto NULL)
+		assertNull(GestorUsuarios.getGestorUsuarios().buscarUsuarioCorreo("incorrecto"));
+	}
+
+	//Método esContrasena(Usuario U, String contrasena)
+
+	@Test
+	public void GUesContrasenaCorrecta() {
+		//Crear un usuario de prueba
+		Usuario u = new Usuario("usuario", "correo@ehu.eus", "contrasena");
+		//Añadir el usuario a la lista
+		GestorUsuarios.getGestorUsuarios().anadir(u);
+		//Comprobar que la misma contraseña devuelve True
+		assertTrue(GestorUsuarios.getGestorUsuarios().esContrasena(u, "contrasena"));
+	}
+
+	@Test
+	public void GUesContrasenaIncorrecta() {
+		//Crear un usuario de prueba
+		Usuario u = new Usuario("usuario", "correo@ehu.eus", "contrasena");
+		//Añadir el usuario a la lista
+		GestorUsuarios.getGestorUsuarios().anadir(u);
+		//Comprobar que una contraseña incorrecta devuelve False
+		assertFalse(GestorUsuarios.getGestorUsuarios().esContrasena(u,"incorrecto"));
+	}
+
+	//Método cambiarContrasena(Usuario U, String contrasena)
+
+	@Test
+	public void cambiarContrasena() {
+		//Crear un usuario de prueba
+		Usuario u = new Usuario("usuario", "correo@ehu.eus", "incorrecto");
+		//Añadir el usuario a la lista
+		GestorUsuarios.getGestorUsuarios().anadir(u);
+		//Cambiar su contraseña
+		GestorUsuarios.getGestorUsuarios().cambiarContrasena(u, "contrasena");
+		//Comprobar que la contraseña es la definida con el cambio
+		assertTrue(u.esContrasena("contrasena"));
+	}
+
+	//Método registrarUsuario(String nombreUsuario, String correo, String contrasena1)
+
+	@Test
+	public void registrarUsuario() {
+		//Registrar un usuario
+		GestorUsuarios.getGestorUsuarios().registrarUsuario("usuario", "correo@ehu.eus", "contrasena");
+		//Comprobar que esté en la lista
+		assertNotNull(GestorUsuarios.getGestorUsuarios().buscarUsuario("usuario"));
+	}
+
+	//Método borrarUsuarios()
+
+	@Test
+	public void borrarUsuarios() {
+		//Crear un usuario de prueba
+		Usuario u = new Usuario("usuario", "correo@ehu.eus", "incorrecto");
+		//Añadir el usuario a la lista
+		GestorUsuarios.getGestorUsuarios().anadir(u);
+		//Borrar los usuarios de la lista
+		GestorUsuarios.getGestorUsuarios().borrarUsuarios();
+		//Comprobar que no esté en la lista
+		assertNull(GestorUsuarios.getGestorUsuarios().buscarUsuario("usuario"));
+	}
+
+	//Clase ArkanoidFrontera
+
+	//Método comprobarInicio(String nombreUsuario, String contrasena)
+
+	@Test
+	public void comprobarInicioValido() {
+		//Crear un usuario de prueba
+		Usuario u = new Usuario("usuario", "correo@ehu.eus", "contrasena");
+		//Añadir el usuario a la lista
+		GestorUsuarios.getGestorUsuarios().anadir(u);
+		//Intentar que un usuario válido inicie
+		JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().comprobarInicio("usuario", "contrasena");
+		//Comprobar que el resultado ha sido correcto
+		assertTrue(resultado.getBoolean("estado"));
+	}
+
+	//Método recuperarContrasena(String correo)
+
+
+
+	//Método emailValido(String correo)
+
+
+
+	//Método enviarEmail(String correo)
+
+
+
+	//Método generarCodigo() - ???
+
+
+
+	//Método comprobarCodigo(String correo, String codigo, String codigoIntroducido, String cNueva1, String cNueva2)
+
+
+
+	//Método comprobarRegistro(String nombreUsuario, String correo, String contrasena1, String contrasena2)
+
+
+
+	//Método comprobarCambio(String nombreUsuario, String cAnterior, String cNueva1, String cNueva2)
+
+
+
+	//Método contrasenaValida(String contrasena)
+
+
+
+	//Método borrarUsuarios()
+
+
+
 }
