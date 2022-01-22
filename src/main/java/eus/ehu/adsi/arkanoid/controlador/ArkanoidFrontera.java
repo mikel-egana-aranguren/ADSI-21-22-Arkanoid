@@ -1,15 +1,21 @@
 package eus.ehu.adsi.arkanoid.controlador;
 
 import java.sql.SQLException;
+import java.sql.Time;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 import org.json.JSONObject;
 
+import eus.ehu.adsi.arkanoid.modelo.Arkanoid;
 import eus.ehu.adsi.arkanoid.modelo.DataBase;
 import eus.ehu.adsi.arkanoid.modelo.Usuario;
 
 public class ArkanoidFrontera {
     private static ArkanoidFrontera mArkanoidFrontera = null;
+    private LocalDateTime fechaHoraInicio;
+    private String fechaHoraInicioStr;
 
     private ArkanoidFrontera() {}
 
@@ -198,5 +204,13 @@ public class ArkanoidFrontera {
                 return 0;
             }
         }
+    }
+
+    public void comenzarPartida(int nivel){
+        //DataBase.getmDataBase().crearPartida(nivel, nombreJugador);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
+        LocalDateTime fechaHoraInicio = LocalDateTime.now();
+        fechaHoraInicioStr = dtf.format(fechaHoraInicio);
+        Arkanoid.getArkanoid(nivel).run();
     }
 }
