@@ -1,8 +1,12 @@
 package eus.ehu.adsi.arkanoid.controlador;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
+import eus.ehu.adsi.arkanoid.modelo.DataBase;
 import eus.ehu.adsi.arkanoid.modelo.Usuario;
 
 public class GestorUsuarios {
@@ -50,6 +54,19 @@ public class GestorUsuarios {
     /*MÉTODOS PARA PRUEBAS*/
     public void anadir(Usuario u) {
         this.lUsuarios.add(u);
+    }
+
+    public JSONObject cargarDatosPersonalizacion(String nombreUsuario) {
+        try {
+            return DataBase.getmDataBase().cargarDatosPersonalizacion(nombreUsuario);
+        } catch (SQLException e) {
+            System.err.println(e);
+            return null;
+        }
+    }
+
+    public void actualizarPersonalizacion(String nombreUsuario, String colorBola, String colorPadel,
+            String colorLadrillo, String colorFondo, boolean sonido) {
     }
 
 }
