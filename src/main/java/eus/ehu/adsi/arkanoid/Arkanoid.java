@@ -199,5 +199,34 @@ public class Arkanoid extends JFrame implements KeyListener {
 	}
 
 	public void keyTyped(KeyEvent arg0) {}
+	
+	
+	public static void mostrarRankingPersonalAbsoluto() {
+		//llamar a bd
+		//		
+	}
+	public static void mostrarRankingPersonalNivel() {
+		//llamar a bd
+		//		
+	}
+	public static void mostrarRankingNivelAbsoluto() {
+		//llamar a bd
+		//		
+	}
+	public static void mostrarRankingGlobalNivel() {
+		//llamar a bd
+		//
+	}
+	
+	public static void ordenarPorPuntos() {
+	
+	}
 
 }
+
+
+
+
+
+
+

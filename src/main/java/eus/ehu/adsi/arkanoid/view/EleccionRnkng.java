@@ -17,6 +17,8 @@ package eus.ehu.adsi.arkanoid.view;
 	import javax.swing.JPanel;
 	import javax.swing.border.EmptyBorder;
 
+import eus.ehu.adsi.arkanoid.Arkanoid;
+
 //	import modelo.CatalogoSudokus;
 //	import modelo.JuegoActual;
 //	import modelo.Jugador;
@@ -121,16 +123,16 @@ package eus.ehu.adsi.arkanoid.view;
 			JRadioButton btn = (JRadioButton)e.getSource();
 
 			if (btn.getText().equals("Personal - Absoluto")){
-				
+				Arkanoid.mostrarRankingPersonalAbsoluto();
 				
 			}else if (btn.getText().equals("Personal-Nivel")){
-				
+				Arkanoid.mostrarRankingPersonalNivel();
 				
 			}else if (btn.getText().equals("Global-Absoluto")){
-
+				Arkanoid.mostrarRankingNivelAbsoluto();
 			
 			}else if (btn.getText().equals("Global - Nivel")){
-
+				Arkanoid.mostrarRankingGlobalNivel();
 	
 			}else if (btn.getText().equals("Salir")){
 				System.exit(getDefaultCloseOperation());
