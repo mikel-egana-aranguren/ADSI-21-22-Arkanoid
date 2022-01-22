@@ -116,13 +116,21 @@ package eus.ehu.adsi.arkanoid.view;
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+
 			JRadioButton btn = (JRadioButton)e.getSource();
 
-			if (btn.getText().equals("Jugar una nueva partida")){
+			if (btn.getText().equals("Personal - Absoluto")){
 				
-			}else if (btn.getText().equals("Ver el ranking")){
+				
+			}else if (btn.getText().equals("Personal-Nivel")){
+				
+				
+			}else if (btn.getText().equals("Global-Absoluto")){
 
+			
+			}else if (btn.getText().equals("Global - Nivel")){
+
+	
 			}else if (btn.getText().equals("Salir")){
 				System.exit(getDefaultCloseOperation());
 			}
