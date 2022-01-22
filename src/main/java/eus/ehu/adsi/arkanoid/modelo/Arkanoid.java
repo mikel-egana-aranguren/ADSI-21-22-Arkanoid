@@ -32,7 +32,7 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 
 	// Housekeeping
 	private static final long serialVersionUID = 1L;
-	//private static final Logger logger = LogManager.getLogger(Arkanoid.class);
+	private static final Logger logger = LogManager.getLogger(Arkanoid.class);
 
 	// Game variables
 	private Game game;
@@ -64,6 +64,7 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 		this.addKeyListener(this);
 		this.setLocationRelativeTo(null);
 		this.createBufferStrategy(2);
+		this.setFocusable(true);
 
 		bricks = Game.initializeBricks(bricks, nivel);
 
@@ -85,7 +86,7 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 
 			long time1 = System.currentTimeMillis();
 			if (!scoreboard.gameOver && !scoreboard.win) {
-				//logger.info("Playing");
+				logger.info("Playing");
 				game.setTryAgain(false);
 				update();
 				drawScene(ball, bricks, scoreboard);
@@ -94,12 +95,12 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {
-					//logger.error(e.getMessage());
+					logger.error(e.getMessage());
 				}
 
 			} else {
 				if (game.isTryAgain()) {
-					//logger.info("Trying again");
+					logger.info("Trying again");
 					game.setTryAgain(false);
 					bricks = Game.initializeBricks(bricks, nivel);
 					scoreboard.lives = Config.PLAYER_LIVES;
@@ -121,7 +122,7 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 			double seconds = elapsedTime / 1000.0;
 			if (seconds > 0.0) {
 				double fps = 1.0 / seconds;
-				//logger.info("FPS: " + fps);
+				logger.info("FPS: " + fps);
 			}
 
 		}
