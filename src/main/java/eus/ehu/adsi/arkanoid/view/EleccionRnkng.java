@@ -79,7 +79,7 @@ import eus.ehu.adsi.arkanoid.Arkanoid;
 			contentPane.setBackground(new Color(100,176,155));
 			contentPane.setOpaque(true);
 
-			JLabel l1 = new JLabel("¿Qué ranking quieres ver?");
+			JLabel l1 = new JLabel("ï¿½Quï¿½ ranking quieres ver?");
 			l1.setFont(new Font("Lucida Sans", Font.BOLD, 20));
 			l1.setForeground(Color.BLACK);
 			l1.setBounds(250, 40, 1000, 23);
@@ -123,16 +123,16 @@ import eus.ehu.adsi.arkanoid.Arkanoid;
 			JRadioButton btn = (JRadioButton)e.getSource();
 
 			if (btn.getText().equals("Personal - Absoluto")){
-				Arkanoid.mostrarRankingPersonalAbsoluto();
+				//Arkanoid.mostrarRankingPersonalAbsoluto();
 				
 			}else if (btn.getText().equals("Personal-Nivel")){
-				Arkanoid.mostrarRankingPersonalNivel();
+				//Arkanoid.mostrarRankingPersonalNivel();
 				
 			}else if (btn.getText().equals("Global-Absoluto")){
-				Arkanoid.mostrarRankingNivelAbsoluto();
+				//Arkanoid.mostrarRankingNivelAbsoluto();
 			
 			}else if (btn.getText().equals("Global - Nivel")){
-				Arkanoid.mostrarRankingGlobalNivel();
+				//Arkanoid.mostrarRankingGlobalNivel();
 	
 			}else if (btn.getText().equals("Salir")){
 				System.exit(getDefaultCloseOperation());

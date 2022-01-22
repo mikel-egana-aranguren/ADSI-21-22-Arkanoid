@@ -1,7 +1,9 @@
 package eus.ehu.adsi.arkanoid;
 
 // Adapted from https://gist.github.com/Miretz/f10b18df01f9f9ebfad5
-
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Toolkit;
@@ -9,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
+import java.net.URISyntaxException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -200,6 +203,9 @@ public class Arkanoid extends JFrame implements KeyListener {
 		if (event.getKeyCode() == KeyEvent.VK_ENTER) {
 			game.setTryAgain(true);
 		}
+		if (event.getKeyCode() == KeyEvent.VK_S) {
+			share();
+		}
 		switch (event.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
 			paddle.moveLeft();
@@ -236,6 +242,31 @@ public class Arkanoid extends JFrame implements KeyListener {
 	}
 
 	public void keyTyped(KeyEvent arg0) {}
+	public void share(){
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM partidanormal ORDER BY fecha DESC LIMIT 1");
+		String resultado = "";
+		try {
+				rs.next();
+				int puntos = rs.getInt("puntos");
+				int nivel = rs.getInt("numnivel");
+				String mensaje="He conseguido "+puntos+" puntos en el nivel "+ nivel + " de Arkanoid ADSI!!!";
+			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+				try {
+					Desktop.getDesktop().browse(new URI("https://twitter.com/intent/tweet?text="+mensaje.replace( " ","%20")));
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (URISyntaxException e) {
+					e.printStackTrace();
+				}
+			}
+
+				rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+
+	}
 	
   
 	public static String obtenerDescripciones() {
@@ -284,6 +315,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 		return resultado;
 
 	}
+
 
 }
 

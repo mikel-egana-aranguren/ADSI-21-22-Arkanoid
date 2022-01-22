@@ -42,7 +42,7 @@ public class ScoreBoard {
 				if(bricksRotos==Config.NBricks3){
 					win = true;
 					text = "You have won! \nYour score was: " + score
-							+ "\n\nPress Enter to restart";
+							+ "\n\nPress Enter to restart + \n\nPress S to share";
 				}else{updateScoreboard();}
 				break;
 		}
@@ -62,7 +62,7 @@ public class ScoreBoard {
 		if (lives == 0) {
 			gameOver = true;
 			text = "You have lost! \nYour score was: " + score
-					+ "\n\nPress Enter to restart";
+					+ "\n\nPress Enter to restart + \n\nPress S to share";
 		} else {
 			updateScoreboard();
 		}
