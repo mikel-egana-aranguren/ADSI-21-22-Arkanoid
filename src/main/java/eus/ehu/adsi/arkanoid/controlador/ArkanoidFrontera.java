@@ -32,7 +32,8 @@ public class ArkanoidFrontera {
 
     public void cambiarAjustes(String colorBola, String colorPadel, String colorLadrillo, String colorFondo, boolean sonido, String nombreUsuario) {
         Usuario u = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
-        u.cambiarAjustes(colorBola, colorPadel, colorLadrillo, colorFondo, sonido);
+        GestorUsuarios.getGestorUsuarios().actualizarPersonalizacion(nombreUsuario, colorBola, colorPadel, colorLadrillo, colorFondo, sonido);
+        //u.cambiarAjustes(colorBola, colorPadel, colorLadrillo, colorFondo, sonido);
     }
     public JSONObject comprobarInicio(String nombreUsuario, String contrasena) {
 
