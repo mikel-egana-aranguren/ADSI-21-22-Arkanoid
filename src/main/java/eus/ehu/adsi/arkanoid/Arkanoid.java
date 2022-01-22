@@ -202,6 +202,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 	public void keyTyped(KeyEvent arg0) {}
 	
+  
 	public static String obtenerDescripciones() {
 		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM premio");
 		String resultado = "";
@@ -246,6 +247,14 @@ public class Arkanoid extends JFrame implements KeyListener {
 			e.printStackTrace();
 		}
 		return resultado;
+
 	}
 
 }
+
+
+
+
+
+
+
