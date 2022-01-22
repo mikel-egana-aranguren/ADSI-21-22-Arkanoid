@@ -9,12 +9,19 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import eus.ehu.adsi.arkanoid.Arkanoid;
+import eus.ehu.adsi.arkanoid.Conexion;
 
 public class Descripciones extends JFrame{
 	private static Descripciones miDescripciones;
@@ -69,8 +76,17 @@ public class Descripciones extends JFrame{
 		fondo = new JPanel();
 		fondo.setLayout(new GridLayout(5,2));
 		fondo.setOpaque(false);
+		String rs = Arkanoid.obtenerDescripciones();
+		//No se usar JSON
+		String[] lineas = rs.split("8");
+		for (String linea : lineas) {
+			JLabel l = new JLabel();
+			System.out.println(linea);
+			l.setText(linea);
+			l.setForeground(Color.WHITE);
+			fondo.add(l);
+		}
 		contentPane.add(fondo, BorderLayout.CENTER);
-		JLabel obt = new JLabel();
 		
 		sur = new JPanel();
 		sur.setLayout(new FlowLayout());

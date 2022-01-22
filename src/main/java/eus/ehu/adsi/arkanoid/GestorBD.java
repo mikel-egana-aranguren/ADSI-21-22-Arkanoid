@@ -1,36 +1,35 @@
 package eus.ehu.adsi.arkanoid;
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.JLabel;
 
 public class GestorBD {
-
-	private static final String CONTROLADOR = "com.mysql.jdbc.Driver";
-	private static final String URL = "jdbc:mysql://localhost:3306/Arkanoid";
-	private static final String USUARIO = "root";
-	private static final String CLAVE = "mysql";
-
-	public Connection conectar() {
-		Connection conexion = null;
-		
+	public static GestorBD miGestorBD = new GestorBD();
+	
+	private GestorBD(){
+	}
+	
+	public GestorBD getMiGestorBD() {
+		return GestorBD.miGestorBD;
+	}
+	
+	public ResultSet execSQL1(String instr) {
+		Conexion conexion = new Conexion();
+		Connection cn = null;
+		Statement stm = null;
+		ResultSet rs = null;
 		try {
-			Class.forName(CONTROLADOR);
-			conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
-			System.out.println("Conexión OK");
-
-		} catch (ClassNotFoundException e) {
-			System.out.println("Error al cargar el controlador");
-			e.printStackTrace();
-
+			cn = conexion.conectar();
+			stm = cn.createStatement();
+			rs = stm.executeQuery(instr);
 		} catch (SQLException e) {
-			System.out.println("Error en la conexión");
 			e.printStackTrace();
 		}
-		
-		return conexion;
-	}
-
-	public static void main(String[] args) {
-
+		return rs;
 	}
 }
