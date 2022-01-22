@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Iterator;
 
 import org.json.JSONObject;
 
@@ -144,25 +145,96 @@ public class DataBase {
         s.executeUpdate("UPDATE usuario SET sonidoAct=\"" + son + "\", colorLadrillo=\"" + colorLadrillo + "\", colorBola =\"" + colorBola + "\", colorPaddle =\"" + colorPadel + "\" , colorFondo =\"" + colorFondo + "\" WHERE nombreUsuario = \"" + nombreUsuario + "\"");
     }
 
-    public JSONObject getColoresBola() {
+    public JSONObject getColoresBola(String nombre) throws SQLException {
         JSONObject colores = new JSONObject();
         Connection con = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://sql4.freesqldatabase.com/sql4466495", "sql4466495","NKihfwtwiR");
 		} catch (ClassNotFoundException e) {
-			System.out.println("Error al registrar el dirver de MySQL:" + e); 
+			System.out.println("Error al registrar el dirver de MySQL:" + e);
+            return null;
 		}
-        int son;
         Statement s = con.createStatement();
         ResultSet rs;
-        rs = s.executeQuery("SELECT * FROM colorBola");
-        rs.next();
-        while (rs.next()){
-            
+        rs = s.executeQuery("SELECT bolaNaranja, bolaRojo, bolaBlanca, bolaAzul FROM usuario WHERE nombreUsuario=\"" + nombre +"\"");
+        boolean b = rs.next();
+        if (b) {
+            colores.put("bolaRojo", rs.getInt(1));
+            colores.put("bolaBlanca", rs.getInt(2));
+            colores.put("bolaAzul", rs.getInt(3));
+            colores.put("bolaNaranja", rs.getInt(4));
         }
+        return colores;
+    }
 
-        return rs;
+    public JSONObject getColoresFondo(String nombre) throws SQLException {
+        JSONObject colores = new JSONObject();
+        Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://sql4.freesqldatabase.com/sql4466495", "sql4466495","NKihfwtwiR");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error al registrar el dirver de MySQL:" + e);
+            return null;
+		}
+        Statement s = con.createStatement();
+        ResultSet rs;
+        rs = s.executeQuery("SELECT fondoNegro, fondoVerde, fondoMorado, fondoCyan FROM usuario WHERE nombreUsuario=\"" + nombre +"\"");
+        boolean b = rs.next();
+        if (b) {
+            colores.put("fondoVerde", rs.getInt(1));
+            colores.put("fondoMorado", rs.getInt(2));
+            colores.put("fondoCyan", rs.getInt(3));
+            colores.put("fondoNegro", rs.getInt(4));
+        }
+        return colores;
+    }
+
+    public JSONObject getColoresLadrillos(String nombre) throws SQLException {
+        JSONObject colores = new JSONObject();
+        Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://sql4.freesqldatabase.com/sql4466495", "sql4466495","NKihfwtwiR");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error al registrar el dirver de MySQL:" + e);
+            return null;
+		}
+        Statement s = con.createStatement();
+        ResultSet rs;
+        rs = s.executeQuery("SELECT ladrilloAzul, ladrilloRojo, ladrilloBlanco, ladrilloNaranja FROM usuario WHERE nombreUsuario=\"" + nombre +"\"");
+        boolean b = rs.next();
+        if (b) {
+            colores.put("ladrilloRojo", rs.getInt(1));
+            colores.put("ladrilloBlanco", rs.getInt(2));
+            colores.put("ladrilloNaranja", rs.getInt(3));
+            colores.put("ladrilloAzul", rs.getInt(4));
+        }
+        return colores;
+    }
+
+    public JSONObject getColoresPaddle(String nombre) throws SQLException {
+        JSONObject colores = new JSONObject();
+        Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://sql4.freesqldatabase.com/sql4466495", "sql4466495","NKihfwtwiR");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error al registrar el dirver de MySQL:" + e);
+            return null;
+		}
+        Statement s = con.createStatement();
+        ResultSet rs;
+        rs = s.executeQuery("SELECT paddleRojo, paddleBlanco, paddleNaranja, paddleAzul FROM usuario WHERE nombreUsuario=\"" + nombre +"\"");
+        boolean b = rs.next();
+        if (b) {
+            colores.put("paddleBlanco", rs.getInt(1));
+            colores.put("paddleNaranja", rs.getInt(2));
+            colores.put("paddleAzul", rs.getInt(3));
+            colores.put("paddleRojo", rs.getInt(4));
+        }
+        return colores;
     }
 
     

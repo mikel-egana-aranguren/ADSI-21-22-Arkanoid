@@ -234,31 +234,41 @@ public class ArkanoidFrontera {
         }
     }
 
-    public JSONObject getColores(String objeto){
+    public JSONObject getColores(String objeto, String nombre){
+        JSONObject colores;
         if (objeto == "fondo"){
             try {
-                DataBase.getmDataBase().getColoresFondo();
+                colores = DataBase.getmDataBase().getColoresFondo(nombre);
             } catch (Exception e) {
+                e.printStackTrace();
                 System.err.println(e);
+                return null;
             }
         } else if (objeto == "bola"){
             try {
-                DataBase.getmDataBase().getColoresBola();
+                colores = DataBase.getmDataBase().getColoresBola(nombre);
             } catch (Exception e) {
+                e.printStackTrace();
                 System.err.println(e);
+                return null;
             }
         }else if (objeto == "paddle"){
             try {
-                DataBase.getmDataBase().getColoresPaddle();
+                colores = DataBase.getmDataBase().getColoresPaddle(nombre);
             } catch (Exception e) {
+                e.printStackTrace();
                 System.err.println(e);
+                return null;
             }
         }else {
             try {
-                DataBase.getmDataBase().getColoresLadrillos();
+                colores = DataBase.getmDataBase().getColoresLadrillos(nombre);
             } catch (Exception e) {
+                e.printStackTrace();
                 System.err.println(e);
+                return null;
             }
         }
+        return colores;
     }
 }

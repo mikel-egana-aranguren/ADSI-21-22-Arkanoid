@@ -4,6 +4,8 @@ import eus.ehu.adsi.arkanoid.view.game.Config;
 
 import javax.swing.JFrame;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JLabel;
 
 import javax.swing.JPanel;
@@ -24,6 +26,9 @@ import javax.swing.ImageIcon;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.awt.Font;
 
 public class Personalizacion21 {
@@ -287,8 +292,9 @@ public class Personalizacion21 {
     private JComboBox<String> getComboBoxBackGround(String s) {
 		if (comboBoxBackGround == null) {
 			comboBoxBackGround = new JComboBox<String>();
-			String[] colores = ArkanoidFrontera.getArkanoidFrontera().getColores("Fondo");
-			comboBoxBackGround.setModel(new DefaultComboBoxModel<String>(colores));
+			JSONObject colores = ArkanoidFrontera.getArkanoidFrontera().getColores("fondo", nombreUsuario);
+			comboBoxBackGround.setModel(new DefaultComboBoxModel<String>());
+			this.añadirColores(comboBoxBackGround, colores);
 			comboBoxBackGround.setForeground(Color.BLACK);
 			comboBoxBackGround.setFont(impact);
 		}
@@ -298,7 +304,9 @@ public class Personalizacion21 {
     private JComboBox<String> getComboBoxBall(String s) {
 		if (comboBoxBall == null) {
 			comboBoxBall = new JComboBox<String>();
-			comboBoxBall.setModel(new DefaultComboBoxModel<String>(new String[] {s, "Color2", "Color3"}));
+			JSONObject colores = ArkanoidFrontera.getArkanoidFrontera().getColores("bola", nombreUsuario);
+			comboBoxBall.setModel(new DefaultComboBoxModel<String>());
+			this.añadirColores(comboBoxBall, colores);
 			comboBoxBall.setForeground(Color.BLACK);
 			comboBoxBall.setFont(impact);
 		}
@@ -308,7 +316,9 @@ public class Personalizacion21 {
     private JComboBox<String> getComboBoxPaddle(String s) {
 		if (comboBoxPaddle == null) {
 			comboBoxPaddle = new JComboBox<String>();
-			comboBoxPaddle.setModel(new DefaultComboBoxModel<String>(new String[] {s, "Color2", "Color3"}));
+			JSONObject colores = ArkanoidFrontera.getArkanoidFrontera().getColores("paddle", nombreUsuario);
+			comboBoxPaddle.setModel(new DefaultComboBoxModel<String>());
+			this.añadirColores(comboBoxPaddle, colores);
 			comboBoxPaddle.setForeground(Color.BLACK);
 			comboBoxPaddle.setFont(impact);
 		}
@@ -318,11 +328,40 @@ public class Personalizacion21 {
     private JComboBox<String> getComboBoxLadrillo(String s) {
 		if (comboBoxLadrillo == null) {
 			comboBoxLadrillo = new JComboBox<String>();
-			comboBoxLadrillo.setModel(new DefaultComboBoxModel<String>(new String[] {s, "Color2", "Color3"}));
+			JSONObject colores = ArkanoidFrontera.getArkanoidFrontera().getColores("ladrillo", nombreUsuario);
+			comboBoxLadrillo.setModel(new DefaultComboBoxModel<String>());
+			this.añadirColores(comboBoxLadrillo, colores);
 			comboBoxLadrillo.setForeground(Color.BLACK);
 			comboBoxLadrillo.setFont(impact);
 		}
 		return comboBoxLadrillo;
+	}
+
+	private void añadirColores(JComboBox comboBox, JSONObject colores){
+		Iterator <String> keys = colores.keys();
+		while(keys.hasNext()){
+			String key = keys.next();
+			if ((int)colores.get(key) == 1){
+				List<Character> lChar = new ArrayList<>();
+				for (char c : key.toCharArray()){
+					lChar.add(c);
+				}
+				boolean primeraPalabra = true;
+				List<Character> lChar2 = new ArrayList<>();
+				for (Character car : lChar) {
+					if (!primeraPalabra || Character.isUpperCase(car)){
+						primeraPalabra = false;
+						lChar2.add(car);
+					}
+				}
+				StringBuilder sb = new StringBuilder();
+				for (Character car : lChar2){
+					sb.append(car);
+				}
+				comboBox.addItem(sb.toString());
+			}
+		}
+		
 	}
 
     private JButton getBtnSonido(int s) {
