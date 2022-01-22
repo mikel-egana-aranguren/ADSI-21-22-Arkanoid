@@ -9,11 +9,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -200,26 +202,52 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 	public void keyTyped(KeyEvent arg0) {}
 	
+  
+	public static String obtenerDescripciones() {
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM premio");
+		String resultado = "";
+		try {
+			while (rs.next()) {
+				String nombre = rs.getString("nombre");
+				String desc = rs.getString("descr");
+				resultado = resultado+nombre+": "+desc+"8";
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resultado;
+	}
 	
-	public static void mostrarRankingPersonalAbsoluto() {
-		//llamar a bd
-		//		
+	public static String obtenerPremiosObtenidos(String usuario) {
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT nombre FROM premiosJugador WHERE username='" + usuario+"'");
+		String resultado = "";
+		try {
+			while (rs.next()) {
+				String nombre = rs.getString("nombre");
+				resultado = resultado+nombre+"8";
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resultado;
 	}
-	public static void mostrarRankingPersonalNivel() {
-		//llamar a bd
-		//		
-	}
-	public static void mostrarRankingNivelAbsoluto() {
-		//llamar a bd
-		//		
-	}
-	public static void mostrarRankingGlobalNivel() {
-		//llamar a bd
-		
-	}
-	
-	public static void ordenarPorPuntos() {
-	
+
+	public static String obtenerPremiosNoObtenidos(String usuario) {
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT nombre FROM premio WHERE nombre NOT IN (SELECT nombre FROM premiosJugador WHERE username='" + usuario+ "')");
+		String resultado = "";
+		try {
+			while (rs.next()) {
+				String nombre = rs.getString("nombre");
+				resultado = resultado+nombre+"8";
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resultado;
+
 	}
 
 }
