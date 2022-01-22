@@ -45,9 +45,9 @@ public class Personalizacion21 {
 	private String nombreUsuario;
 	
 	
-	public Personalizacion21() {
-		initialize();
+	public Personalizacion21(String nombre) {
 		nombreUsuario = nombre;
+		initialize();
 	}
 	
 	
