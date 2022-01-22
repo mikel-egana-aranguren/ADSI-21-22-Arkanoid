@@ -9,8 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
-import eus.ehu.adsi.arkanoid.view.game.Config;
-
 import javax.swing.JButton;
 
 import java.awt.GridBagLayout;
@@ -45,9 +43,9 @@ public class Personalizacion21 {
 	private String nombreUsuario;
 	
 	
-	public Personalizacion21() {
-		initialize();
+	public Personalizacion21(String nombre) {
 		nombreUsuario = nombre;
+		initialize();
 	}
 	
 	
@@ -62,6 +60,7 @@ public class Personalizacion21 {
 		frame.setLocationRelativeTo(null);
 		frame.setBackground(Color.BLACK);
 		frame.setVisible(true);
+		ArkanoidFrontera.getArkanoidFrontera().cargarDatosPersonalizacion(nombreUsuario);
 	}
 	
 	private JPanel getPanelCentro() {

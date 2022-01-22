@@ -161,4 +161,8 @@ public class ArkanoidFrontera {
 
         return resultado;
     }
+
+    public JSONObject cargarDatosPersonalizacion(String nombreUsuario) {
+        return GestorUsuarios.getGestorUsuarios().cargarDatosPersonalizacion(nombreUsuario);
+    }
 }

@@ -3,6 +3,8 @@ package eus.ehu.adsi.arkanoid.controlador;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import eus.ehu.adsi.arkanoid.modelo.Usuario;
 
 public class GestorUsuarios {
@@ -50,6 +52,10 @@ public class GestorUsuarios {
     /*MÉTODOS PARA PRUEBAS*/
     public void anadir(Usuario u) {
         this.lUsuarios.add(u);
+    }
+
+    public JSONObject cargarDatosPersonalizacion(String nombreUsuario) {
+        
     }
 
 }
