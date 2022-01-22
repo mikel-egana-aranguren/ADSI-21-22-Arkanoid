@@ -109,6 +109,7 @@ package eus.ehu.adsi.arkanoid.view;
 			
 			JRadioButton j5 = new JRadioButton("Salir");
 			j5.setBounds(620, 90, 80, 50);
+			j5.setForeground(Color.RED);
 			j5.addActionListener(this);
 			j5.setBackground(new Color(100,176,155));
 			contentPane.add(j5);
