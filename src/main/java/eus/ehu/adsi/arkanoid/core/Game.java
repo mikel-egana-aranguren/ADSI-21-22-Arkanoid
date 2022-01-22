@@ -82,15 +82,46 @@ public class Game {
 				&& mA.bottom() >= mB.top() && mA.top() <= mB.bottom();
 	}
 	
-	public static List<Brick> initializeBricks(List<Brick> bricks) {
+	public static List<Brick> initializeBricks(List<Brick> bricks, int nivel) {
 		bricks.clear();
-		for (int iX = 0; iX < Config.COUNT_BLOCKS_X; ++iX) {
-			for (int iY = 0; iY < Config.COUNT_BLOCKS_Y; ++iY) {
-				bricks.add(new Brick(
-						(iX + 1) * (Config.BLOCK_WIDTH + 3) + 22,
-						(iY + 2) * (Config.BLOCK_HEIGHT + 3) + 50)
-						);
+		switch (nivel){
+			case 1:
+			for (int iX = 0; iX < Config.COUNT_BLOCKS_X; ++iX) {
+				for (int iY = 0; iY < Config.COUNT_BLOCKS_Y; ++iY) {
+					if(Config.nivel1[iY][iX]==1){
+						bricks.add(new Brick(
+							(iX + 1) * (Config.BLOCK_WIDTH + 3) + 22,
+							(iY + 2) * (Config.BLOCK_HEIGHT + 3) + 50));
+					}
+				}
 			}
+			break;
+			
+			
+			case 2:
+			for (int iX = 0; iX < Config.COUNT_BLOCKS_X; ++iX) {
+				for (int iY = 0; iY < Config.COUNT_BLOCKS_Y; ++iY) {
+					if(Config.nivel2[iY][iX]==1){
+						bricks.add(new Brick(
+							(iX + 1) * (Config.BLOCK_WIDTH + 3) + 22,
+							(iY + 2) * (Config.BLOCK_HEIGHT + 3) + 50));
+					}
+				}
+			}
+			break;
+			
+
+			case 3:
+			for (int iX = 0; iX < Config.COUNT_BLOCKS_X; ++iX) {
+				for (int iY = 0; iY < Config.COUNT_BLOCKS_Y; ++iY) {
+					if(Config.nivel3[iY][iX]==1){
+						bricks.add(new Brick(
+							(iX + 1) * (Config.BLOCK_WIDTH + 3) + 22,
+							(iY + 2) * (Config.BLOCK_HEIGHT + 3) + 50));
+					}
+				}
+			}
+			break;
 		}
 		return bricks;
 	}

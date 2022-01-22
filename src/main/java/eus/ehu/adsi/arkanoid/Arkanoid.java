@@ -58,8 +58,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 		this.setLocationRelativeTo(null);
 		this.createBufferStrategy(2);
 
-		bricks = Game.initializeBricks(bricks);
-
+		bricks = Game.initializeBricks(bricks,Config.Nivel_Inicio);
 	}
 
 	private Paddle getPaddle() {
@@ -83,6 +82,15 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 			long time1 = System.currentTimeMillis();
 
+			if(scoreboard.nivelSuperado){
+				scoreboard.nivelSuperado=false;
+				Game.initializeBricks(bricks,scoreboard.getNivelActual());
+				ball.x = Config.SCREEN_WIDTH / 2;
+				ball.y = Config.SCREEN_HEIGHT / 2;
+				paddle.x = Config.SCREEN_WIDTH / 2;
+			}
+			
+			
 			if (!scoreboard.gameOver && !scoreboard.win) {
 				logger.info("Playing");
 				game.setTryAgain(false);
@@ -97,11 +105,14 @@ public class Arkanoid extends JFrame implements KeyListener {
 					logger.error(e.getMessage());
 				}
 
-			} else {
+			} else { //HAY QUE ACTUALIZAR ESTO ESTO
 				if (game.isTryAgain()) {
+
 					logger.info("Trying again");
 					game.setTryAgain(false);
-					bricks = Game.initializeBricks(bricks);
+
+					bricks = Game.initializeBricks(bricks,Config.Nivel_Inicio);
+
 					scoreboard.lives = Config.PLAYER_LIVES;
 					scoreboard.score = 0;
 					scoreboard.win = false;
