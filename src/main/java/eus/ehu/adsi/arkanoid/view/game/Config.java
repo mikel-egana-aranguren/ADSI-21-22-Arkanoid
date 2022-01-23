@@ -9,8 +9,8 @@ public abstract class Config {
 
 	public static final double BALL_RADIUS = 10.0;
 	public static final double BALL_VELOCITY1 = 0.2;
-	public static final double BALL_VELOCITY2 = 0.3;
-	public static final double BALL_VELOCITY3 = 0.4;
+	public static final double BALL_VELOCITY2 = 0.27;
+	public static final double BALL_VELOCITY3 = 0.33;
 
 	public static final double PADDLE_WIDTH = 60.0;
 	public static final double PADDLE_HEIGHT = 20.0;
@@ -39,8 +39,18 @@ public abstract class Config {
 	public static Color PADDLE_COLOR;
 	public static Color BRICK_COLOR;
 
+	public static Boolean SONIDO;
+
 
     public static final Color BRICK_COLOR_SUERTE = Color.yellow;
+
+	public static void setSonido(Boolean activar){
+		SONIDO = activar;
+	}
+
+	public static Boolean getSonido(){
+		return SONIDO;
+	}
 
 	public static void setBackgroundColor(Color color){
 		BACKGROUND_COLOR = color;

@@ -16,8 +16,11 @@ public class Paddle extends Rectangle {
 		this.sizeY = Config.PADDLE_HEIGHT;
 	}
 
-	public void update() {
+	public void update(double sizeX) {
 		x += velocity * Config.FT_STEP;
+		if (sizeX != 0) {
+			this.sizeX = sizeX;
+		}
 	}
 
 	public void stopMove() {

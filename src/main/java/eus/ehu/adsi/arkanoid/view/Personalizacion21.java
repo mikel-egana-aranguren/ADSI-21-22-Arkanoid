@@ -59,7 +59,7 @@ public class Personalizacion21 {
 	
 	
 	private void initialize() {
-		JSONObject j = ArkanoidFrontera.getArkanoidFrontera().cargarDatosPersonalizacion("Bosco");
+		JSONObject j = ArkanoidFrontera.getArkanoidFrontera().cargarDatosPersonalizacion(nombreUsuario);
 		frame = new JFrame();
 		frame.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 		frame.setTitle("Personalización");
@@ -130,7 +130,7 @@ public class Personalizacion21 {
 			gbc_comboBoxBackGround.fill = GridBagConstraints.HORIZONTAL;
 			gbc_comboBoxBackGround.gridx = 1;
 			gbc_comboBoxBackGround.gridy = 0;
-			panelCentro.add(getComboBoxBackGround(j.getString("ColorFondo")), gbc_comboBoxBackGround);
+			panelCentro.add(getComboBoxBackGround(), gbc_comboBoxBackGround);
 
             //CB BALL
             GridBagConstraints gbc_comboBoxBall = new GridBagConstraints();
@@ -138,7 +138,7 @@ public class Personalizacion21 {
 			gbc_comboBoxBall.fill = GridBagConstraints.HORIZONTAL;
 			gbc_comboBoxBall.gridx = 1;
 			gbc_comboBoxBall.gridy = 1;
-			panelCentro.add(getComboBoxBall(j.getString("ColorBola")), gbc_comboBoxBall);
+			panelCentro.add(getComboBoxBall(), gbc_comboBoxBall);
 
 
             //CB PADDLE
@@ -147,7 +147,7 @@ public class Personalizacion21 {
 			gbc_comboBoxPaddle.fill = GridBagConstraints.HORIZONTAL;
 			gbc_comboBoxPaddle.gridx = 1;
 			gbc_comboBoxPaddle.gridy = 2;
-			panelCentro.add(getComboBoxPaddle(j.getString("ColorPaddle")), gbc_comboBoxPaddle);
+			panelCentro.add(getComboBoxPaddle(), gbc_comboBoxPaddle);
 			
 			
 
@@ -157,7 +157,7 @@ public class Personalizacion21 {
 			gbc_comboBoxLadrillo.fill = GridBagConstraints.HORIZONTAL;
 			gbc_comboBoxLadrillo.gridx = 1;
 			gbc_comboBoxLadrillo.gridy = 3;
-			panelCentro.add(getComboBoxLadrillo(j.getString("ColorLadrillo")), gbc_comboBoxLadrillo);
+			panelCentro.add(getComboBoxLadrillo(), gbc_comboBoxLadrillo);
 
             //BTN SONIDO
 			GridBagConstraints gbc_btnSonido= new GridBagConstraints();
@@ -290,7 +290,7 @@ public class Personalizacion21 {
 		return lblLadrillo;
 	}
 
-    private JComboBox<String> getComboBoxBackGround(String s) {
+    private JComboBox<String> getComboBoxBackGround() {
 		if (comboBoxBackGround == null) {
 			comboBoxBackGround = new JComboBox<String>();
 			JSONObject colores = ArkanoidFrontera.getArkanoidFrontera().getColores("fondo", nombreUsuario);
@@ -302,7 +302,7 @@ public class Personalizacion21 {
 		return comboBoxBackGround;
 	}
 
-    private JComboBox<String> getComboBoxBall(String s) {
+    private JComboBox<String> getComboBoxBall() {
 		if (comboBoxBall == null) {
 			comboBoxBall = new JComboBox<String>();
 			JSONObject colores = ArkanoidFrontera.getArkanoidFrontera().getColores("bola", nombreUsuario);
@@ -314,7 +314,7 @@ public class Personalizacion21 {
 		return comboBoxBall;
 	}
 
-    private JComboBox<String> getComboBoxPaddle(String s) {
+    private JComboBox<String> getComboBoxPaddle() {
 		if (comboBoxPaddle == null) {
 			comboBoxPaddle = new JComboBox<String>();
 			JSONObject colores = ArkanoidFrontera.getArkanoidFrontera().getColores("paddle", nombreUsuario);
@@ -326,7 +326,7 @@ public class Personalizacion21 {
 		return comboBoxPaddle;
 	}
 
-    private JComboBox<String> getComboBoxLadrillo(String s) {
+    private JComboBox<String> getComboBoxLadrillo() {
 		if (comboBoxLadrillo == null) {
 			comboBoxLadrillo = new JComboBox<String>();
 			JSONObject colores = ArkanoidFrontera.getArkanoidFrontera().getColores("ladrillo", nombreUsuario);

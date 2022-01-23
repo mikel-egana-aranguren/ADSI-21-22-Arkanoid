@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 
 import org.json.JSONObject;
@@ -157,13 +158,13 @@ public class DataBase {
 		}
         Statement s = con.createStatement();
         ResultSet rs;
-        rs = s.executeQuery("SELECT bolaNaranja, bolaRojo, bolaBlanca, bolaAzul FROM usuario WHERE nombreUsuario=\"" + nombre +"\"");
+        rs = s.executeQuery("SELECT bolaNaranja, bolaRojo, bolaBlanco, bolaAzul FROM usuario WHERE nombreUsuario=\"" + nombre +"\"");
         boolean b = rs.next();
         if (b) {
-            colores.put("bolaRojo", rs.getInt(1));
-            colores.put("bolaBlanca", rs.getInt(2));
-            colores.put("bolaAzul", rs.getInt(3));
-            colores.put("bolaNaranja", rs.getInt(4));
+            colores.put("bolaNaranja", rs.getInt(1));
+            colores.put("bolaRojo", rs.getInt(2));
+            colores.put("bolaBlanco", rs.getInt(3));
+            colores.put("bolaAzul", rs.getInt(4));
         }
         return colores;
     }
@@ -183,10 +184,10 @@ public class DataBase {
         rs = s.executeQuery("SELECT fondoNegro, fondoVerde, fondoMorado, fondoCyan FROM usuario WHERE nombreUsuario=\"" + nombre +"\"");
         boolean b = rs.next();
         if (b) {
-            colores.put("fondoVerde", rs.getInt(1));
-            colores.put("fondoMorado", rs.getInt(2));
-            colores.put("fondoCyan", rs.getInt(3));
-            colores.put("fondoNegro", rs.getInt(4));
+            colores.put("fondoNegro", rs.getInt(1));
+            colores.put("fondoVerde", rs.getInt(2));
+            colores.put("fondoMorado", rs.getInt(3));
+            colores.put("fondoCyan", rs.getInt(4));
         }
         return colores;
     }
@@ -229,10 +230,10 @@ public class DataBase {
         rs = s.executeQuery("SELECT paddleRojo, paddleBlanco, paddleNaranja, paddleAzul FROM usuario WHERE nombreUsuario=\"" + nombre +"\"");
         boolean b = rs.next();
         if (b) {
-            colores.put("paddleBlanco", rs.getInt(1));
-            colores.put("paddleNaranja", rs.getInt(2));
-            colores.put("paddleAzul", rs.getInt(3));
-            colores.put("paddleRojo", rs.getInt(4));
+            colores.put("paddleRojo", rs.getInt(1));
+            colores.put("paddleBlanco", rs.getInt(2));
+            colores.put("paddleNaranja", rs.getInt(3));
+            colores.put("paddleAzul", rs.getInt(4));
         }
         return colores;
     }
@@ -269,5 +270,79 @@ public class DataBase {
         Statement s = con.createStatement();
         s.executeUpdate("UPDATE usuario SET colorBola=\""+ colorBola +"\", colorPaddle=\""+ colorPaddel +"\", colorLadrillo=\""+ colorLadrillo +"\", colorFondo=\""+ colorFondo +"\", sonidoAct=\""+ audio +"\" WHERE nombreUsuario=\""+ nombre +"\";");
     }
+
+    public boolean getSonido(String nombre) throws SQLException{
+        Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://sql4.freesqldatabase.com/sql4466495", "sql4466495","NKihfwtwiR");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error al registrar el dirver de MySQL:" + e);
+		}
+        Statement s = con.createStatement();
+        ResultSet rs = s.executeQuery("SELECT sonidoAct FROM usuario WHERE nombreUsuario=\""+ nombre +"\"");
+        boolean b = rs.next();
+        if (b) {
+            return rs.getBoolean(1);
+        }
+        return false;
+    }
+
+    public JSONObject buscarUsuario(String nombreUsuario, String contra) throws SQLException {
+        JSONObject j = new JSONObject();
+        Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://sql4.freesqldatabase.com/sql4466495", "sql4466495","NKihfwtwiR");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error al registrar el dirver de MySQL:" + e);
+		}
+        ResultSet rs;
+        Statement s = con.createStatement();
+        rs = s.executeQuery("SELECT * FROM usuario WHERE nombreUsuario = \""+nombreUsuario+"\" AND contraseña = \"" + contra + "\"");
+        boolean b = rs.next();
+        if (b) {
+            j.put("nombreUsuario", rs.getString(1));
+            j.put("correo", rs.getString(2));
+            j.put("contra", rs.getString(3));
+        }
+
+        return j;
+    }
+
+    public void guardarPartida(int puntuacion, int ladrillosNormalesDestruidos, int ladrillosEspecialesDestruidos,
+            boolean victoria, String nombre, LocalDateTime fechaFin, int numVidas, int lvl) throws SQLException {
+        Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://sql4.freesqldatabase.com/sql4466495", "sql4466495","NKihfwtwiR");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error al registrar el dirver de MySQL:" + e);
+		}
+        String fecha = fechaFin.toString();
+        Statement s = con.createStatement();
+        int v = 0;
+        if (victoria) v = 1;
+        s.execute("INSERT INTO Partida VALUES (\"" + nombre + "\", \""+ "null" + "\", " + lvl + ", , \""+ "null" + "\", \""+ fecha + "\", " + puntuacion + ", " + ladrillosNormalesDestruidos + ", " + ladrillosEspecialesDestruidos + ", " + v + ", " + numVidas + ")");       
+    }
     
+    public int getMaxPunt(String nombre) throws SQLException {
+        int maxPunt=0;
+        Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://sql4.freesqldatabase.com/sql4466495", "sql4466495","NKihfwtwiR");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error al registrar el dirver de MySQL:" + e);
+            return -1;
+		}
+        Statement s = con.createStatement();
+        ResultSet rs;
+        rs = s.executeQuery("SELECT MAX(puntuacion) FROM Partida WHERE nombreUsuario=\"" + nombre +"\"");
+        boolean b = rs.next();
+        if (b) {
+            maxPunt=rs.getInt(1);
+        }
+        return maxPunt;
+    }
 }

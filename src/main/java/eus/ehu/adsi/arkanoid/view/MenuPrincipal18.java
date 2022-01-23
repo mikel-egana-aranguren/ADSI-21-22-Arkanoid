@@ -1,8 +1,8 @@
 package eus.ehu.adsi.arkanoid.view;
 
 import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
+import eus.ehu.adsi.arkanoid.view.game.Arkanoid;
 import eus.ehu.adsi.arkanoid.view.game.Config;
-import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +15,7 @@ public class MenuPrincipal18 extends JFrame {
 
     public MenuPrincipal18(String pNombreUsuario) {
 
+        
         this.nombreUsuario = pNombreUsuario;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setUndecorated(false);
@@ -51,6 +52,7 @@ public class MenuPrincipal18 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                ArkanoidFrontera.getArkanoidFrontera().cargarAjustes();
                 new SeleccionarNivel19();
             }
         });
@@ -108,7 +110,7 @@ public class MenuPrincipal18 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                new CambiarContraseña20(nombreUsuario);
+                new CambiarContrasena20(nombreUsuario);
             }
         });
         return cambiar;
