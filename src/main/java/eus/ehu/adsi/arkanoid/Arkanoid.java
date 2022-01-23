@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 import eus.ehu.adsi.arkanoid.core.Bonus;
 import org.apache.logging.log4j.LogManager;
@@ -46,6 +45,8 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 	private double lastFt;
 	private double currentSlice;
+
+	private static String usuarioIniciado;
 
 	public Arkanoid() {
 		
@@ -88,6 +89,8 @@ public class Arkanoid extends JFrame implements KeyListener {
 			if(scoreboard.nivelSuperado){
 				scoreboard.nivelSuperado=false;
 				Game.initializeBricks(bricks,scoreboard.getNivelActual());
+				paddle = new Paddle(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT - 50);
+                ball = new Ball(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT / 2);
 				ball.x = Config.SCREEN_WIDTH / 2;
 				ball.y = Config.SCREEN_HEIGHT / 2;
 				paddle.x = Config.SCREEN_WIDTH / 2;
@@ -204,7 +207,9 @@ public class Arkanoid extends JFrame implements KeyListener {
 			game.setTryAgain(true);
 		}
 		if (event.getKeyCode() == KeyEvent.VK_S) {
-			share();
+			if (scoreboard.gameOver || scoreboard.win ) {
+				compartirResultado();
+			}
 		}
 		switch (event.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
@@ -229,27 +234,43 @@ public class Arkanoid extends JFrame implements KeyListener {
 		}
 	}
 	public static void aplicarBonus(Bonus bonus) throws InterruptedException {
-		if(bonus.getNombre().equals("Mas vidas")){
+		String nomBonus=bonus.getNombre();
+		if(nomBonus.equals("Mas vidas")){
 			scoreboard.aumentarVidas();
 		}
-		else if(bonus.getNombre().equals("Paddle grande")){
+		else if(nomBonus.equals("Paddle grande")){
 			paddle.paddleGrande();
 		}
-		else if(bonus.getNombre().equals("Bola grande")){
+		else if(nomBonus.equals("Bola grande")){
 			ball.bolaGorda();
 		}
 
 	}
 
 	public void keyTyped(KeyEvent arg0) {}
-	public void share(){
-		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM partidanormal ORDER BY fecha DESC LIMIT 1");
+	public void compartirResultado(){
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM partidanormal ORDER BY fecha DESC LIMIT 1;");
 		String resultado = "";
+		String mensaje = "";
 		try {
 				rs.next();
 				int puntos = rs.getInt("puntos");
 				int nivel = rs.getInt("numnivel");
-				String mensaje="He conseguido "+puntos+" puntos en el nivel "+ nivel + " de Arkanoid ADSI!!!";
+				String usuario = rs.getString("username");
+				String fechaUltima = rs.getString("fecha");
+				System.out.println("SELECT * FROM partidanormal where username = '" +usuario+"' ORDER BY puntos  DESC LIMIT 1;");
+				rs.close();
+				ResultSet rsMax = GestorBD.miGestorBD.execSQL1("SELECT * FROM partidanormal where username ='" +usuario+"' ORDER BY puntos  DESC LIMIT 1");
+				rsMax.next();
+				String fechaMax = rsMax.getString("fecha");
+				System.out.println(fechaMax +" ||||| "+fechaUltima);
+
+			if(fechaMax.equals(fechaUltima)){
+					mensaje="Yo, " +usuario+" conseguido una nueva Puntuacion Máxima "+puntos+" puntos en el nivel "+ nivel + " de Arkanoid ADSI!!!";
+				}
+				else{
+					mensaje="Yo, " +usuario+" conseguido "+puntos+" puntos en el nivel "+ nivel + " de Arkanoid ADSI!!!";
+				}
 			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
 				try {
 					Desktop.getDesktop().browse(new URI("https://twitter.com/intent/tweet?text="+mensaje.replace( " ","%20")));
@@ -392,6 +413,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 				resultado = user+"#"+nlvl+"#"+ptos+"#"+fecha+"$";
 			}
 			rs.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -468,6 +490,53 @@ public class Arkanoid extends JFrame implements KeyListener {
             e.printStackTrace();
         }
     }
+	////////////////////////////////////////////////////REGISTRO//////////////////////////////////////////////////////
+	public static void registrarse(String email, String user, String password){
+		GestorBD.miGestorBD.execSQL2("INSERT INTO jugador VALUES('"+user+"','"+password+"',1,'"+email+"','verde','rojo','negro','azul');");
+		iniciar(user);
+	}
+	public static void iniciarSesion(String usuario, String password){
+		ResultSet result = GestorBD.miGestorBD.execSQL1("SELECT passwrd FROM jugador WHERE username='"+usuario+"';");
+		try {
+			if (result.next()){
+				String pw = result.getString("passwrd");
+				if (pw.equals(password)){
+					iniciar(usuario);
+					JOptionPane.showMessageDialog(null, "Sesion iniciada");
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void iniciar(String user){
+		usuarioIniciado = user;
+	}
+	public static void modificarContrasena(String user, String password){
+		ResultSet result = GestorBD.miGestorBD.execSQL1("SELECT passwrd FROM jugador WHERE username='"+user+"';");
+		try {
+			if (result.next()){
+				GestorBD.miGestorBD.execSQL2("UPDATE jugador SET passwrd='"+password+"' WHERE username='"+user+"'");
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void cambiarContrasenaUsuarioIniciado(String password){
+		modificarContrasena(usuarioIniciado,password);
+	}
+	public static String getUsuarioIniciado(){
+		return usuarioIniciado;
+	}
 }
 
 
