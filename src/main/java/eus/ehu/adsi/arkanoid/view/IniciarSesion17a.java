@@ -29,7 +29,7 @@ public class IniciarSesion17a extends JFrame {
 
     private void drawScene() {
 
-        this.getContentPane().setBackground(Config.BACKGROUND_COLOR);
+        this.getContentPane().setBackground(Color.BLACK);
         this.setLayout(new FlowLayout());
 
         JLabel textoNombre = new JLabel("Nombre:");

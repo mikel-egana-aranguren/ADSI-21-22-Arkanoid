@@ -1,15 +1,32 @@
 package eus.ehu.adsi.arkanoid.controlador;
 
 import java.sql.SQLException;
+import java.sql.Time;
+import java.lang.reflect.Field;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
+import java.awt.Color;
+
+import javax.swing.SwingUtilities;
+import javax.swing.text.AttributeSet.ColorAttribute;
+import javax.xml.crypto.Data;
 
 import org.json.JSONObject;
 
+import eus.ehu.adsi.arkanoid.view.game.core.*;
 import eus.ehu.adsi.arkanoid.modelo.DataBase;
+import eus.ehu.adsi.arkanoid.modelo.FraseMensaje;
+import eus.ehu.adsi.arkanoid.modelo.Partida;
 import eus.ehu.adsi.arkanoid.modelo.Usuario;
+import eus.ehu.adsi.arkanoid.view.game.Config;
 
 public class ArkanoidFrontera {
     private static ArkanoidFrontera mArkanoidFrontera = null;
+    private LocalDateTime fechaHoraInicio;
+    private String fechaHoraInicioStr;
+    private int lvl;
+    private String nombreUsuario;
 
     private ArkanoidFrontera() {}
 
@@ -18,10 +35,13 @@ public class ArkanoidFrontera {
         return mArkanoidFrontera;
     }
 
+    public String getNombre(){
+        return nombreUsuario;
+    }
+
     public JSONObject darVentaja(String nombreUsuario) {
         Usuario u = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
         int random = generarNumeroAleatorio(4, 1);
-        System.out.println(random);
         return GestorPartidas.getGestorPartidas().crearVentaja(random, u);
     }
 
@@ -30,9 +50,16 @@ public class ArkanoidFrontera {
         return r.nextInt(max - min + 1) + min;
     }
 
-    public void cambiarAjustes(String colorBola, String colorPadel, String colorLadrillo, String colorFondo, boolean sonido, String nombreUsuario) {
-        Usuario u = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
-        u.cambiarAjustes(colorBola, colorPadel, colorLadrillo, colorFondo, sonido);
+    public void cambiarAjustes(String colorBola, String colorPadel, String colorLadrillo, String colorFondo, Boolean sonido, String nombreUsuario) {
+        try {
+            DataBase.getmDataBase().cambiarAjustes(nombreUsuario, colorBola, colorPadel, colorLadrillo, colorFondo, sonido);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        Config.setBackgroundColor(ArkanoidFrontera.getArkanoidFrontera().getColor("Fondo", ArkanoidFrontera.getArkanoidFrontera().getNombre()));
+		Config.setLadrilloColor(ArkanoidFrontera.getArkanoidFrontera().getColor("Ladrillo", ArkanoidFrontera.getArkanoidFrontera().getNombre()));
+		Config.setBolaColor(ArkanoidFrontera.getArkanoidFrontera().getColor("Bola", ArkanoidFrontera.getArkanoidFrontera().getNombre()));
+		Config.setPaddleColor(ArkanoidFrontera.getArkanoidFrontera().getColor("Paddle", ArkanoidFrontera.getArkanoidFrontera().getNombre()));
     }
     public JSONObject comprobarInicio(String nombreUsuario, String contrasena) {
 
@@ -198,5 +225,128 @@ public class ArkanoidFrontera {
                 return 0;
             }
         }
+    }
+
+    public void comenzarPartida(int nivel){
+        //DataBase.getmDataBase().crearPartida(nivel, nombreJugador);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
+        LocalDateTime fechaHoraInicio = LocalDateTime.now();
+        fechaHoraInicioStr = dtf.format(fechaHoraInicio);
+        lvl = nivel;
+        ArkanoidThread arkanoidThread = new ArkanoidThread();
+        arkanoidThread.start();
+    }
+
+    public int getLvl(){
+        return lvl;
+    }
+
+    public String generarMensaje(String pNombreUsuario) {
+    	FraseMensaje f1= new FraseMensaje("pUsuario ha pResultado con una puntuacion de pPuntuacion. ");
+    	FraseMensaje f2= new FraseMensaje("La maxima puntuacion de pUsuario es pMaxPuntuacion. ");
+    	FraseMensaje f3= new FraseMensaje("");	//luego se crear� una frase por cada premio conseguido en la partida
+    	
+    	Usuario usuario=GestorUsuarios.getGestorUsuarios().buscarUsuario(pNombreUsuario);
+    	int maxPunt=GestorPartidas.getGestorPartidas().obtenerMaxPuntuacionHistorica(usuario);
+    	Partida partida=GestorPartidas.getGestorPartidas().buscarPartidaActual(usuario);	//revisar si esta parte se puede eliminar
+    	//igual a estas alturas ya hay fechaFin en la partida, si no la hay, habr�a que ponerla justo aqu�
+    
+    	JSONObject datosPartida=GestorPartidas.getGestorPartidas().obtenerDatosPartida(partida,maxPunt);
+    	f1.asignarValoresAParametros(1,datosPartida);
+    	f2.asignarValoresAParametros(2,datosPartida);
+    	f3.asignarValoresAParametros(3,datosPartida);	//si no se ha conseguido ning�n premio, no se har� nada
+    	
+    	//pasar mensaje a string
+    	String mensaje=f1.getFrase()+f2.getFrase()+f3.getFrase();
+    	
+    	return mensaje;
+    }
+    
+    public JSONObject cargarDatosPersonalizacion(String nombre) {
+        try {
+            nombreUsuario = nombre;
+            return DataBase.getmDataBase().cargarDatosPersonalizacion(nombre);
+        } catch (SQLException e) {
+            System.err.println(e);
+            return null;
+        }
+    }
+
+    public JSONObject getColores(String objeto, String nombre){
+        JSONObject colores;
+        if (objeto == "fondo"){
+            try {
+                colores = DataBase.getmDataBase().getColoresFondo(nombre);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println(e);
+                return null;
+            }
+        } else if (objeto == "bola"){
+            try {
+                colores = DataBase.getmDataBase().getColoresBola(nombre);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println(e);
+                return null;
+            }
+        }else if (objeto == "paddle"){
+            try {
+                colores = DataBase.getmDataBase().getColoresPaddle(nombre);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println(e);
+                return null;
+            }
+        }else {
+            try {
+                colores = DataBase.getmDataBase().getColoresLadrillos(nombre);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println(e);
+                return null;
+            }
+        }
+        return colores;
+    }
+
+    public Color getColor(String obj, String nombre) {
+        String colorStr = null;
+        try {
+            colorStr = DataBase.getmDataBase().getColor(obj, nombre);
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+        Color color;
+        switch (colorStr) {
+            case "Rojo":
+                color = Color.RED;
+                break;
+            case "Verde":
+                color = Color.GREEN;
+                break;
+            case "Morado":
+                color = Color.MAGENTA;
+                break;
+            case "Naranja":
+                color = Color.ORANGE;
+                break;
+            case "Cyan":
+                color = Color.CYAN;
+                break;
+            case "Blanco":
+                color = Color.WHITE;
+                break;
+            case "Azul":
+                color = Color.BLUE;
+                break;
+            case "Negro":
+                color = Color.BLACK;
+                break;
+            default:
+                color = Color.PINK;
+                break;
+        }
+        return color;
     }
 }

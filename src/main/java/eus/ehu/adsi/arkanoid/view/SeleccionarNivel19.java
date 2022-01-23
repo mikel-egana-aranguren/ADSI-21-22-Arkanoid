@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 
 import javax.swing.JPanel;
 
-import eus.ehu.adsi.arkanoid.view.game.Arkanoid;
+import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
 import eus.ehu.adsi.arkanoid.view.game.Config;
 
 import javax.swing.JButton;
@@ -29,6 +29,7 @@ public class SeleccionarNivel19 {
     private JButton btnCancelar;
 	private JLabel lblNivel;
 	private JComboBox<String> comboBoxNivel;
+	private Font impact = AddFont.createFont();
 	
 	public SeleccionarNivel19() {
 		initialize();
@@ -92,21 +93,21 @@ public class SeleccionarNivel19 {
 			btnComenzar.setFocusPainted(false);
 			btnComenzar.setContentAreaFilled(false);
 			btnComenzar.setForeground(Color.WHITE);
-			btnComenzar.setFont(new Font("Impact", Font.PLAIN, 30));
+			btnComenzar.setFont(impact.deriveFont(30.0f));
 			btnComenzar.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					frame.dispose();
-					new Arkanoid(comboBoxNivel.getSelectedIndex()+1).run();
+					ArkanoidFrontera.getArkanoidFrontera().comenzarPartida(comboBoxNivel.getSelectedIndex()+1);
 				}
-				/*@Override
+				@Override
 				public void mouseEntered(MouseEvent e){
 					btnComenzar.setForeground(Color.RED);
 				}
 				@Override
 				public void mouseExited(MouseEvent e){
 					btnComenzar.setForeground(Color.WHITE);
-				}*/
+				}
 			});
 		}
 		return btnComenzar;
@@ -119,7 +120,7 @@ public class SeleccionarNivel19 {
 			btnCancelar.setFocusPainted(false);
 			btnCancelar.setContentAreaFilled(false);
 			btnCancelar.setForeground(Color.WHITE);
-			btnCancelar.setFont(new Font("Impact", Font.PLAIN, 30));
+			btnCancelar.setFont(impact.deriveFont(30.0f));
 			btnCancelar.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -140,7 +141,7 @@ public class SeleccionarNivel19 {
 	private JLabel getLblNivel() {
 		if (lblNivel == null) {
 			lblNivel = new JLabel("Escoge un nivel", JLabel.CENTER);
-			lblNivel.setFont(new Font("Impact", Font.PLAIN, 48));
+			lblNivel.setFont(impact.deriveFont(60.0f));
 			lblNivel.setForeground(Color.WHITE);
 			}
 		return lblNivel;
@@ -151,7 +152,7 @@ public class SeleccionarNivel19 {
 			comboBoxNivel = new JComboBox<String>();
 			comboBoxNivel.setModel(new DefaultComboBoxModel<String>(new String[] {"F\u00E1cil", "Medio", "Dif\u00EDcil"}));
 			comboBoxNivel.setForeground(Color.BLACK);
-			comboBoxNivel.setFont(new Font("Impact", Font.PLAIN, 25));
+			comboBoxNivel.setFont(impact.deriveFont(30.0f));
 		}
 		return comboBoxNivel;
 	}
