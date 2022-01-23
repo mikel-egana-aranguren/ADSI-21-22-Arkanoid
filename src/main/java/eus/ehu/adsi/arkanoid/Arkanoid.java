@@ -230,13 +230,14 @@ public class Arkanoid extends JFrame implements KeyListener {
 		}
 	}
 	public static void aplicarBonus(Bonus bonus) throws InterruptedException {
-		if(bonus.getNombre().equals("Mas vidas")){
+		String nomBonus=bonus.getNombre();
+		if(nomBonus.equals("Mas vidas")){
 			scoreboard.aumentarVidas();
 		}
-		else if(bonus.getNombre().equals("Paddle grande")){
+		else if(nomBonus.equals("Paddle grande")){
 			paddle.paddleGrande();
 		}
-		else if(bonus.getNombre().equals("Bola grande")){
+		else if(nomBonus.equals("Bola grande")){
 			ball.bolaGorda();
 		}
 
