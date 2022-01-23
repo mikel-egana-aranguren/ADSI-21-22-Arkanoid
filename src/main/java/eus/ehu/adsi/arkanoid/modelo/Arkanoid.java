@@ -53,10 +53,7 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 	
 	public Arkanoid(int lvl) {
 
-		Config.setBackgroundColor(ArkanoidFrontera.getArkanoidFrontera().getColor("Fondo", ArkanoidFrontera.getArkanoidFrontera().getNombre()));
-		Config.setLadrilloColor(ArkanoidFrontera.getArkanoidFrontera().getColor("Ladrillo", ArkanoidFrontera.getArkanoidFrontera().getNombre()));
-		Config.setBolaColor(ArkanoidFrontera.getArkanoidFrontera().getColor("Bola", ArkanoidFrontera.getArkanoidFrontera().getNombre()));
-		Config.setPaddleColor(ArkanoidFrontera.getArkanoidFrontera().getColor("Paddle", ArkanoidFrontera.getArkanoidFrontera().getNombre()));
+		
 		
 		game = new Game ();
 		nivel = lvl;

@@ -55,7 +55,7 @@ public class GestorUsuarios {
     public void anadir(Usuario u) {
         this.lUsuarios.add(u);
     }
-
+    /////
     public JSONObject cargarDatosPersonalizacion(String nombreUsuario) {
         try {
             return DataBase.getmDataBase().cargarDatosPersonalizacion(nombreUsuario);
