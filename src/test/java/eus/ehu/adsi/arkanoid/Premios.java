@@ -46,7 +46,7 @@ public class Premios {
 	
 	@Test
 	public void prueba3A() {
-
+		Arkanoid.obtenerPremiosObtenidos("endika1");
 	}
 	
 	@Test
