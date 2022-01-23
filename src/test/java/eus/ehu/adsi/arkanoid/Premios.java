@@ -16,11 +16,11 @@ public class Premios {
 
 	@Test
 	public void prueba0A() {
-		//Para realizar esta prueba y suponiendo que la identificación se realiza correctamente miramos el string que nos devuelve el metodo obtenerPremiosObtenidos
+		//Para realizar esta prueba y suponiendo que la identificaciÃ³n se realiza correctamente miramos el string que nos devuelve el metodo obtenerPremiosObtenidos
 		String si = Arkanoid.obtenerPremiosObtenidos("urkazio");
 		assertTrue(si.length()==0);
 		String no = Arkanoid.obtenerPremiosNoObtenidos("urkazio");
-		assertTrue(no.equals("Bronce8Diamante8Oro8Plata8Platino8Rubí8Zafiro8"));
+		assertTrue(no.equals("Bronce8Diamante8Oro8Plata8Platino8RubÃ­8Zafiro8"));
 	}
 	
 	@Test
@@ -28,30 +28,30 @@ public class Premios {
 		String si = Arkanoid.obtenerPremiosObtenidos("urkazio");
 		assertTrue(si.length()==0);
 		String no = Arkanoid.obtenerPremiosNoObtenidos("urkazio");
-		assertTrue(no.equals("Bronce8Diamante8Oro8Plata8Platino8Rubí8Zafiro8"));
-		//Ahora cambiando el usuario debería cambiar el resultado (como si se hubiese logeado otra persona)
+		assertTrue(no.equals("Bronce8Diamante8Oro8Plata8Platino8RubÃ­8Zafiro8"));
+		//Ahora cambiando el usuario deberÃ­a cambiar el resultado (como si se hubiese logeado otra persona)
 		String no1 = Arkanoid.obtenerPremiosNoObtenidos("endika1");
 		assertTrue(no1.length()==0);
 		String si1 = Arkanoid.obtenerPremiosObtenidos("endika1");
-		assertTrue(si1.equals("Bronce8Diamante8Oro8Plata8Platino8Rubí8Zafiro8"));
+		assertTrue(si1.equals("Bronce8Diamante8Oro8Plata8Platino8RubÃ­8Zafiro8"));
 	}
 	
 	@Test
 	public void prueba1A() {
-		//Para realizar esta prueba miramos los resultados que nos da el método obtenerPremiosObtenidos un usuario sin premios
+		//Para realizar esta prueba miramos los resultados que nos da el mÃ©todo obtenerPremiosObtenidos un usuario sin premios
 		String si = Arkanoid.obtenerPremiosObtenidos("urkazio");
 		assertTrue(si.length()==0);
-		//Para realizar esta prueba miramos los resultados que nos da el método obtenerPremiosNoObtenidos un usuario sin premios
+		//Para realizar esta prueba miramos los resultados que nos da el mÃ©todo obtenerPremiosNoObtenidos un usuario sin premios
 		String no = Arkanoid.obtenerPremiosNoObtenidos("urkazio");
 		assertTrue(no.length()!=0);
 	}
 	
 	@Test
 	public void prueba1B() {
-		//Para realizar esta prueba miramos los resultados que nos da el método  obtenerPremiosObtenidos un usuario con todos los premios
+		//Para realizar esta prueba miramos los resultados que nos da el mÃ©todo  obtenerPremiosObtenidos un usuario con todos los premios
 		String si = Arkanoid.obtenerPremiosObtenidos("endika1");
 		assertTrue(si.length()!=0);
-		//Para realizar esta prueba miramos los resultados que nos da el método obtenerPremiosNoObtenidos un usuario sin premios
+		//Para realizar esta prueba miramos los resultados que nos da el mÃ©todo obtenerPremiosNoObtenidos un usuario sin premios
 		String no = Arkanoid.obtenerPremiosNoObtenidos("endika1");
 		assertTrue(no.length()==0);
 	}
@@ -67,35 +67,36 @@ public class Premios {
 		GestorBD.miGestorBD.execSQL2("INSERT INTO partidanormal VALUES('1','urkazio','2000-01-23 22:22:26','2000','1')");
 		Arkanoid.entregarPremios("urkazio");
 		String si = Arkanoid.obtenerPremiosObtenidos("urkazio");
-		assertTrue(si.equals("Bronce8Rubí"));
+		assertTrue(si.equals("Bronce8RubÃ­"));
 		GestorBD.miGestorBD.execSQL2("DELETE FROM partidanormal WHERE username='urkazio'");
 		GestorBD.miGestorBD.execSQL2("DELETE FROM premiosjugador WHERE username='urkazio'");
 		si = Arkanoid.obtenerPremiosObtenidos("urkazio");
 		assertTrue(si.length()==0);
+		Arkanoid.obtenerPremiosObtenidos("endika1");
 	}
 	
 	@Test
 	public void prueba3B() {
-		//El anterior ejemplo ya cumple con esta condición ya que gana 5 partidas totales y 5 partidas seguidas
+		//El anterior ejemplo ya cumple con esta condiciÃ³n ya que gana 5 partidas totales y 5 partidas seguidas
 	}
 	
 	//La prueba que se propone en el 4A no sucede.
 	
 	@Test
 	public void prueba4B() {
-		//El entregar premios comprueba el número de victorias y racha.
+		//El entregar premios comprueba el nÃºmero de victorias y racha.
 		//Posteriormente comprueba si hay premios ya obtenidos.
 		//Finalmente inserta.
-		//En caso de que este método no funcione debería salirnos un error en sql de fila duplicada cosa que no ocurre.
+		//En caso de que este mÃ©todo no funcione deberÃ­a salirnos un error en sql de fila duplicada cosa que no ocurre.
 		Arkanoid.entregarPremios("anegda");
 		
 	}
 	
 	public void prueba4D() {
-		//El entregar premios comprueba el número de victorias y racha.
+		//El entregar premios comprueba el nÃºmero de victorias y racha.
 		//Posteriormente comprueba si hay premios ya obtenidos.
 		//Finalmente inserta.
-		//En caso de que este método no funcione debería salirnos un error en sql de fila duplicada cosa que no ocurre.
+		//En caso de que este mÃ©todo no funcione deberÃ­a salirnos un error en sql de fila duplicada cosa que no ocurre.
 		Arkanoid.entregarPremios("endika1");
 		
 	}
@@ -105,10 +106,10 @@ public class Premios {
 	
 	@Test
 	public void prueba5B() {
-		//El entregar premios comprueba el número de victorias y racha.
+		//El entregar premios comprueba el nÃºmero de victorias y racha.
 		//Posteriormente comprueba si hay premios ya obtenidos.
 		//Finalmente inserta.
-		//En caso de que este método no funcione debería salirnos un error en sql de fila duplicada cosa que no ocurre.
+		//En caso de que este mÃ©todo no funcione deberÃ­a salirnos un error en sql de fila duplicada cosa que no ocurre.
 		Arkanoid.entregarPremios("anegda");
 	}
 

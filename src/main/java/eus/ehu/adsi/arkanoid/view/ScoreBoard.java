@@ -9,7 +9,7 @@ public class ScoreBoard {
 	public int score = 0;
 	public int bricksRotos = 0;
 	public int lives = Config.PLAYER_LIVES;
-	public int nivelActual = Config.Nivel_Inicio;
+	public static int nivelActual = Config.Nivel_Inicio;
 	public boolean win = false;
 	public boolean gameOver = false;
 	public boolean nivelSuperado = false;
@@ -53,13 +53,14 @@ public class ScoreBoard {
 		nivelActual++;
 		nivelSuperado = true;
 	}
-	public int getNivelActual(){
+	public static int getNivelActual(){
 		return nivelActual;
 	}
 
 	void die() {
 		lives--;
 		if (lives == 0) {
+			bricksRotos=0;
 			gameOver = true;
 			text = "You have lost! \nYour score was: " + score
 					+ "\n\nPress Enter to restart + \n\nPress S to share";

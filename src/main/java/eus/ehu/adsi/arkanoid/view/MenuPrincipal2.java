@@ -133,7 +133,8 @@ public class MenuPrincipal2 extends JFrame{
 				Premios.getMiPremios().main(null);
 			}
 			else if(btn.getText().equals("RANKING")) {
-				
+				MenuPrincipal2.this.dispose();
+				EleccionRnkng.main(null);
 			}
 			else if(btn.getText().equals("SALIR")) {
 				MenuPrincipal2.this.dispose();	

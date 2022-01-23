@@ -79,13 +79,13 @@ import eus.ehu.adsi.arkanoid.Arkanoid;
 			contentPane.setBackground(new Color(100,176,155));
 			contentPane.setOpaque(true);
 
-			JLabel l1 = new JLabel("�Qu� ranking quieres ver?");
+			JLabel l1 = new JLabel("¿Qué ranking quieres ver?");
 			l1.setFont(new Font("Lucida Sans", Font.BOLD, 20));
 			l1.setForeground(Color.BLACK);
 			l1.setBounds(250, 40, 1000, 23);
 			contentPane.add(l1);
 			
-			JRadioButton j1 = new JRadioButton("Personal - Absoluto");
+			JRadioButton j1 = new JRadioButton("Personal-Absoluto");
 			j1.setBounds(40, 90, 170, 50);
 			j1.addActionListener(this);
 			j1.setBackground(new Color(100,176,155));
@@ -103,7 +103,7 @@ import eus.ehu.adsi.arkanoid.Arkanoid;
 			j3.setBackground(new Color(100,176,155));
 			contentPane.add(j3);
 			
-			JRadioButton j4 = new JRadioButton("Global - Nivel");
+			JRadioButton j4 = new JRadioButton("Global-Nivel");
 			j4.setBounds(480, 90, 110, 50);
 			j4.addActionListener(this);
 			j4.setBackground(new Color(100,176,155));
@@ -115,25 +115,39 @@ import eus.ehu.adsi.arkanoid.Arkanoid;
 			j5.addActionListener(this);
 			j5.setBackground(new Color(100,176,155));
 			contentPane.add(j5);
-
 		}
 		
 		public void actionPerformed(ActionEvent e) {
 
 			JRadioButton btn = (JRadioButton)e.getSource();
-
-			if (btn.getText().equals("Personal - Absoluto")){
-				//Arkanoid.mostrarRankingPersonalAbsoluto();
+			
+			String usuario ="";
+			int nivel= ScoreBoard.getNivelActual();
+			
+			if (btn.getText().equals("Personal-Absoluto")){
+				String s = Arkanoid.obtenerRankingPA(usuario);
+				Ranking.main(null);
+				Ranking.postearDatos(s);
+				Ranking.cambiarConcepto("Ranking Personal y Absoluto:");
 				
 			}else if (btn.getText().equals("Personal-Nivel")){
-				//Arkanoid.mostrarRankingPersonalNivel();
+				String s = Arkanoid.obtenerRankingPN(usuario, nivel);
+				Ranking.main(null);
+				Ranking.postearDatos(s);
+				Ranking.cambiarConcepto("Ranking Personal y Por Nivel:");
 				
 			}else if (btn.getText().equals("Global-Absoluto")){
-				//Arkanoid.mostrarRankingNivelAbsoluto();
+				String s = Arkanoid.obtenerRankingGA();
+				Ranking.main(null);
+				Ranking.postearDatos(s);
+				Ranking.cambiarConcepto("Ranking Global y Absoluto:");
 			
-			}else if (btn.getText().equals("Global - Nivel")){
-				//Arkanoid.mostrarRankingGlobalNivel();
-	
+			}else if (btn.getText().equals("Global-Nivel")){
+				String s = Arkanoid.obtenerRankingGN(nivel);
+				Ranking.main(null);
+				Ranking.postearDatos(s);
+				Ranking.cambiarConcepto("Ranking Global y Por Nivel:");
+
 			}else if (btn.getText().equals("Salir")){
 				System.exit(getDefaultCloseOperation());
 			}
