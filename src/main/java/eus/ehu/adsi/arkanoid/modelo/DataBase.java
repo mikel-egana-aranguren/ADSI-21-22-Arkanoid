@@ -157,11 +157,11 @@ public class DataBase {
 		}
         Statement s = con.createStatement();
         ResultSet rs;
-        rs = s.executeQuery("SELECT bolaNaranja, bolaRojo, bolaBlanca, bolaAzul FROM usuario WHERE nombreUsuario=\"" + nombre +"\"");
+        rs = s.executeQuery("SELECT bolaNaranja, bolaRojo, bolaBlanco, bolaAzul FROM usuario WHERE nombreUsuario=\"" + nombre +"\"");
         boolean b = rs.next();
         if (b) {
             colores.put("bolaRojo", rs.getInt(1));
-            colores.put("bolaBlanca", rs.getInt(2));
+            colores.put("bolaBlanco", rs.getInt(2));
             colores.put("bolaAzul", rs.getInt(3));
             colores.put("bolaNaranja", rs.getInt(4));
         }
@@ -251,6 +251,7 @@ public class DataBase {
         rs = s.executeQuery("SELECT color"+ obj +" FROM usuario WHERE nombreUsuario=\"" + nombre +"\"");
         boolean b = rs.next();
         if (b){
+            System.out.println(rs.getString(1));
             return rs.getString(1);
         }
         return null;
