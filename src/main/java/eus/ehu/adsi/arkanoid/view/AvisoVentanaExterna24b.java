@@ -1,19 +1,12 @@
 package eus.ehu.adsi.arkanoid.view;
 
-import java.awt.BorderLayout;
-
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 
 import eus.ehu.adsi.arkanoid.view.game.Config;
 
@@ -21,7 +14,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.Font;
 
 public class AvisoVentanaExterna24b {
@@ -59,7 +51,7 @@ public class AvisoVentanaExterna24b {
 			
 			panel.setLayout(layout);
 			
-			JLabel labelTexto =new JLabel("Se va a abrir una p�gina web externa al sistema Arkanoid");
+			JLabel labelTexto =new JLabel("Se va a abrir una pagina web externa al sistema Arkanoid");
 			labelTexto.setForeground(Color.WHITE);
 			labelTexto.setFont(impact.deriveFont(20.0f));
 			panel.add(labelTexto);
@@ -121,9 +113,8 @@ public class AvisoVentanaExterna24b {
 				@Override
 				public void mouseClicked(MouseEvent e) {			
 					try {
-                		java.awt.Desktop.getDesktop().browse(linkRedSocial);
-                		//ArkanoidFrontera.getArkanoidFrontera().abrirRedSocial(linkRedSocial);
-                		frameFigura.dispose();
+						frameFigura.dispose();
+                		java.awt.Desktop.getDesktop().browse(linkRedSocial);               		
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}

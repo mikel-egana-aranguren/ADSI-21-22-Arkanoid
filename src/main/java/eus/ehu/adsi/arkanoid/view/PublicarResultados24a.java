@@ -1,18 +1,15 @@
 package eus.ehu.adsi.arkanoid.view;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 
+import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
 import eus.ehu.adsi.arkanoid.view.game.Config;
 
 import javax.swing.BorderFactory;
@@ -21,31 +18,28 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
+import javax.swing.JTextArea;
 
+import org.json.JSONObject;
 import java.awt.Font;
 
 public class PublicarResultados24a {
 
 	private JFrame frameFigura;
 	private JPanel panel;
-	private JLabel labelMensaje;
+	private JTextArea labelMensaje;
 	private JButton botonInstagram;
 	private JButton botonTwitter;
 	private JButton botonFacebook;
 	private JButton botonTerminar;
-	private String nombreUsuario;
+	private JSONObject datosPartida;
 	private String mensaje;
 	private Font impact = AddFont.createFont();
 	
-	public PublicarResultados24a(String pNombreUsuario) {
-		nombreUsuario=pNombreUsuario;
-		
-		//Generaci�n del mensaje:		
-		//mensaje = ArkanoidFrontera.getArkanoidFrontera().generarMensaje(nombreUsuario);
-		
-		//prueba (BORRAR):
-		mensaje="Mensaje de prueba. partida";
+	public PublicarResultados24a(JSONObject jo) {
+		datosPartida=jo;
+		//Generacion del mensaje:		
+		mensaje = ArkanoidFrontera.getArkanoidFrontera().generarMensaje(datosPartida);
 		
 		initialize();
 	}
@@ -73,7 +67,7 @@ public class PublicarResultados24a {
 
 			panel.setLayout(layout);
 			
-			JLabel label1 = new JLabel("La partida ha terminado, aqu� puedes ver tus resultados:");
+			JLabel label1 = new JLabel("La partida ha terminado, aqui puedes ver tus resultados:");
 			label1.setForeground(Color.WHITE);
 			label1.setFont(impact.deriveFont(20.0f));
 			panel.add(label1);
@@ -98,7 +92,7 @@ public class PublicarResultados24a {
 					
 			panel.add(panelRedes);
 			
-			JLabel label3 = new JLabel("Para volver al m�nu principal, pulsa aqu�:");
+			JLabel label3 = new JLabel("Para volver al menu principal, pulsa aqui:");
 			label3.setForeground(Color.WHITE);
 			label3.setFont(impact.deriveFont(20.0f));
 			panel.add(label3);
@@ -108,12 +102,15 @@ public class PublicarResultados24a {
 		return panel;	
 	}
 	
-	private JLabel getLabelMensaje() {
+	private JTextArea getLabelMensaje() {
     	if (labelMensaje == null) {
-    		labelMensaje = new JLabel(mensaje);
-    		labelMensaje.setForeground(Color.WHITE);
-    		labelMensaje.setFont(impact.deriveFont(30.0f));
+    		labelMensaje = new JTextArea(mensaje);
+    		labelMensaje.setForeground(Color.BLACK);
+    		labelMensaje.setFont(impact.deriveFont(15.0f));
     		labelMensaje.setBorder(BorderFactory.createLineBorder(Color.RED));
+			labelMensaje.setLineWrap(true);
+			labelMensaje.setWrapStyleWord(false);
+			labelMensaje.setEditable(false);
         }
         return labelMensaje;
 	}
@@ -241,6 +238,7 @@ public class PublicarResultados24a {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					frameFigura.dispose();
+					String nombreUsuario=String.valueOf(datosPartida.opt("usuario"));
                 	new MenuPrincipal18(nombreUsuario);
 				}
 				@Override
