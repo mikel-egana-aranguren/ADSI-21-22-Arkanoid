@@ -161,7 +161,7 @@ public class Ajustes extends JFrame implements ActionListener {
 			String ladrillo = colorLadrillo.getSelectedItem().toString();
 			String bola = colorBola.getSelectedItem().toString();
 			String paddle = colorPaddle.getSelectedItem().toString();
-			Arkanoid.cambiarColores(nUser,fondo,ladrillo,bola,paddle);
+			Arkanoid.cambiarColores("anegda",fondo,ladrillo,bola,paddle);
 //			String[] arg = new String[1];
 //			arg[0] = nUser;
 			MenuPrincipal2.getMiMenuPrincipal2().main(null);;

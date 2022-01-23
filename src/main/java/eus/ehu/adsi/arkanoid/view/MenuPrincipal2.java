@@ -126,6 +126,7 @@ public class MenuPrincipal2 extends JFrame{
 			}
 			else if(btn.getText().equals("AJUSTES")) {
 				MenuPrincipal2.this.dispose();
+				Ajustes.getMisAjustes().main(null);
 			}
 			else if(btn.getText().equals("PREMIOS")) {
 				MenuPrincipal2.this.dispose();
