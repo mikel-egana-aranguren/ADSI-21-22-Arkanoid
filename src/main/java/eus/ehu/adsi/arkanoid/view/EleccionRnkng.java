@@ -79,7 +79,7 @@ import eus.ehu.adsi.arkanoid.Arkanoid;
 			contentPane.setBackground(new Color(100,176,155));
 			contentPane.setOpaque(true);
 
-			JLabel l1 = new JLabel("¿Qué ranking quieres ver?");
+			JLabel l1 = new JLabel("ï¿½Quï¿½ ranking quieres ver?");
 			l1.setFont(new Font("Lucida Sans", Font.BOLD, 20));
 			l1.setForeground(Color.BLACK);
 			l1.setBounds(250, 40, 1000, 23);
@@ -147,7 +147,7 @@ import eus.ehu.adsi.arkanoid.Arkanoid;
 				Ranking.main(null);
 				Ranking.postearDatos(s);
 				Ranking.cambiarConcepto("Ranking Global y Por Nivel:");
-	
+
 			}else if (btn.getText().equals("Salir")){
 				System.exit(getDefaultCloseOperation());
 			}

@@ -2,12 +2,15 @@ package eus.ehu.adsi.arkanoid.core;
 
 import java.util.List;
 
+import eus.ehu.adsi.arkanoid.Arkanoid;
 import eus.ehu.adsi.arkanoid.view.Ball;
 import eus.ehu.adsi.arkanoid.view.Brick;
 import eus.ehu.adsi.arkanoid.view.Config;
 import eus.ehu.adsi.arkanoid.view.GameObject;
 import eus.ehu.adsi.arkanoid.view.Paddle;
 import eus.ehu.adsi.arkanoid.view.ScoreBoard;
+
+import static eus.ehu.adsi.arkanoid.Arkanoid.aplicarBonus;
 
 public class Game {
 	private boolean running;
@@ -44,13 +47,17 @@ public class Game {
 			mBall.velocityX = Config.BALL_VELOCITY;
 	}
 	
-	public static void testCollision(Brick mBrick, Ball mBall, ScoreBoard scoreboard) {
+	public static void testCollision(Brick mBrick, Ball mBall, ScoreBoard scoreboard) throws InterruptedException {
 		if (!Game.isIntersecting(mBrick, mBall))
 			return;
 
 		mBrick.destroyed = true;
+		if(mBrick.esEspecial()){
+			Bonus bonus=mBrick.getBonus();
+			aplicarBonus(bonus);}
 
 		scoreboard.increaseScore();
+
 
 		double overlapLeft = mBall.right() - mBrick.left();
 		double overlapRight = mBrick.right() - mBall.left();
@@ -75,15 +82,46 @@ public class Game {
 				&& mA.bottom() >= mB.top() && mA.top() <= mB.bottom();
 	}
 	
-	public static List<Brick> initializeBricks(List<Brick> bricks) {
+	public static List<Brick> initializeBricks(List<Brick> bricks, int nivel) {
 		bricks.clear();
-		for (int iX = 0; iX < Config.COUNT_BLOCKS_X; ++iX) {
-			for (int iY = 0; iY < Config.COUNT_BLOCKS_Y; ++iY) {
-				bricks.add(new Brick(
-						(iX + 1) * (Config.BLOCK_WIDTH + 3) + 22,
-						(iY + 2) * (Config.BLOCK_HEIGHT + 3) + 50)
-						);
+		switch (nivel){
+			case 1:
+			for (int iX = 0; iX < Config.COUNT_BLOCKS_X; ++iX) {
+				for (int iY = 0; iY < Config.COUNT_BLOCKS_Y; ++iY) {
+					if(Config.nivel1[iY][iX]==1){
+						bricks.add(new Brick(
+							(iX + 1) * (Config.BLOCK_WIDTH + 3) + 22,
+							(iY + 2) * (Config.BLOCK_HEIGHT + 3) + 50));
+					}
+				}
 			}
+			break;
+			
+			
+			case 2:
+			for (int iX = 0; iX < Config.COUNT_BLOCKS_X; ++iX) {
+				for (int iY = 0; iY < Config.COUNT_BLOCKS_Y; ++iY) {
+					if(Config.nivel2[iY][iX]==1){
+						bricks.add(new Brick(
+							(iX + 1) * (Config.BLOCK_WIDTH + 3) + 22,
+							(iY + 2) * (Config.BLOCK_HEIGHT + 3) + 50));
+					}
+				}
+			}
+			break;
+			
+
+			case 3:
+			for (int iX = 0; iX < Config.COUNT_BLOCKS_X; ++iX) {
+				for (int iY = 0; iY < Config.COUNT_BLOCKS_Y; ++iY) {
+					if(Config.nivel3[iY][iX]==1){
+						bricks.add(new Brick(
+							(iX + 1) * (Config.BLOCK_WIDTH + 3) + 22,
+							(iY + 2) * (Config.BLOCK_HEIGHT + 3) + 50));
+					}
+				}
+			}
+			break;
 		}
 		return bricks;
 	}

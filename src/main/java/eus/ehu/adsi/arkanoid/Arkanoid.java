@@ -1,7 +1,9 @@
 package eus.ehu.adsi.arkanoid;
 
-// Adapted from https://gist.github.com/Miretz/f10b18df01f9f9ebfad5
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Toolkit;
@@ -9,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
+import java.net.URISyntaxException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,6 +20,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import eus.ehu.adsi.arkanoid.core.Bonus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,14 +39,14 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 	// Game variables
 	private Game game;
-	private Paddle paddle = new Paddle(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT - 50);
-	private Ball ball = new Ball(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT / 2);
+	private static Paddle paddle = new Paddle(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT - 50);
+	private static Ball ball = new Ball(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT / 2);
 	private List<Brick> bricks = new ArrayList<Brick>();
-	private ScoreBoard scoreboard = new ScoreBoard();
+	private static ScoreBoard scoreboard = new ScoreBoard();
 
 	private double lastFt;
-	private double currentSlice;	
-	
+	private double currentSlice;
+
 	public Arkanoid() {
 		
 		game = new Game ();
@@ -57,11 +61,18 @@ public class Arkanoid extends JFrame implements KeyListener {
 		this.setLocationRelativeTo(null);
 		this.createBufferStrategy(2);
 
-		bricks = Game.initializeBricks(bricks);
-
+		bricks = Game.initializeBricks(bricks,Config.Nivel_Inicio);
 	}
-	
-	void run() {
+
+	private Paddle getPaddle() {
+		return paddle;
+	}
+
+	private ScoreBoard getScoreBoard() {
+		return this.scoreboard;
+	}
+
+	void run() throws InterruptedException {
 
 		BufferStrategy bf = this.getBufferStrategy();
 		Graphics g = bf.getDrawGraphics();
@@ -74,10 +85,20 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 			long time1 = System.currentTimeMillis();
 
+			if(scoreboard.nivelSuperado){
+				scoreboard.nivelSuperado=false;
+				Game.initializeBricks(bricks,scoreboard.getNivelActual());
+				ball.x = Config.SCREEN_WIDTH / 2;
+				ball.y = Config.SCREEN_HEIGHT / 2;
+				paddle.x = Config.SCREEN_WIDTH / 2;
+			}
+			
+			
 			if (!scoreboard.gameOver && !scoreboard.win) {
 				logger.info("Playing");
 				game.setTryAgain(false);
 				update();
+
 				drawScene(ball, bricks, scoreboard);
 
 				// to simulate low FPS
@@ -87,16 +108,21 @@ public class Arkanoid extends JFrame implements KeyListener {
 					logger.error(e.getMessage());
 				}
 
-			} else {
+			} else { //HAY QUE ACTUALIZAR ESTO ESTO
 				if (game.isTryAgain()) {
+
 					logger.info("Trying again");
 					game.setTryAgain(false);
-					bricks = Game.initializeBricks(bricks);
+
+					bricks = Game.initializeBricks(bricks,Config.Nivel_Inicio);
+
 					scoreboard.lives = Config.PLAYER_LIVES;
 					scoreboard.score = 0;
 					scoreboard.win = false;
 					scoreboard.gameOver = false;
 					scoreboard.updateScoreboard();
+					paddle = new Paddle(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT - 50);
+					ball = new Ball(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT / 2);
 					ball.x = Config.SCREEN_WIDTH / 2;
 					ball.y = Config.SCREEN_HEIGHT / 2;
 					paddle.x = Config.SCREEN_WIDTH / 2;
@@ -120,7 +146,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 	}
 
-	private void update() {
+	private void update() throws InterruptedException {
 
 		currentSlice += lastFt;
 
@@ -177,6 +203,9 @@ public class Arkanoid extends JFrame implements KeyListener {
 		if (event.getKeyCode() == KeyEvent.VK_ENTER) {
 			game.setTryAgain(true);
 		}
+		if (event.getKeyCode() == KeyEvent.VK_S) {
+			share();
+		}
 		switch (event.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
 			paddle.moveLeft();
@@ -199,8 +228,45 @@ public class Arkanoid extends JFrame implements KeyListener {
 			break;
 		}
 	}
+	public static void aplicarBonus(Bonus bonus) throws InterruptedException {
+		if(bonus.getNombre().equals("Mas vidas")){
+			scoreboard.aumentarVidas();
+		}
+		else if(bonus.getNombre().equals("Paddle grande")){
+			paddle.paddleGrande();
+		}
+		else if(bonus.getNombre().equals("Bola grande")){
+			ball.bolaGorda();
+		}
+
+	}
 
 	public void keyTyped(KeyEvent arg0) {}
+	public void share(){
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM partidanormal ORDER BY fecha DESC LIMIT 1");
+		String resultado = "";
+		try {
+				rs.next();
+				int puntos = rs.getInt("puntos");
+				int nivel = rs.getInt("numnivel");
+				String mensaje="He conseguido "+puntos+" puntos en el nivel "+ nivel + " de Arkanoid ADSI!!!";
+			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+				try {
+					Desktop.getDesktop().browse(new URI("https://twitter.com/intent/tweet?text="+mensaje.replace( " ","%20")));
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (URISyntaxException e) {
+					e.printStackTrace();
+				}
+			}
+
+				rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+
+	}
 	
   
 	public static String obtenerDescripciones() {
@@ -250,6 +316,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 	}
 	
+
 	////////////////////////////////	RANKING 	/////////////////////////////////////////	
 	
 	public static String obtenerRankingPA(String usuario) {
@@ -324,13 +391,83 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 				resultado = user+"#"+nlvl+"#"+ptos+"#"+fecha+"$";
 			}
+
+	public static void entregarPremios(String usuario) {
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT usuario, ganada? FROM partidaNormal WHERE usuario='"+ usuario +"' ORDER BY fecha");
+		int total=0;
+		int racha=0;
+		try {
+			while (rs.next()) {
+				Boolean victoria = rs.getBoolean("ganada?");
+				if(victoria) {
+					total=total+1;
+					racha=racha+1;
+				}
+				else {
+					racha=0;
+				}
+				
+			}
+			//Una vez ya hemos visto cuantas victorias y rachas asignamos los premios correspondientes
+			//VICTORIAS TOTALES
+			ResultSet rs2;
+			if(total>=5 && total<10) {
+				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE usuario='"+ usuario +"' AND nombre='Bronce'");
+				if(!rs2.next()) {
+					GestorBD.miGestorBD.execSQL2("INSERT INTO premiosjugador VALUES('"+ usuario +"','Bronce')");
+				}
+			}
+			else if(total>=10 && total<20) {
+				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE usuario='"+ usuario +"' AND nombre='Plata'");
+				if(!rs2.next()) {
+					GestorBD.miGestorBD.execSQL2("INSERT INTO premiosjugador VALUES('"+ usuario +"','Plata')");					
+				}
+			}
+			else if(total>=20 && total<50) {
+				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE usuario='"+ usuario +"' AND nombre='Oro'");
+				if(!rs2.next()) {
+					GestorBD.miGestorBD.execSQL2("INSERT INTO premiosjugador VALUES('"+ usuario +"','Oro')");					
+				}
+			}
+			else if(total>=50) {
+				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE usuario='"+ usuario +"' AND nombre='Platino'");
+				if(!rs2.next()) {
+					GestorBD.miGestorBD.execSQL2("INSERT INTO premiosjugador VALUES('"+ usuario +"','Platino')");					
+				}
+			}
+			
+			//RACHA DE VICTORIAS
+			if(total>=5 && total<10) {
+				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE usuario='"+ usuario +"' AND nombre='Rub�'");
+				if(!rs2.next()) {
+					GestorBD.miGestorBD.execSQL2("INSERT INTO premiosjugador VALUES('"+ usuario +"','Rub�')");					
+				}
+			}
+			else if(total>=10 && total<20) {
+				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE usuario='"+ usuario +"' AND nombre='Zafiro'");
+				if(!rs2.next()) {
+					GestorBD.miGestorBD.execSQL2("INSERT INTO premiosjugador VALUES('"+ usuario +"','Zafiro')");					
+				}
+			}
+			else if(total>=20) {
+				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE usuario='"+ usuario +"' AND nombre='Diamante'");
+				if(!rs2.next()) {
+					GestorBD.miGestorBD.execSQL2("INSERT INTO premiosjugador VALUES('"+ usuario +"','Diamante')");					
+				}
+			}
+			
+
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 		return resultado;
 
 	}
+
+	
+
 
 }
 
