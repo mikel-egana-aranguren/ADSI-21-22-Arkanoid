@@ -119,7 +119,7 @@ public class CambiarContrasena20 extends JFrame {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     cerrarActual();
-                    new Fig18(nombreUsuario);
+                    new MenuPrincipal18(nombreUsuario);
                 }
                 @Override
                 public void mouseEntered(MouseEvent e){
@@ -158,7 +158,7 @@ public class CambiarContrasena20 extends JFrame {
                         //Si ha sido exitoso, cerrar pantalla actual
                         cerrarActual();
                         //Abrir pantalla de Menú Principal con el nombre de usuario del jugador
-                        new Fig18((String) resultado.get("mensaje"));
+                        new MenuPrincipal18((String) resultado.get("mensaje"));
                     }
                 }
                 @Override
