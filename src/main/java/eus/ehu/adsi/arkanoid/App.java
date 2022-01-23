@@ -15,7 +15,7 @@ public class App {
 			EventQueue.invokeAndWait(new Runnable() {
 				public void run(){
 					try {
-						new PublicarResultados24a("Bosco");
+						new Personalizacion21("Bosco");
 					} catch (Exception e){
 						System.err.println(e);
 						e.printStackTrace();

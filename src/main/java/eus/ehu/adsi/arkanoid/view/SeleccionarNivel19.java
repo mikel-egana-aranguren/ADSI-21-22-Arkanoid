@@ -101,14 +101,14 @@ public class SeleccionarNivel19 {
 					frame.dispose();
 					ArkanoidFrontera.getArkanoidFrontera().comenzarPartida(comboBoxNivel.getSelectedIndex()+1);
 				}
-				/*@Override
+				@Override
 				public void mouseEntered(MouseEvent e){
 					btnComenzar.setForeground(Color.RED);
 				}
 				@Override
 				public void mouseExited(MouseEvent e){
 					btnComenzar.setForeground(Color.WHITE);
-				}*/
+				}
 			});
 		}
 		return btnComenzar;

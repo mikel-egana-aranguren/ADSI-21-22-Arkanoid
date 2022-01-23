@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import org.apache.logging.log4j.LogManager; //TEMAS DEL LOGGER POR LA VULNERABILIDAD
 import org.apache.logging.log4j.Logger;
 
+import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
 import eus.ehu.adsi.arkanoid.controlador.GestorPartidas;
 import eus.ehu.adsi.arkanoid.controlador.GestorUsuarios;
 
@@ -52,6 +53,7 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 	
 	public Arkanoid(int lvl) {
 
+		
 		
 		game = new Game ();
 		nivel = lvl;
@@ -166,7 +168,7 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 
 			g = bf.getDrawGraphics();
 
-			g.setColor(Config.BACKGROUND_COLOR);
+			g.setColor(Config.getBackGroundColor());
 			g.fillRect(0, 0, getWidth(), getHeight());
 
 			ball.draw(g);
@@ -196,11 +198,9 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 		switch (event.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
 			paddle.moveLeft();
-			System.out.println("hola");
 			break;
 		case KeyEvent.VK_RIGHT:
 			paddle.moveRight();
-			System.out.println("adios");
 			break;
 		default:
 			break;

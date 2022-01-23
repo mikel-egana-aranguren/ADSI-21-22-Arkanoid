@@ -28,7 +28,7 @@ public class MenuPrincipal18 extends JFrame {
 
     private void drawScene() {
 
-        this.getContentPane().setBackground(Config.BACKGROUND_COLOR);
+        this.getContentPane().setBackground(Color.BLACK);
         this.setLayout(new FlowLayout());
 
         JLabel textoNombre = new JLabel(nombreUsuario);
@@ -41,6 +41,7 @@ public class MenuPrincipal18 extends JFrame {
         this.add(botonCerrar());
         this.add(botonCambiar());
     }
+
 
     private JButton botonJugar() {
 
@@ -78,7 +79,8 @@ public class MenuPrincipal18 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Ajustes, añadir fig");
+                dispose();
+                new Personalizacion21(nombreUsuario);
             }
         });
         return ajustes;
