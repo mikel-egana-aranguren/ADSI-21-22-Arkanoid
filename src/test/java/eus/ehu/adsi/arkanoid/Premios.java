@@ -10,9 +10,9 @@ import eus.ehu.adsi.arkanoid.core.Game;
 import eus.ehu.adsi.arkanoid.view.Ball;
 import eus.ehu.adsi.arkanoid.view.Brick;
 
-public class PremiosTest {
+public class Premios {
 	
-	private static final Logger logger = LogManager.getLogger(PremiosTest.class);
+	private static final Logger logger = LogManager.getLogger(Premios.class);
 
 	@Test
 	public void prueba0A() {
