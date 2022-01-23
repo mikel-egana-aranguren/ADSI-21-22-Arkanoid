@@ -317,12 +317,12 @@ public class Arkanoid extends JFrame implements KeyListener {
 	}
 	
 	public static void entregarPremios(String usuario) {
-		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT usuario, ganada? FROM partidaNormal WHERE usuario='"+ usuario +"' ORDER BY fecha");
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT username, ganada FROM partidaNormal WHERE username='"+ usuario +"' ORDER BY fecha");
 		int total=0;
 		int racha=0;
 		try {
 			while (rs.next()) {
-				Boolean victoria = rs.getBoolean("ganada?");
+				Boolean victoria = rs.getBoolean("ganada");
 				if(victoria) {
 					total=total+1;
 					racha=racha+1;
@@ -336,25 +336,25 @@ public class Arkanoid extends JFrame implements KeyListener {
 			//VICTORIAS TOTALES
 			ResultSet rs2;
 			if(total>=5 && total<10) {
-				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE usuario='"+ usuario +"' AND nombre='Bronce'");
+				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE username='"+ usuario +"' AND nombre='Bronce'");
 				if(!rs2.next()) {
 					GestorBD.miGestorBD.execSQL2("INSERT INTO premiosjugador VALUES('"+ usuario +"','Bronce')");
 				}
 			}
 			else if(total>=10 && total<20) {
-				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE usuario='"+ usuario +"' AND nombre='Plata'");
+				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE username='"+ usuario +"' AND nombre='Plata'");
 				if(!rs2.next()) {
 					GestorBD.miGestorBD.execSQL2("INSERT INTO premiosjugador VALUES('"+ usuario +"','Plata')");					
 				}
 			}
 			else if(total>=20 && total<50) {
-				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE usuario='"+ usuario +"' AND nombre='Oro'");
+				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE username='"+ usuario +"' AND nombre='Oro'");
 				if(!rs2.next()) {
 					GestorBD.miGestorBD.execSQL2("INSERT INTO premiosjugador VALUES('"+ usuario +"','Oro')");					
 				}
 			}
 			else if(total>=50) {
-				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE usuario='"+ usuario +"' AND nombre='Platino'");
+				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE username='"+ usuario +"' AND nombre='Platino'");
 				if(!rs2.next()) {
 					GestorBD.miGestorBD.execSQL2("INSERT INTO premiosjugador VALUES('"+ usuario +"','Platino')");					
 				}
@@ -362,19 +362,19 @@ public class Arkanoid extends JFrame implements KeyListener {
 			
 			//RACHA DE VICTORIAS
 			if(total>=5 && total<10) {
-				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE usuario='"+ usuario +"' AND nombre='Rub�'");
+				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE username='"+ usuario +"' AND nombre='Rub�'");
 				if(!rs2.next()) {
 					GestorBD.miGestorBD.execSQL2("INSERT INTO premiosjugador VALUES('"+ usuario +"','Rub�')");					
 				}
 			}
 			else if(total>=10 && total<20) {
-				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE usuario='"+ usuario +"' AND nombre='Zafiro'");
+				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE username='"+ usuario +"' AND nombre='Zafiro'");
 				if(!rs2.next()) {
 					GestorBD.miGestorBD.execSQL2("INSERT INTO premiosjugador VALUES('"+ usuario +"','Zafiro')");					
 				}
 			}
 			else if(total>=20) {
-				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE usuario='"+ usuario +"' AND nombre='Diamante'");
+				rs2 = GestorBD.miGestorBD.execSQL1("SELECT * FROM premiosjugador WHERE username='"+ usuario +"' AND nombre='Diamante'");
 				if(!rs2.next()) {
 					GestorBD.miGestorBD.execSQL2("INSERT INTO premiosjugador VALUES('"+ usuario +"','Diamante')");					
 				}
