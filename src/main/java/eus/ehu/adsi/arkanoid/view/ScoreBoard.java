@@ -60,6 +60,7 @@ public class ScoreBoard {
 	void die() {
 		lives--;
 		if (lives == 0) {
+			bricksRotos=0;
 			gameOver = true;
 			text = "You have lost! \nYour score was: " + score
 					+ "\n\nPress Enter to restart + \n\nPress S to share";
