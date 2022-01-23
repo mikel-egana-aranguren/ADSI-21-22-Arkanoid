@@ -14,8 +14,7 @@ public class App {
 			EventQueue.invokeAndWait(new Runnable() {
 				public void run(){
 					try {
-						new CrearCuenta17d();
-						//new Personalizacion21("Bosco");
+						new Inicio16();
 					} catch (Exception e){
 						System.err.println(e);
 						e.printStackTrace();

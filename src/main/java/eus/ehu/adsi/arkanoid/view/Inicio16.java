@@ -112,7 +112,7 @@ public class Inicio16 extends JFrame {
 			btnIniciarSesion.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-                    dispose();
+                    frame.dispose();
                     new IniciarSesion17a();
 				}
 				@Override
@@ -139,6 +139,7 @@ public class Inicio16 extends JFrame {
 			btnRegistrase.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
+					frame.dispose();
                     new CrearCuenta17d();
 				}
 				@Override
