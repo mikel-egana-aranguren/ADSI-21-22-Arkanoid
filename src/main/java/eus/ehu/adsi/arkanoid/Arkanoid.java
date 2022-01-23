@@ -413,6 +413,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 				resultado = user+"#"+nlvl+"#"+ptos+"#"+fecha+"$";
 			}
 			rs.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
