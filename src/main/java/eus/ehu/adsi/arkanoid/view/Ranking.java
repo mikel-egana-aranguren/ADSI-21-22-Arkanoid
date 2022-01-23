@@ -11,7 +11,8 @@ package eus.ehu.adsi.arkanoid.view;
 	import java.awt.event.ActionEvent;
 	import java.awt.event.ActionListener;
 	import java.util.ArrayList;
-	import java.util.Iterator;
+import java.util.Arrays;
+import java.util.Iterator;
 
 	import javax.swing.DefaultComboBoxModel;
 	import javax.swing.ImageIcon;
@@ -24,23 +25,23 @@ package eus.ehu.adsi.arkanoid.view;
 	import javax.swing.JTextArea;
 	import javax.swing.border.EmptyBorder;
 
+import org.apache.logging.log4j.util.PropertySource.Comparator;
 
-		public class RankingAbsoluto extends JFrame implements ActionListener {
-			private static RankingAbsoluto mRanking;
+
+		public class Ranking extends JFrame implements ActionListener {
+			private static Ranking mRanking;
 			private JPanel contentPane;
 		    private JPanel fondo ;
-			private JPanel este;
-			private JPanel centro;
-//			private JComboBox nvl;
-//			private JComboBox dfclt;
-			private JTextArea ayudatxt= new JTextArea("\tNombre \tNivel\tPuntos \tFecha", 50, 60);
+			private JPanel centro;	
+			private static JLabel titulo = new JLabel("iniciando...");
+			private static JPanel textArea = new JPanel();
 
 		    
 			public static void main(String[] args) {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							RankingAbsoluto frame = new RankingAbsoluto();
+							Ranking frame = new Ranking();
 							frame.setTitle("Ranking de arkanoid");
 							Image imagen = new ImageIcon(getClass().getResource("IconoRanking.png")).getImage();
 							frame.setIconImage(imagen);
@@ -53,24 +54,26 @@ package eus.ehu.adsi.arkanoid.view;
 				});
 			}
 			
-			public static RankingAbsoluto getMiRankingAbsoluto() {
-				if(RankingAbsoluto.mRanking==null) {
-					RankingAbsoluto.mRanking = new RankingAbsoluto();
+			public static Ranking getMiRanking() {
+				if(Ranking.mRanking==null) {
+					Ranking.mRanking = new Ranking();
 				}
-				return RankingAbsoluto.mRanking;
+				return Ranking.mRanking;
 			}
-
-			private RankingAbsoluto() {
+			
+			
+			private Ranking() {
 				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				setBounds(100, 100, 800, 600);
-				//POP UP CENTRADPO
+				setBounds(100, 100, 600, 600);
+				//POP UP CENTRADO
 				setLocationRelativeTo(null);
 				contentPane = new JPanel();
 				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 				setContentPane(contentPane);
 				contentPane.setLayout(new GridLayout(1, 1));  //1x1
 				contentPane.add(getFondo());
-			
+				//Ranking.postearDatos("urko#2#200#10-10-2020@juan#3#2030#10-12-2120@elpuma#1#20#10-10-2000");
+				//Ranking.cambiarConcepto("titulo prueba");
 			}
 			
 			private JPanel getFondo() {
@@ -91,22 +94,37 @@ package eus.ehu.adsi.arkanoid.view;
 					centro.setLayout(new BorderLayout()); //2x1
 				}
 				//Texto de Ranking 
-				JPanel textArea = new JPanel();
-				FlowLayout a = new FlowLayout();
-				textArea.setLayout(a);
-				ayudatxt.setEditable(false);
-				ayudatxt.setLineWrap(true);
-				ayudatxt.setPreferredSize(new Dimension(675, 20));
-				textArea.add(ayudatxt);
+				
+				textArea.setLayout(null);
+								
+				JLabel titUser = new JLabel("Jugador");
+				titUser.setFont(new Font("Arial", Font.BOLD, 15));
+				titUser.setBounds(80, 0, 1000, 23);
+				
+				JLabel titLvl = new JLabel("Nivel");
+				titLvl.setFont(new Font("Arial", Font.BOLD, 15));
+				titLvl.setBounds(200, 0, 1000, 23);
+				
+				JLabel titPts = new JLabel("Puntos");
+				titPts.setFont(new Font("Arial", Font.BOLD, 15));
+				titPts.setBounds(310, 0, 1000, 23);
+				
+				JLabel titFecha = new JLabel("Fecha");
+				titFecha.setFont(new Font("Arial", Font.BOLD, 15));
+				titFecha.setBounds(420, 0, 1000, 23);
+				
+				textArea.add(titUser);
+				textArea.add(titLvl);
+				textArea.add(titPts);
+				textArea.add(titFecha);	
+				
 				JScrollPane sp = new JScrollPane(textArea);
 				
 				JPanel etiqueta = new JPanel();
 				etiqueta.setLayout(new FlowLayout());
-				String s = "hola";
-				JLabel txt= new JLabel(s);
-				txt.setFont(new Font("Lucida Sans", Font.BOLD, 30));
-				txt.setForeground(Color.WHITE);
-				etiqueta.add(txt);
+				titulo.setFont(new Font("Lucida Sans", Font.BOLD, 30));
+				titulo.setForeground(Color.WHITE);
+				etiqueta.add(titulo);
 				
 				JPanel botones = new JPanel();
 				botones.setOpaque(false);
@@ -128,6 +146,7 @@ package eus.ehu.adsi.arkanoid.view;
 				bSalir.addActionListener(this);
 				salir.add(bSalir);
 				
+////////////////////////////////------RELLENO------////////////////////////////////
 				JPanel e1 = new JPanel();
 				e1.setLayout(new FlowLayout());
 				JLabel relleno1= new JLabel(" ");
@@ -142,14 +161,13 @@ package eus.ehu.adsi.arkanoid.view;
 				e3.setLayout(new FlowLayout());
 				JLabel relleno3= new JLabel(" ");
 				e3.add(relleno3);
-				
+////////////////////////////////------------------////////////////////////////////
 				
 				botones.add(relleno1);
 				botones.add(bVolver);
 				botones.add(relleno2);
 				botones.add(bSalir);
 				botones.add(relleno3);
-
 
 				centro.add(etiqueta, BorderLayout.NORTH);
 				centro.add(sp, BorderLayout.CENTER);
@@ -163,19 +181,71 @@ package eus.ehu.adsi.arkanoid.view;
 			}
 			
 
-			///////////////////////// BOTONES /////////////////////////////////
+////////////////////////////////////////RELLENO DE  DATOS ///////////////////////////////////////////////////
+
+			public static void cambiarConcepto(String concepto) { //titulo del ranking
+				titulo.setText(concepto);
+			}
+			
+			public static void postearDatos(String datos) { 
+				
+				//Pasar string de resultado SQL a array de arrays
+				//FORMATO: user#lvl#ptos#fecha$[...]
+				
+				String[] split = datos.split("@");
+				int salto = 20;
+				String[] split2;
+	        	String pNom,pLvl,pPts,pFecha;
+	        	
+		        for (int i=0; i<split.length; i++) {		   
+		        	String aux =split[i];
+		        	split2 = aux.split("#");
+		        	pNom = split2[0];
+		        	pLvl = split2[1];
+		        	pPts = split2[2];
+		        	pFecha = split2[3];
+		        	
+		        	JLabel titUser = new JLabel(pNom);
+					JLabel titLvl = new JLabel(pLvl);
+					JLabel titPts = new JLabel(pPts);
+					JLabel titFecha = new JLabel(pFecha);
+					
+					titUser.setBounds(80, salto, 1000, 23);
+					titLvl.setBounds(200, salto, 1000, 23);
+					titPts.setBounds(310, salto, 1000, 23);
+					titFecha.setBounds(420, salto, 1000, 23);
+					
+					textArea.add(titUser);
+					textArea.add(titLvl);
+					textArea.add(titPts);
+					textArea.add(titFecha);
+					
+					salto+=20;
+		        	
+		        			
+		        }
+		    }
+	        
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+			   
+//////////////////////////////////////// BOTONES ///////////////////////////////////////////////////
 			
 			public void actionPerformed(ActionEvent e) {
 				JButton btn = (JButton)e.getSource();
-				ayudatxt.setText(null);
+				//ayudatxt.setText(null);
 				if (btn.getText().equals("VOLVER"))
-				{			
-					
+				{						
+					this.setVisible(false);
+					EleccionRnkng.main(null);
 				}
 				else if (btn.getText().equals("SALIR"))
 				{
 					System.exit(getDefaultCloseOperation());
 				}
 		}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	}
 
