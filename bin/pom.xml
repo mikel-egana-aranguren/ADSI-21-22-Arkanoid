@@ -27,13 +27,7 @@
 			<version>4.13.2</version>
 			<scope>test</scope>
 		</dependency>
-        <dependency>
-            <groupId>ADSI-Arkanoid</groupId>
-            <artifactId>ADSI-Arkanoid</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>

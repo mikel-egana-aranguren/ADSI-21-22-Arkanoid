@@ -7,9 +7,13 @@ import java.awt.Graphics;
 public class ScoreBoard {
 
 	public int score = 0;
+	public int bricksRotos = 0;
 	public int lives = Config.PLAYER_LIVES;
+	public static int nivelActual = Config.Nivel_Inicio;
 	public boolean win = false;
 	public boolean gameOver = false;
+	public boolean nivelSuperado = false;
+
 	String text = "";
 
 	Font font;
@@ -21,25 +25,50 @@ public class ScoreBoard {
 
 	public void increaseScore() {
 		score++;
-		if (score == (Config.COUNT_BLOCKS_X * Config.COUNT_BLOCKS_Y)) {
-			win = true;
-			text = "You have won! \nYour score was: " + score
-					+ "\n\nPress Enter to restart";
-		} else {
-			updateScoreboard();
+		bricksRotos++;
+		System.out.println("Score: " + score + " bricksRotos:" + bricksRotos);
+		switch(nivelActual){
+			case 1:
+				if(bricksRotos==Config.NBricks1){
+					nextLevel();
+				}else{updateScoreboard();}
+				break;
+			case 2:
+				if(bricksRotos==Config.NBricks2){
+					nextLevel();
+				}else{updateScoreboard();}
+				break;
+			case 3:
+				if(bricksRotos==Config.NBricks3){
+					win = true;
+					text = "You have won! \nYour score was: " + score
+							+ "\n\nPress Enter to restart + \n\nPress S to share";
+				}else{updateScoreboard();}
+				break;
 		}
+	}
+
+	public void nextLevel(){
+		bricksRotos=0;
+		nivelActual++;
+		nivelSuperado = true;
+	}
+	public static int getNivelActual(){
+		return nivelActual;
 	}
 
 	void die() {
 		lives--;
 		if (lives == 0) {
+			bricksRotos=0;
 			gameOver = true;
 			text = "You have lost! \nYour score was: " + score
-					+ "\n\nPress Enter to restart";
+					+ "\n\nPress Enter to restart + \n\nPress S to share";
 		} else {
 			updateScoreboard();
 		}
 	}
+	public void aumentarVidas(){lives++;}
 
 	public void updateScoreboard() {
 		text = "Score: " + score + "  Lives: " + lives;
