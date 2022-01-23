@@ -570,7 +570,7 @@ public class ArkanoidFrontera {
 
     	return mensaje;
     }
-    
+    //Cargamos los datos de la base de datos 
     public JSONObject cargarDatosPersonalizacion(String nombre) {
         try {
             nombreUsuario = nombre;
@@ -580,7 +580,7 @@ public class ArkanoidFrontera {
             return null;
         }
     }
-
+    //Recogemos los colores de cada uno de los objetos: Bola, paddle, fondo y ladrillos
     public JSONObject getColores(String objeto, String nombre){
         JSONObject colores;
         if (objeto == "fondo"){
@@ -618,7 +618,7 @@ public class ArkanoidFrontera {
         }
         return colores;
     }
-
+    //Recogemos el valor del sonido para poder mostrarlo en la interfaz
     public static boolean getSonido(String nombre) {
         boolean b = false;
         try {
@@ -628,7 +628,7 @@ public class ArkanoidFrontera {
         }
         return b;
     }
-
+//Si seleccionamos el nombre del color lo transformamos en su color correspondiente
     public Color getColor(String obj, String nombre) {
         String colorStr = null;
         try {
