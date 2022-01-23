@@ -48,7 +48,7 @@ public class PremiosTest {
 	 
 	@Test
 	public void prueba3A() {
-		//
+		
 	}
 	
 	@Test
@@ -56,20 +56,24 @@ public class PremiosTest {
 
 	}
 	
-	@Test
-	public void prueba4A() {
-
-	}
+	//La prueba que se propone en el 4A no sucede.
 	
 	@Test
 	public void prueba4B() {
-
+		//Para realizar esta prueba vamos a volver a ejecutar el método obtener premios de Arkanoid
+		//Los premios ya obtenidos no deberían volver a salir (anegda ya tiene todos los premios obtenidos)
+		//Comprobamos si hay resultados duplicados
+		GestorBD.miGestorBD.execSQL2("INSERT INTO partidanormal VALUES('1','anegda','2000-01-23 22:22:22','2000','1')");
+		GestorBD.miGestorBD.execSQL2("INSERT INTO partidanormal VALUES('1','anegda','2000-01-23 22:22:23','2000','1')");
+		GestorBD.miGestorBD.execSQL2("INSERT INTO partidanormal VALUES('1','anegda','2000-01-23 22:22:24','2000','1')");
+		GestorBD.miGestorBD.execSQL2("INSERT INTO partidanormal VALUES('1','anegda','2000-01-23 22:22:25','2000','1')");
+		GestorBD.miGestorBD.execSQL2("INSERT INTO partidanormal VALUES('1','anegda','2000-01-23 22:22:26','2000','1')");
+		GestorBD.miGestorBD.execSQL2("INSERT INTO premiosjugador VALUES('anegda','Bronce')");
+		Arkanoid.entregarPremios("anegda");
+		
 	}
 
-	@Test
-	public void prueba5A() {
-
-	}
+	//La prueba que se propone en el 4A no sucede.	
 	
 	@Test
 	public void prueba5B() {
