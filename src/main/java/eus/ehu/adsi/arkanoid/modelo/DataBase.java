@@ -257,7 +257,7 @@ public class DataBase {
         return null;
     }
 
-    public void cambiarAjustes(String nombre, String colorBola, String colorPaddel, String colorLadrillo, String colorFondo) throws SQLException{
+    public void cambiarAjustes(String nombre, String colorBola, String colorPaddel, String colorLadrillo, String colorFondo, Boolean sonido) throws SQLException{
         Connection con = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -265,8 +265,10 @@ public class DataBase {
 		} catch (ClassNotFoundException e) {
 			System.out.println("Error al registrar el dirver de MySQL:" + e);
 		}
+        int audio = 0;
+        if (sonido) audio=1;
         Statement s = con.createStatement();
-        s.executeQuery("UPDATE usuario SET colorBola=\""+ colorBola +"\", colorPaddle=\""+ colorPaddel +"\", colorLadrillo=\""+ colorLadrillo +"\", colorFondo=\""+ colorFondo +"\" WHERE nombreUsuario=\""+ nombre +"\";");
+        s.executeQuery("UPDATE usuario SET colorBola=\""+ colorBola +"\", colorPaddle=\""+ colorPaddel +"\", colorLadrillo=\""+ colorLadrillo +"\", colorFondo=\""+ colorFondo +"\", sonidoAct=\""+ audio +"\" WHERE nombreUsuario=\""+ nombre +"\";");
     }
     
 }

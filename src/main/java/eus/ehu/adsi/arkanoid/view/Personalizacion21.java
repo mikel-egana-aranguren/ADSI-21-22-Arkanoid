@@ -202,7 +202,7 @@ public class Personalizacion21 {
 					String colorPadel = comboBoxPaddle.getSelectedItem().toString();
 					String colorLadrillo = comboBoxLadrillo.getSelectedItem().toString();
 					String colorFondo = comboBoxBackGround.getSelectedItem().toString();
-					ArkanoidFrontera.getArkanoidFrontera().cambiarAjustes(colorBola, colorPadel, colorLadrillo, colorFondo, nombreUsuario);
+					ArkanoidFrontera.getArkanoidFrontera().cambiarAjustes(colorBola, colorPadel, colorLadrillo, colorFondo, sonido, nombreUsuario);
 					frame.dispose();
 					new MenuPrincipal18(nombreUsuario);
 

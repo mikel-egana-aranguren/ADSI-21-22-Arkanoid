@@ -48,9 +48,9 @@ public class ArkanoidFrontera {
         return r.nextInt(i - j + 1) + j;
     }
 
-    public void cambiarAjustes(String colorBola, String colorPadel, String colorLadrillo, String colorFondo, String nombreUsuario) {
+    public void cambiarAjustes(String colorBola, String colorPadel, String colorLadrillo, String colorFondo, Boolean sonido, String nombreUsuario) {
         try {
-            DataBase.getmDataBase().cambiarAjustes(nombreUsuario, colorBola, colorPadel, colorLadrillo, colorFondo);
+            DataBase.getmDataBase().cambiarAjustes(nombreUsuario, colorBola, colorPadel, colorLadrillo, colorFondo, sonido);
         } catch (SQLException e) {
             e.printStackTrace();
         }
