@@ -15,16 +15,13 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-import org.apache.logging.log4j.LogManager; //TEMAS DEL LOGGER POR LA VULNERABILIDAD
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import eus.ehu.adsi.arkanoid.controlador.GestorPartidas;
-import eus.ehu.adsi.arkanoid.controlador.GestorUsuarios;
-import eus.ehu.adsi.arkanoid.modelo.Partida;
-import eus.ehu.adsi.arkanoid.modelo.Usuario;
+import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
 import eus.ehu.adsi.arkanoid.view.game.core.Game;
 
-public class Arkanoid extends JFrame implements KeyListener { //No se si se podrá hacer MAE esta clase
+public class Arkanoid extends JFrame implements KeyListener { 
 
 	// Housekeeping
 	private static final long serialVersionUID = 1L;
@@ -43,14 +40,15 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 
 	private int ladrillo1 = -1;
 	private int ladrillo2 = -1;
+	private String nombre;
 
 
 	private int nivel;
 	
-	public Arkanoid(int lvl) {
+	public Arkanoid(int lvl, String pNombre) {
 
 		
-		
+		nombre = pNombre;
 		game = new Game ();
 		nivel = lvl;
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,8 +68,6 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 		
 
 	public void run() {
-		
-		this.prepararPartida();
 
 		BufferStrategy bf = this.getBufferStrategy();
 		Graphics g = bf.getDrawGraphics();
@@ -98,6 +94,25 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 
 			} else {
 				if (game.isTryAgain()) {
+
+					//GUARDAR PARTIDA ANTERIOR
+					int counterBN = 0;
+					int counterBS = 0;
+					int counterBSR = 0;
+					int counterBNR = 0;
+					for (Brick b : bricks) {
+						if (b.getSuerte()) counterBS++;
+						counterBN++;
+					}
+
+					if (counterBS == 0) counterBSR = 1;
+					double d = (Config.getCountBlocksX(nivel)*Config.getCountBlocksY(nivel)) - counterBN;
+					counterBNR = (int)d;
+
+					ArkanoidFrontera.getArkanoidFrontera().guardarPartida(nombre, counterBSR, counterBNR, scoreboard.lives, scoreboard.win, scoreboard.score);
+					//Y CREAR NUEVA
+					ArkanoidFrontera.getArkanoidFrontera().volverAJugar(nivel);
+
 					logger.info("Trying again");
 					game.setTryAgain(false);
 					bricks = Game.initializeBricks(bricks, nivel);
@@ -124,6 +139,20 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 			}
 
 		}
+		int counterBN = 0;
+		int counterBS = 0;
+		int counterBSR = 0;
+		int counterBNR = 0;
+		for (Brick b : bricks) {
+			if (b.getSuerte()) counterBS++;
+			counterBN++;
+		}
+
+		if (counterBS == 0) counterBSR = 1;
+		double d = (Config.getCountBlocksX(nivel)*Config.getCountBlocksY(nivel)) - counterBN;
+		counterBNR = (int)d;
+
+		ArkanoidFrontera.getArkanoidFrontera().guardarPartida(nombre, counterBSR, counterBNR, scoreboard.lives, scoreboard.win, scoreboard.score);
 
 		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 
@@ -144,8 +173,8 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 			Iterator<Brick> it = bricks.iterator();
 			while (it.hasNext()) {
 				Brick brick = it.next();
-				if (ball != null) Game.testCollision(brick, ball, scoreboard, nivel, this);
-				if (ball2 != null) Game.testCollision(brick, ball2, scoreboard, nivel, this);
+				if (ball != null) Game.testCollision(brick, ball, scoreboard, nivel, this, nombre);
+				if (ball2 != null) Game.testCollision(brick, ball2, scoreboard, nivel, this, nombre);
 
 				if (brick.destroyed) {
 					it.remove();
@@ -225,17 +254,6 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 	}
 
 	public void keyTyped(KeyEvent arg0) {}
-
-	//PRUEBAS
-
-	private void prepararPartida() {
-		Usuario u = new Usuario("null", "null", "null");
-		GestorUsuarios.getGestorUsuarios().anadir(u);
-		Partida p = new Partida(u);
-		GestorPartidas.getGestorPartidas().anadir(p);
-	}
-
-	//////
 
 	public void duplicarBola() {
 		if (ball2 == null)

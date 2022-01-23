@@ -35,7 +35,6 @@ public class GestorUsuarios {
         if (j.has("nombreUsuario")) {
             u = new Usuario(j.getString("nombreUsuario"), j.getString("correo"), j.getString("contra"));
             GestorUsuarios.getGestorUsuarios().anadir(u);
-            System.out.println("hola");
         }
 
         return u;
@@ -94,11 +93,10 @@ public class GestorUsuarios {
         this.lUsuarios.add(U);
     }
 
-    /*MÉTODOS PARA PRUEBAS*/
     public void anadir(Usuario u) {
         this.lUsuarios.add(u);
     }
-    /////
+
     public JSONObject cargarDatosPersonalizacion(String nombreUsuario) {
         try {
             return DataBase.getmDataBase().cargarDatosPersonalizacion(nombreUsuario);

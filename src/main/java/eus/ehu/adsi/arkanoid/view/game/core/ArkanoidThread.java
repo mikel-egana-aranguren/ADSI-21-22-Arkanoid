@@ -7,7 +7,7 @@ public class ArkanoidThread extends Thread {
     
     @Override
     public void run(){
-        new Arkanoid(ArkanoidFrontera.getArkanoidFrontera().getLvl()).run();
+        new Arkanoid(ArkanoidFrontera.getArkanoidFrontera().getLvl(), ArkanoidFrontera.getArkanoidFrontera().getNombre()).run();
     }
     public static void main(String[] args) {
         ArkanoidThread thread = new ArkanoidThread();

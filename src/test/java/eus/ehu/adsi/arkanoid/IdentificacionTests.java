@@ -9,8 +9,6 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Test;
 
-import javax.mail.internet.AddressException;
-
 public class IdentificacionTests {
 
 	@After
@@ -569,7 +567,7 @@ public class IdentificacionTests {
 		//Registrar un usuario
 		GestorUsuarios.getGestorUsuarios().registrarUsuario("usuario", "correo@ehu.eus", "contrasena");
 		//Comprobar que esté en la lista
-		assertNotNull(GestorUsuarios.getGestorUsuarios().buscarUsuario("usuario"));
+		assertNotNull(GestorUsuarios.getGestorUsuarios().buscarUsuarioGestor("usuario"));
 	}
 
 	//Método borrarUsuarios()
@@ -583,7 +581,7 @@ public class IdentificacionTests {
 		//Borrar los usuarios de la lista
 		GestorUsuarios.getGestorUsuarios().borrarUsuarios();
 		//Comprobar que no esté en la lista
-		assertNull(GestorUsuarios.getGestorUsuarios().buscarUsuario("usuario"));
+		assertNull(GestorUsuarios.getGestorUsuarios().buscarUsuarioGestor("usuario"));
 	}
 
 	//Clase ArkanoidFrontera
@@ -661,6 +659,6 @@ public class IdentificacionTests {
 		//Borrar los usuarios de la lista
 		ArkanoidFrontera.getArkanoidFrontera().borrarUsuarios();
 		//Comprobar que no esté en la lista
-		assertNull(GestorUsuarios.getGestorUsuarios().buscarUsuario("usuario"));
+		assertNull(GestorUsuarios.getGestorUsuarios().buscarUsuarioGestor("usuario"));
 	}
 }

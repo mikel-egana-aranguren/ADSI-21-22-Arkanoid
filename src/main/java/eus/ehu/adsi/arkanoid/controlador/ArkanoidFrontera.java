@@ -59,6 +59,10 @@ public class ArkanoidFrontera {
         return mArkanoidFrontera;
     }
 
+    public void setNombre(String pNombre) {
+        nombreUsuario = pNombre;
+    }
+
     public String getNombre(){
         return nombreUsuario;
     }
@@ -80,12 +84,8 @@ public class ArkanoidFrontera {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        Config.setBackgroundColor(getColor("Fondo", nombreUsuario));
-		Config.setLadrilloColor(getColor("Ladrillo", nombreUsuario));
-		Config.setBolaColor(getColor("Bola", nombreUsuario));
-		Config.setPaddleColor(getColor("Paddle",nombreUsuario));
-        Config.setSonido(getSonido(nombreUsuario));
     }
+
     /**
      * Verificar el estado del inicio de sesión (Vista de Iniciar Sesión)
      * @param nombreUsuario el usuario que intenta iniciar sesión
@@ -108,6 +108,9 @@ public class ArkanoidFrontera {
 
         //Comprobar si el usuario existe
         if (U != null) {
+
+            //Set el nombreUsuario
+            ArkanoidFrontera.getArkanoidFrontera().setNombre(nombreUsuario);
 
             //Comprobar si la contraseña que ha introducido es la correcta para su cuenta
             correcto = GestorUsuarios.getGestorUsuarios().esContrasena(U, contrasena);
@@ -518,8 +521,14 @@ public class ArkanoidFrontera {
         }
     }
 
+    public void volverAJugar(int nivel) {
+        Usuario u = GestorUsuarios.getGestorUsuarios().buscarUsuarioGestor(nombreUsuario);
+        GestorPartidas.getGestorPartidas().crearPartida(u, nivel);
+    }
+
     public void comenzarPartida(int nivel, boolean sonido){
-        //DataBase.getmDataBase().crearPartida(nivel, nombreJugador);
+        Usuario u = GestorUsuarios.getGestorUsuarios().buscarUsuarioGestor(nombreUsuario);
+        GestorPartidas.getGestorPartidas().crearPartida(u, nivel);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
         LocalDateTime fechaHoraInicio = LocalDateTime.now();
         fechaHoraInicioStr = dtf.format(fechaHoraInicio);
@@ -611,7 +620,7 @@ public class ArkanoidFrontera {
         return colores;
     }
 
-    public boolean getSonido(String nombre) {
+    public static boolean getSonido(String nombre) {
         boolean b = false;
         try {
             b = DataBase.getmDataBase().getSonido(nombre);
@@ -676,5 +685,24 @@ public class ArkanoidFrontera {
      */
     public void borrarUsuarios() {
         GestorUsuarios.getGestorUsuarios().borrarUsuarios();
+    }
+
+	public void cargarAjustes() {
+        Config.setBackgroundColor(getColor("Fondo", nombreUsuario));
+		Config.setLadrilloColor(getColor("Ladrillo", nombreUsuario));
+		Config.setBolaColor(getColor("Bola", nombreUsuario));
+		Config.setPaddleColor(getColor("Paddle",nombreUsuario));
+        Config.setSonido(getSonido(nombreUsuario));
+	}
+
+    public void guardarPartida(String nombre, int BSR, int BNR, int lives, boolean win, int score) {
+        Usuario u = GestorUsuarios.getGestorUsuarios().buscarUsuarioGestor(nombre);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
+        LocalDateTime fechaHoraFin = LocalDateTime.now();
+        Partida p = GestorPartidas.getGestorPartidas().buscarPartidaActual(u);
+        p.setHoraFin(fechaHoraFin);
+        p.setBricks(BSR, BNR);
+        p.setScores(lives, win, score);
+        p.guardarEnBD();
     }
 }

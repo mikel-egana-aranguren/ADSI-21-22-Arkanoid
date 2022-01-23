@@ -49,7 +49,7 @@ public class Game {
 			mBall.velocityX = Config.getBallVelocity(nivel);
 	}
 	
-	public static void testCollision(Brick mBrick, Ball mBall, ScoreBoard scoreboard, int nivel, Arkanoid a) {
+	public static void testCollision(Brick mBrick, Ball mBall, ScoreBoard scoreboard, int nivel, Arkanoid a, String pNombre) {
 		if (!Game.isIntersecting(mBrick, mBall))
 			return;
 
@@ -58,7 +58,7 @@ public class Game {
 		String descrip = null;
 
 		if (mBrick.getSuerte()) {
-			JSONObject j = ArkanoidFrontera.getArkanoidFrontera().darVentaja("null"); //TO DO: Gestión de usuarios
+			JSONObject j = ArkanoidFrontera.getArkanoidFrontera().darVentaja(pNombre); //TO DO: Gestión de usuarios
 			descrip = j.getString("descrip");
 			
 			if (!j.isNull("vidas")) {

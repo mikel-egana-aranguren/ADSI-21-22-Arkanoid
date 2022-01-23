@@ -46,4 +46,9 @@ public class GestorPartidas {
     public JSONObject obtenerDatosPartida(Partida p, int pMaxPuntUsuario) {
     	return p.obtenerDatos();
     }
+
+    public void crearPartida(Usuario u, int lvl) {
+        Partida p = new Partida(0, 0, 0, false, u, 0, lvl);
+        this.lPartidas.add(p);
+    }
 }

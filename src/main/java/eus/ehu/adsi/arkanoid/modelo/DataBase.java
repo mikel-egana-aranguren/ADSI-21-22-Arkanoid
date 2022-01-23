@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 
 import org.json.JSONObject;
@@ -288,8 +289,6 @@ public class DataBase {
     }
 
     public JSONObject buscarUsuario(String nombreUsuario, String contra) throws SQLException {
-        System.out.println(nombreUsuario);
-        System.out.println(contra);
         JSONObject j = new JSONObject();
         Connection con = null;
 		try {
@@ -303,13 +302,28 @@ public class DataBase {
         rs = s.executeQuery("SELECT * FROM usuario WHERE nombreUsuario = \""+nombreUsuario+"\" AND contraseña = \"" + contra + "\"");
         boolean b = rs.next();
         if (b) {
-            System.out.println("hola");
             j.put("nombreUsuario", rs.getString(1));
             j.put("correo", rs.getString(2));
             j.put("contra", rs.getString(3));
         }
 
         return j;
+    }
+
+    public void guardarPartida(int puntuacion, int ladrillosNormalesDestruidos, int ladrillosEspecialesDestruidos,
+            boolean victoria, String nombre, LocalDateTime fechaFin, int numVidas, int lvl) throws SQLException {
+        Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://sql4.freesqldatabase.com/sql4466495", "sql4466495","NKihfwtwiR");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error al registrar el dirver de MySQL:" + e);
+		}
+        String fecha = fechaFin.toString();
+        Statement s = con.createStatement();
+        int v = 0;
+        if (victoria) v = 1;
+        s.execute("INSERT INTO Partida VALUES (\"" + nombre + "\", \""+ "null" + "\", " + lvl + ", "+ 0 + ", \""+ "null" + "\", \""+ fecha + "\", " + puntuacion + ", " + ladrillosNormalesDestruidos + ", " + ladrillosEspecialesDestruidos + ", " + v + ", " + numVidas + ")");       
     }
     
 }
