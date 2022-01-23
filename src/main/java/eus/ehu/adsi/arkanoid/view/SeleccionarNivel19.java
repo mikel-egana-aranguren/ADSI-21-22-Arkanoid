@@ -1,5 +1,5 @@
 package eus.ehu.adsi.arkanoid.view;
- 
+
 import javax.swing.JFrame;
 import java.awt.Color;
 
@@ -26,16 +26,17 @@ public class SeleccionarNivel19 {
 	private JFrame frame;
 	private JPanel panelCentro;
 	private JButton btnComenzar;
-    private JButton btnCancelar;
+	private JButton btnCancelar;
 	private JLabel lblNivel;
 	private JComboBox<String> comboBoxNivel;
 	private Font impact = AddFont.createFont();
 	
+
 	public SeleccionarNivel19() {
 		initialize();
 	}
-	
-	
+
+
 	private void initialize() {
 		frame = new JFrame();
 		frame.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
@@ -48,7 +49,7 @@ public class SeleccionarNivel19 {
 		frame.setBackground(Color.BLACK);
 		frame.setVisible(true);
 	}
-	
+
 	private JPanel getPanelCentro() {
 		if (panelCentro == null) {
 			panelCentro = new JPanel();
@@ -76,16 +77,16 @@ public class SeleccionarNivel19 {
 			gbc_btnComenzar.gridx = 3;
 			gbc_btnComenzar.gridy = 4;
 			panelCentro.add(getBtnComenzar(), gbc_btnComenzar);
-            GridBagConstraints gbc_btnCancelar = new GridBagConstraints();
+			GridBagConstraints gbc_btnCancelar = new GridBagConstraints();
 			gbc_btnCancelar.insets = new Insets(0, 0, 0, 0);
 			gbc_btnCancelar.gridx = 1;
 			gbc_btnCancelar.gridy = 4;
 			panelCentro.add(getBtnCancelar(), gbc_btnCancelar);
 			panelCentro.setBackground(Color.BLACK);
-          	}
+		}
 		return panelCentro;
 	}
-	
+
 	private JButton getBtnComenzar() {
 		if (btnComenzar == null) {
 			btnComenzar = new JButton("Comenzar");
@@ -113,7 +114,7 @@ public class SeleccionarNivel19 {
 		return btnComenzar;
 	}
 
-    private JButton getBtnCancelar() {
+	private JButton getBtnCancelar() {
 		if (btnCancelar == null) {
 			btnCancelar = new JButton("Cancelar");
 			btnCancelar.setBorderPainted(false);
@@ -143,11 +144,11 @@ public class SeleccionarNivel19 {
 			lblNivel = new JLabel("Escoge un nivel", JLabel.CENTER);
 			lblNivel.setFont(impact.deriveFont(60.0f));
 			lblNivel.setForeground(Color.WHITE);
-			}
+		}
 		return lblNivel;
 	}
 
-    private JComboBox<String> getComboBoxNivel() {
+	private JComboBox<String> getComboBoxNivel() {
 		if (comboBoxNivel == null) {
 			comboBoxNivel = new JComboBox<String>();
 			comboBoxNivel.setModel(new DefaultComboBoxModel<String>(new String[] {"F\u00E1cil", "Medio", "Dif\u00EDcil"}));
