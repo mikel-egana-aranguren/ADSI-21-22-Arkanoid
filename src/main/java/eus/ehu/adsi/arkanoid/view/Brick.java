@@ -6,13 +6,15 @@ public class Brick extends Rectangle {
 
 	public boolean destroyed = false;
 	private boolean suerte;
+	private int id;
 
-	public Brick(double x, double y, boolean pSuerte) {
+	public Brick(double x, double y, boolean pSuerte, int pId) {
 		this.x = x;
 		this.y = y;
 		this.sizeX = Config.BLOCK_WIDTH;
 		this.sizeY = Config.BLOCK_HEIGHT;
 		suerte = pSuerte;
+		id = pId;
 	}
 
 	public void draw(Graphics g) {
@@ -31,5 +33,9 @@ public class Brick extends Rectangle {
 
 	public double getY() {
 		return y;
+	}
+
+	public int getId() {
+		return id;
 	}
 }

@@ -45,7 +45,7 @@ public class Game {
 			mBall.velocityX = Config.getBallVelocity(nivel);
 	}
 	
-	public static void testCollision(Brick mBrick, Ball mBall, ScoreBoard scoreboard, int nivel) {
+	public static void testCollision(Brick mBrick, Ball mBall, ScoreBoard scoreboard, int nivel, Arkanoid a) {
 		if (!Game.isIntersecting(mBrick, mBall))
 			return;
 
@@ -60,13 +60,14 @@ public class Game {
 				scoreboard.updateLives(vidas);
 				System.out.println(descrip);
 			} else if (!j.isNull("bola")) {
-				//Arkanoid.getArkanoid().duplicarBola();
+				a.duplicarBola();
 				System.out.println(descrip);
 			} else if (!j.isNull("paddle")) {
+				a.aumentarPaddle(100.0);
 				System.out.println(descrip);
 			} else if (!j.isNull("ladrillos")) {
 				int ladrillos = j.getInt("ladrillos");
-				//Arkanoid.getArkanoid().eliminarLadrillos(ladrillos, mBrick);
+				a.eliminarLadrillos(ladrillos, mBrick);
 				System.out.println(descrip);
 			}
 		}
@@ -100,6 +101,7 @@ public class Game {
 		int counter = 10; //Para generar ladrillos de la suerte
 		boolean suerte = false;
 		bricks.clear();
+		int i = 0;
 		for (int iX = 0; iX < Config.getCountBlocksX(nivel); ++iX) {
 			for (int iY = 0; iY < Config.getCountBlocksY(nivel); ++iY) {
 				counter--;
@@ -110,8 +112,9 @@ public class Game {
 				bricks.add(new Brick(
 						(iX + 1) * (Config.BLOCK_WIDTH + 3) + 22,
 						(iY + 2) * (Config.BLOCK_HEIGHT + 3) + 50,
-						true)
+						true, i)
 						);
+				i++;
 			}
 		}
 		return bricks;

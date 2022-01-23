@@ -16,7 +16,7 @@ public class ScoreBoard {
 
 	public ScoreBoard() {
 		font = new Font(Config.FONT, Font.PLAIN, 12);
-		text = "Welcome to Arkanoid";
+		text = "Bienvenido a Arkanoid";
 	}
 
 	public void increaseScore(int nivel) {
@@ -48,7 +48,7 @@ public class ScoreBoard {
 	}
 
 	public void updateScoreboard() {
-		text = "Score: " + score + "  Lives: " + lives;
+		text = "Puntos: " + score + "  Vidas: " + lives;
 	}
 
 	public void draw(Graphics g) {

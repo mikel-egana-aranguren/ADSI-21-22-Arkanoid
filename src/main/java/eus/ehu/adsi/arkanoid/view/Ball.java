@@ -11,10 +11,13 @@ public class Ball extends GameObject {
 	double radius = Config.BALL_RADIUS;
 	public double velocityX = 0.2;
 	public double velocityY = 0.2;
+	private int id;
 
-	public Ball(int x, int y) {
+	public Ball(int x, int y, int pId) {
 		this.x = x;
 		this.y = y;
+		id = pId;
+
 	}
 
 	public void draw(Graphics g) {
@@ -23,7 +26,7 @@ public class Ball extends GameObject {
 				(int) radius * 2);
 	}
 
-	public void update(ScoreBoard scoreBoard, Paddle paddle, int nivel) {
+	public void update(ScoreBoard scoreBoard, Paddle paddle, int nivel, Arkanoid a) {
 		x += velocityX * Config.FT_STEP;
 		y += velocityY * Config.FT_STEP;
 
@@ -35,9 +38,24 @@ public class Ball extends GameObject {
 			velocityY = Config.getBallVelocity(nivel);
 		} else if (bottom() > Config.SCREEN_HEIGHT) {
 			velocityY = -Config.getBallVelocity(nivel);
-			x = paddle.x;
-			y = paddle.y - 50;
-			scoreBoard.die();
+			if (id == 1) {
+				if (a.getBola(1) != null && a.getBola(2) != null) {
+					a.setBolaNull(1);
+				} else if (a.getBola(1) != null && a.getBola(2) == null) {
+					x = paddle.x;
+					y = paddle.y - 50;
+					scoreBoard.die();
+				}
+			} else {
+				if (a.getBola(1) != null && a.getBola(2) != null) {
+					a.setBolaNull(2);
+				} else if (a.getBola(1) == null && a.getBola(2) != null) {
+					x = paddle.x;
+					y = paddle.y - 50;
+					scoreBoard.die();
+				}
+			}
+			
 			
 		}
 
