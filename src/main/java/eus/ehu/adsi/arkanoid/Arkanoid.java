@@ -253,16 +253,16 @@ public class Arkanoid extends JFrame implements KeyListener {
 	////////////////////////////////	RANKING 	/////////////////////////////////////////	
 	
 	public static String obtenerRankingPA(String usuario) {
-		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM PartidaNormal WHERE username='" + usuario+ "'");
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM PartidaNormal WHERE username='" + usuario+"' ORDER BY puntos ASC");
 		String resultado = "";
 		try {
 			while (rs.next()) {
 				String nlvl = rs.getString("numNivel");
 				String user = rs.getString("username");
 				Date fecha = rs.getDate("fecha");
-				int ptos = rs.getInt("fecha");
+				int ptos = rs.getInt("puntos");
 
-				resultado = nlvl+user+fecha+ptos+"$";
+				resultado = user+"#"+nlvl+"#"+ptos+"#"+fecha+"$";
 			}
 			rs.close();
 		} catch (SQLException e) {
@@ -273,15 +273,16 @@ public class Arkanoid extends JFrame implements KeyListener {
 	}
 	
 	public static String obtenerRankingPN(String usuario, int nivel) {
-		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM PartidaNormal WHERE username='" + usuario+ "' AND numNivel='" + nivel+ "'");
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM PartidaNormal WHERE username='" + usuario+"' AND numNivel='" + nivel+"' ORDER BY puntos ASC");
 		String resultado = "";
 		try {
 			while (rs.next()) {
+				String nlvl = rs.getString("numNivel");
 				String user = rs.getString("username");
 				Date fecha = rs.getDate("fecha");
 				int ptos = rs.getInt("puntos");
 
-				resultado = user+fecha+ptos+"$";
+				resultado = user+"#"+nlvl+"#"+ptos+"#"+fecha+"$";
 			}
 			rs.close();
 		} catch (SQLException e) {
@@ -292,15 +293,16 @@ public class Arkanoid extends JFrame implements KeyListener {
 	}
 	
 	public static String obtenerRankingGA() {
-		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM PartidaNormal");
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM PartidaNormal ORDER BY puntos ASC");
 		String resultado = "";
 		try {
 			while (rs.next()) {
+				String nlvl = rs.getString("numNivel");
 				String user = rs.getString("username");
 				Date fecha = rs.getDate("fecha");
 				int ptos = rs.getInt("puntos");
 
-				resultado = user+fecha+ptos+"$";
+				resultado = user+"#"+nlvl+"#"+ptos+"#"+fecha+"$";
 			}
 			rs.close();
 		} catch (SQLException e) {
@@ -311,7 +313,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 	}
 	
 	public static String obtenerRankingGN(int nivel) {
-		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM PartidaNormal WHERE AND numNivel='" + nivel+ "'");
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM PartidaNormal WHERE AND numNivel='" + nivel+"' ORDER BY puntos ASC");
 		String resultado = "";
 		try {
 			while (rs.next()) {
@@ -320,7 +322,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 				Date fecha = rs.getDate("fecha");
 				int ptos = rs.getInt("puntos");
 
-				resultado = nlvl+user+fecha+ptos+"$";
+				resultado = user+"#"+nlvl+"#"+ptos+"#"+fecha+"$";
 			}
 			rs.close();
 		} catch (SQLException e) {
