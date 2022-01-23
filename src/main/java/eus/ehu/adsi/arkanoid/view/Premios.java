@@ -79,7 +79,7 @@ public class Premios extends JFrame{
 		obt.setFont(new Font("Consolas", Font.PLAIN, 20));
 		obt.setForeground(Color.WHITE);
 		String rs = Arkanoid.obtenerPremiosObtenidos(Arkanoid.getUsuarioIniciado());
-		//No se usar JSON
+
 		fondo.add(obt);
 		String[] lineas = rs.split("8");
 		for (String linea : lineas) {
