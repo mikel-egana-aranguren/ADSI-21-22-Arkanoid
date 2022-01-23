@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.SwingUtilities;
 import javax.swing.text.AttributeSet.ColorAttribute;
@@ -32,6 +34,11 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class ArkanoidFrontera {
 
@@ -517,6 +524,15 @@ public class ArkanoidFrontera {
         LocalDateTime fechaHoraInicio = LocalDateTime.now();
         fechaHoraInicioStr = dtf.format(fechaHoraInicio);
         lvl = nivel;
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/main/resources/X2Download.com - Plan B - Si No Le Contesto [Official Video] (64 kbps).wav").getAbsoluteFile());
+            System.out.println("sonido");
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+           } catch(UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+            System.err.println(ex);
+           }
         ArkanoidThread arkanoidThread = new ArkanoidThread();
         arkanoidThread.start();
     }
