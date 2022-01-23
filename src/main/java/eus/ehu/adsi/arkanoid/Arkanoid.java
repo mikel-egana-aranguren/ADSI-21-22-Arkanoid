@@ -207,7 +207,9 @@ public class Arkanoid extends JFrame implements KeyListener {
 			game.setTryAgain(true);
 		}
 		if (event.getKeyCode() == KeyEvent.VK_S) {
-			compartirResultado();
+			if (scoreboard.gameOver || scoreboard.win ) {
+				compartirResultado();
+			}
 		}
 		switch (event.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
@@ -261,7 +263,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 				ResultSet rsMax = GestorBD.miGestorBD.execSQL1("SELECT * FROM partidanormal where username ='" +usuario+"' ORDER BY puntos  DESC LIMIT 1");
 				rsMax.next();
 				String fechaMax = rsMax.getString("fecha");
-				System.out.println(fechaMax +"|||||"+fechaUltima);
+				System.out.println(fechaMax +" ||||| "+fechaUltima);
 
 			if(fechaMax.equals(fechaUltima)){
 					mensaje="Yo, " +usuario+" conseguido una nueva Puntuacion Máxima "+puntos+" puntos en el nivel "+ nivel + " de Arkanoid ADSI!!!";

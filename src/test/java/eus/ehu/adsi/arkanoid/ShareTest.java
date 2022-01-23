@@ -22,7 +22,10 @@ public class ShareTest {
 			e.printStackTrace();
 		}
 		assertTrue(true);
+		System.out.println("\n\n################################################################################################");
 		System.out.println("Comprobar si tras jugar una partida y Ganarla es posible compartir el resultado en Twitter.");
+		System.out.println("################################################################################################¡\n\n");
+
 	}
 	
 	@Test
@@ -36,5 +39,28 @@ public class ShareTest {
 		System.out.println("\n\n################################################################################################");
 		System.out.println("Comprobar si tras jugar una partida y perderla es posible compartir el resultado en Twitter.");
 		System.out.println("################################################################################################¡\n\n");
+	}
+	public void compartirPerdidaMaximaPuntuacion() {
+		try {
+			new Arkanoid().run();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		assertTrue(true);
+		System.out.println("\n\n################################################################################################");
+		System.out.println("Comprobar si tras jugar una partida y perderla es posible compartir el resultado en Twitter (Highscore).");
+		System.out.println("################################################################################################¡\n\n");
+	}
+	public void compartirGanadaMaximaPuntuacion() {
+		try {
+			new Arkanoid().run();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		assertTrue(true);
+		System.out.println("\n\n################################################################################################");
+		System.out.println("Comprobar si tras jugar una partida y Ganarla es posible compartir el resultado en Twitter (Highscore).");
+		System.out.println("################################################################################################¡\n\n");
+
 	}
 }
