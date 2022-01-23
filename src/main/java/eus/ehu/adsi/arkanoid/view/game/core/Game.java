@@ -55,28 +55,26 @@ public class Game {
 
 		mBrick.destroyed = true;
 
+		String descrip = null;
+
 		if (mBrick.getSuerte()) {
-			JSONObject j = ArkanoidFrontera.getArkanoidFrontera().darVentaja("null");
-			String descrip = j.getString("descrip");
+			JSONObject j = ArkanoidFrontera.getArkanoidFrontera().darVentaja("null"); //TO DO: Gestión de usuarios
+			descrip = j.getString("descrip");
 			
 			if (!j.isNull("vidas")) {
 				int vidas = j.getInt("vidas");
 				scoreboard.updateLives(vidas);
-				System.out.println(descrip);
 			} else if (!j.isNull("bola")) {
 				a.duplicarBola();
-				System.out.println(descrip);
 			} else if (!j.isNull("paddle")) {
 				a.aumentarPaddle(100.0);
-				System.out.println(descrip);
 			} else if (!j.isNull("ladrillos")) {
 				int ladrillos = j.getInt("ladrillos");
 				a.eliminarLadrillos(ladrillos, mBrick);
-				System.out.println(descrip);
 			}
 		}
 
-		scoreboard.increaseScore(nivel);
+		scoreboard.increaseScore(nivel, descrip);
 
 		double overlapLeft = mBall.right() - mBrick.left();
 		double overlapRight = mBrick.right() - mBall.left();

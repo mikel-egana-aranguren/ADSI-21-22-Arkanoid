@@ -11,6 +11,7 @@ public class ScoreBoard {
 	public boolean win = false;
 	public boolean gameOver = false;
 	String text = "";
+	String text2 = null;
 
 	Font font;
 
@@ -19,14 +20,14 @@ public class ScoreBoard {
 		text = "Bienvenido a Arkanoid";
 	}
 
-	public void increaseScore(int nivel) {
+	public void increaseScore(int nivel, String ventaja) {
 		score++;
 		if (score == (Config.getCountBlocksX(nivel) * Config.getCountBlocksY(nivel))) {
 			win = true;
 			text = "Has ganado! \nTus puntos fueron: " + score
-					+ "\n\nPulsa enter para volver a jugar";
+					+ "\n\nPulsa enter para \nvolver a jugar";
 		} else {
-			updateScoreboard();
+			updateScoreboard(ventaja);
 		}
 	}
 
@@ -35,20 +36,23 @@ public class ScoreBoard {
 		if (lives == 0) {
 			gameOver = true;
 			text = "Has perdido! \nTus puntos fueron: " + score
-					+ "\n\nPulsa enter para volver a jugar";
+					+ "\n\nPulsa enter para \nvolver a jugar";
 		} else {
-			updateScoreboard();
+			updateScoreboard(null);
 		}
 	}
 
 	//Actualizar vidas
 	public void updateLives(int l) {
 		this.lives = lives + l;
-		updateScoreboard();
+		updateScoreboard(null);
 	}
 
-	public void updateScoreboard() {
+	public void updateScoreboard(String ventaja) {
 		text = "Puntos: " + score + "  Vidas: " + lives;
+		if (ventaja != null) {
+			text2 = ventaja;
+		}
 	}
 
 	public void draw(Graphics g) {
@@ -68,13 +72,19 @@ public class ScoreBoard {
 			}
 		} else {
 			font = font.deriveFont(34f);
+			Font font2 = font.deriveFont(12f);
 			FontMetrics fontMetrics = g.getFontMetrics(font);
 			g.setColor(Config.FONT_COLOR);
 			g.setFont(font);
 			int titleLen = fontMetrics.stringWidth(text);
 			int titleHeight = fontMetrics.getHeight();
 			g.drawString(text, (Config.SCREEN_WIDTH / 2) - (titleLen / 2),
-					titleHeight + 35);
+					titleHeight + 20);
+			if (text2 != null) {
+				g.setFont(font2);
+				g.drawString(text2, (Config.SCREEN_WIDTH / 2) - (titleLen / 2),
+					titleHeight+40);
+			}
 		}
 	}
 }

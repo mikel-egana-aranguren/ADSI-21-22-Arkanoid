@@ -104,7 +104,7 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 					scoreboard.score = 0;
 					scoreboard.win = false;
 					scoreboard.gameOver = false;
-					scoreboard.updateScoreboard();
+					scoreboard.updateScoreboard(null);
 					ball.x = Config.SCREEN_WIDTH / 2;
 					ball.y = Config.SCREEN_HEIGHT / 2;
 					paddle.x = Config.SCREEN_WIDTH / 2;
