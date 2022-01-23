@@ -59,7 +59,7 @@ public class Personalizacion21 {
 	
 	
 	private void initialize() {
-		JSONObject j = ArkanoidFrontera.getArkanoidFrontera().cargarDatosPersonalizacion("Bosco");
+		JSONObject j = ArkanoidFrontera.getArkanoidFrontera().cargarDatosPersonalizacion(nombreUsuario);
 		frame = new JFrame();
 		frame.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 		frame.setTitle("Personalización");
