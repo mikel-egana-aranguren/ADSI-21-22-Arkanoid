@@ -3,6 +3,7 @@ package eus.ehu.adsi.arkanoid;
 import java.awt.EventQueue;
 import java.lang.reflect.InvocationTargetException;
 
+import eus.ehu.adsi.arkanoid.view.IniciarSesion17a;
 import eus.ehu.adsi.arkanoid.view.Personalizacion21;
 
 public class App {
@@ -12,7 +13,7 @@ public class App {
 			EventQueue.invokeAndWait(new Runnable() {
 				public void run(){
 					try {
-						new Personalizacion21("Bosco");
+						new IniciarSesion17a();
 					} catch (Exception e){
 						System.err.println(e);
 						e.printStackTrace();
