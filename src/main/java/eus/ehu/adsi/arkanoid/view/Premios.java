@@ -78,7 +78,7 @@ public class Premios extends JFrame{
 		obt.setText("Premios obtenidos: ");
 		obt.setFont(new Font("Consolas", Font.PLAIN, 20));
 		obt.setForeground(Color.WHITE);
-		String rs = Arkanoid.obtenerPremiosObtenidos("anegda");
+		String rs = Arkanoid.obtenerPremiosObtenidos("urkazio");
 		//No se usar JSON
 		fondo.add(obt);
 		String[] lineas = rs.split("8");
@@ -96,7 +96,7 @@ public class Premios extends JFrame{
 		nObt.setFont(new Font("Consolas", Font.PLAIN, 20));
 		nObt.setForeground(Color.WHITE);
 		fondo.add(nObt);
-		String rs2 = Arkanoid.obtenerPremiosNoObtenidos("anegda");
+		String rs2 = Arkanoid.obtenerPremiosNoObtenidos("urkazio");
 		//No se usar JSON
 		String[] lineas2 = rs2.split("8");
 		for (String linea2 : lineas2) {
