@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 import eus.ehu.adsi.arkanoid.core.Bonus;
 import org.apache.logging.log4j.LogManager;
@@ -46,6 +45,8 @@ public class Arkanoid extends JFrame implements KeyListener {
 
 	private double lastFt;
 	private double currentSlice;
+
+	private static String usuarioIniciado;
 
 	public Arkanoid() {
 		
@@ -468,6 +469,53 @@ public class Arkanoid extends JFrame implements KeyListener {
             e.printStackTrace();
         }
     }
+	////////////////////////////////////////////////////REGISTRO//////////////////////////////////////////////////////
+	public static void registrarse(String email, String user, String password){
+		GestorBD.miGestorBD.execSQL2("INSERT INTO jugador VALUES('"+user+"','"+password+"',1,'"+email+"','verde','rojo','negro','azul');");
+		iniciar(user);
+	}
+	public static void iniciarSesion(String usuario, String password){
+		ResultSet result = GestorBD.miGestorBD.execSQL1("SELECT passwrd FROM jugador WHERE username='"+usuario+"';");
+		try {
+			if (result.next()){
+				String pw = result.getString("passwrd");
+				if (pw.equals(password)){
+					iniciar(usuario);
+					JOptionPane.showMessageDialog(null, "Sesion iniciada");
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void iniciar(String user){
+		usuarioIniciado = user;
+	}
+	public static void modificarContrasena(String user, String password){
+		ResultSet result = GestorBD.miGestorBD.execSQL1("SELECT passwrd FROM jugador WHERE username='"+user+"';");
+		try {
+			if (result.next()){
+				GestorBD.miGestorBD.execSQL2("UPDATE jugador SET passwrd='"+password+"' WHERE username='"+user+"'");
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void cambiarContrasenaUsuarioIniciado(String password){
+		modificarContrasena(usuarioIniciado,password);
+	}
+	public static String getUsuarioIniciado(){
+		return usuarioIniciado;
+	}
 }
 
 
