@@ -9,7 +9,7 @@ public class ScoreBoard {
 	public int score = 0;
 	public int bricksRotos = 0;
 	public int lives = Config.PLAYER_LIVES;
-	public int nivelActual = Config.Nivel_Inicio;
+	public static int nivelActual = Config.Nivel_Inicio;
 	public boolean win = false;
 	public boolean gameOver = false;
 	public boolean nivelSuperado = false;
@@ -53,7 +53,7 @@ public class ScoreBoard {
 		nivelActual++;
 		nivelSuperado = true;
 	}
-	public int getNivelActual(){
+	public static int getNivelActual(){
 		return nivelActual;
 	}
 
