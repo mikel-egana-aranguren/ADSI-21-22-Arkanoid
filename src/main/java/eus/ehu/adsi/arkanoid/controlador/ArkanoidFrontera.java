@@ -526,7 +526,6 @@ public class ArkanoidFrontera {
         lvl = nivel;
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/main/resources/X2Download.com - Plan B - Si No Le Contesto [Official Video] (64 kbps).wav").getAbsoluteFile());
-            System.out.println("sonido");
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
