@@ -205,7 +205,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 			game.setTryAgain(true);
 		}
 		if (event.getKeyCode() == KeyEvent.VK_S) {
-			share();
+			compartirResultado();
 		}
 		switch (event.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
@@ -244,14 +244,29 @@ public class Arkanoid extends JFrame implements KeyListener {
 	}
 
 	public void keyTyped(KeyEvent arg0) {}
-	public void share(){
-		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM partidanormal ORDER BY fecha DESC LIMIT 1");
+	public void compartirResultado(){
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM partidanormal ORDER BY fecha DESC LIMIT 1;");
 		String resultado = "";
+		String mensaje = "";
 		try {
 				rs.next();
 				int puntos = rs.getInt("puntos");
 				int nivel = rs.getInt("numnivel");
-				String mensaje="He conseguido "+puntos+" puntos en el nivel "+ nivel + " de Arkanoid ADSI!!!";
+				String usuario = rs.getString("username");
+				String fechaUltima = rs.getString("fecha");
+				System.out.println("SELECT * FROM partidanormal where username = '" +usuario+"' ORDER BY puntos  DESC LIMIT 1;");
+				rs.close();
+				ResultSet rsMax = GestorBD.miGestorBD.execSQL1("SELECT * FROM partidanormal where username ='" +usuario+"' ORDER BY puntos  DESC LIMIT 1");
+				rsMax.next();
+				String fechaMax = rsMax.getString("fecha");
+				System.out.println(fechaMax +"|||||"+fechaUltima);
+
+			if(fechaMax.equals(fechaUltima)){
+					mensaje="Yo, " +usuario+" conseguido una nueva Puntuacion Máxima "+puntos+" puntos en el nivel "+ nivel + " de Arkanoid ADSI!!!";
+				}
+				else{
+					mensaje="Yo, " +usuario+" conseguido "+puntos+" puntos en el nivel "+ nivel + " de Arkanoid ADSI!!!";
+				}
 			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
 				try {
 					Desktop.getDesktop().browse(new URI("https://twitter.com/intent/tweet?text="+mensaje.replace( " ","%20")));
