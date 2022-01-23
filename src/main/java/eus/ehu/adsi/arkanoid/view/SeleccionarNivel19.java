@@ -99,7 +99,7 @@ public class SeleccionarNivel19 {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					frame.dispose();
-					ArkanoidFrontera.getArkanoidFrontera().comenzarPartida(comboBoxNivel.getSelectedIndex()+1);
+					ArkanoidFrontera.getArkanoidFrontera().comenzarPartida(comboBoxNivel.getSelectedIndex()+1, Config.getSonido());
 				}
 				@Override
 				public void mouseEntered(MouseEvent e){

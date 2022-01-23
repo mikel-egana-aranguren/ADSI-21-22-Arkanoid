@@ -39,8 +39,18 @@ public abstract class Config {
 	public static Color PADDLE_COLOR;
 	public static Color BRICK_COLOR;
 
+	public static Boolean SONIDO;
+
 
     public static final Color BRICK_COLOR_SUERTE = Color.yellow;
+
+	public static void setSonido(Boolean activar){
+		SONIDO = activar;
+	}
+
+	public static Boolean getSonido(){
+		return SONIDO;
+	}
 
 	public static void setBackgroundColor(Color color){
 		BACKGROUND_COLOR = color;

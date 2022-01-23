@@ -14,7 +14,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.text.AttributeSet.ColorAttribute;
 import javax.xml.crypto.Data;
 import java.util.Properties;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -81,10 +80,11 @@ public class ArkanoidFrontera {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        Config.setBackgroundColor(ArkanoidFrontera.getArkanoidFrontera().getColor("Fondo", ArkanoidFrontera.getArkanoidFrontera().getNombre()));
-		Config.setLadrilloColor(ArkanoidFrontera.getArkanoidFrontera().getColor("Ladrillo", ArkanoidFrontera.getArkanoidFrontera().getNombre()));
-		Config.setBolaColor(ArkanoidFrontera.getArkanoidFrontera().getColor("Bola", ArkanoidFrontera.getArkanoidFrontera().getNombre()));
-		Config.setPaddleColor(ArkanoidFrontera.getArkanoidFrontera().getColor("Paddle", ArkanoidFrontera.getArkanoidFrontera().getNombre()));
+        Config.setBackgroundColor(getColor("Fondo", nombreUsuario));
+		Config.setLadrilloColor(getColor("Ladrillo", nombreUsuario));
+		Config.setBolaColor(getColor("Bola", nombreUsuario));
+		Config.setPaddleColor(getColor("Paddle",nombreUsuario));
+        Config.setSonido(getSonido(nombreUsuario));
     }
     /**
      * Verificar el estado del inicio de sesión (Vista de Iniciar Sesión)
@@ -518,12 +518,13 @@ public class ArkanoidFrontera {
         }
     }
 
-    public void comenzarPartida(int nivel){
+    public void comenzarPartida(int nivel, boolean sonido){
         //DataBase.getmDataBase().crearPartida(nivel, nombreJugador);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
         LocalDateTime fechaHoraInicio = LocalDateTime.now();
         fechaHoraInicioStr = dtf.format(fechaHoraInicio);
         lvl = nivel;
+        if (sonido){
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/main/resources/X2Download.com - Plan B - Si No Le Contesto [Official Video] (64 kbps).wav").getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
@@ -532,6 +533,7 @@ public class ArkanoidFrontera {
            } catch(UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
             System.err.println(ex);
            }
+        }
         ArkanoidThread arkanoidThread = new ArkanoidThread();
         arkanoidThread.start();
     }
@@ -607,6 +609,16 @@ public class ArkanoidFrontera {
             }
         }
         return colores;
+    }
+
+    public boolean getSonido(String nombre) {
+        boolean b = false;
+        try {
+            b = DataBase.getmDataBase().getSonido(nombre);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return b;
     }
 
     public Color getColor(String obj, String nombre) {

@@ -14,7 +14,7 @@ public class App {
 				public void run(){
 					try {
 						//new IniciarSesion17a();
-						new Personalizacion21("Joel");
+						new Personalizacion21("Bosco");
 					} catch (Exception e){
 						System.err.println(e);
 						e.printStackTrace();

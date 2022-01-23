@@ -270,6 +270,23 @@ public class DataBase {
         s.executeUpdate("UPDATE usuario SET colorBola=\""+ colorBola +"\", colorPaddle=\""+ colorPaddel +"\", colorLadrillo=\""+ colorLadrillo +"\", colorFondo=\""+ colorFondo +"\", sonidoAct=\""+ audio +"\" WHERE nombreUsuario=\""+ nombre +"\";");
     }
 
+    public boolean getSonido(String nombre) throws SQLException{
+        Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://sql4.freesqldatabase.com/sql4466495", "sql4466495","NKihfwtwiR");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error al registrar el dirver de MySQL:" + e);
+		}
+        Statement s = con.createStatement();
+        ResultSet rs = s.executeQuery("SELECT sonidoAct FROM usuario WHERE nombreUsuario=\""+ nombre +"\"");
+        boolean b = rs.next();
+        if (b) {
+            return rs.getBoolean(1);
+        }
+        return false;
+    }
+
     public JSONObject buscarUsuario(String nombreUsuario, String contra) throws SQLException {
         System.out.println(nombreUsuario);
         System.out.println(contra);
