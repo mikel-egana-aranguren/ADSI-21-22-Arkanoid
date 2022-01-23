@@ -78,7 +78,7 @@ public class Premios extends JFrame{
 		obt.setText("Premios obtenidos: ");
 		obt.setFont(new Font("Consolas", Font.PLAIN, 20));
 		obt.setForeground(Color.WHITE);
-		String rs = Arkanoid.obtenerPremiosObtenidos("urkazio");
+		String rs = Arkanoid.obtenerPremiosObtenidos(Arkanoid.getUsuarioIniciado());
 		//No se usar JSON
 		fondo.add(obt);
 		String[] lineas = rs.split("8");
@@ -96,8 +96,8 @@ public class Premios extends JFrame{
 		nObt.setFont(new Font("Consolas", Font.PLAIN, 20));
 		nObt.setForeground(Color.WHITE);
 		fondo.add(nObt);
-		String rs2 = Arkanoid.obtenerPremiosNoObtenidos("urkazio");
-		//No se usar JSON
+		String rs2 = Arkanoid.obtenerPremiosNoObtenidos(Arkanoid.getUsuarioIniciado());
+
 		String[] lineas2 = rs2.split("8");
 		for (String linea2 : lineas2) {
 			JLabel l2 = new JLabel(); 
