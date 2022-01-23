@@ -121,7 +121,7 @@ import eus.ehu.adsi.arkanoid.Arkanoid;
 
 			JRadioButton btn = (JRadioButton)e.getSource();
 			
-			String usuario ="";
+			String usuario ="";//-
 			int nivel=0;
 			
 			if (btn.getText().equals("Personal-Absoluto")){
