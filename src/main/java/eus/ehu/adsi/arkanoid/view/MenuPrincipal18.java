@@ -28,7 +28,7 @@ public class MenuPrincipal18 extends JFrame {
 
     private void drawScene() {
 
-        this.getContentPane().setBackground(Config.BACKGROUND_COLOR);
+        this.getContentPane().setBackground(Color.BLACK);
         this.setLayout(new FlowLayout());
 
         JLabel textoNombre = new JLabel(nombreUsuario);

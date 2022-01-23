@@ -198,7 +198,6 @@ public class Personalizacion21 {
 				public void mouseClicked(MouseEvent e) {
 					
 					String colorBola = comboBoxBall.getSelectedItem().toString();
-					System.out.println(comboBoxBall.getSelectedItem());
 					String colorPadel = comboBoxPaddle.getSelectedItem().toString();
 					String colorLadrillo = comboBoxLadrillo.getSelectedItem().toString();
 					String colorFondo = comboBoxBackGround.getSelectedItem().toString();

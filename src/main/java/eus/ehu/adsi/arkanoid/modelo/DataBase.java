@@ -251,7 +251,6 @@ public class DataBase {
         rs = s.executeQuery("SELECT color"+ obj +" FROM usuario WHERE nombreUsuario=\"" + nombre +"\"");
         boolean b = rs.next();
         if (b){
-            System.out.println(rs.getString(1));
             return rs.getString(1);
         }
         return null;
@@ -268,7 +267,7 @@ public class DataBase {
         int audio = 0;
         if (sonido) audio=1;
         Statement s = con.createStatement();
-        s.executeQuery("UPDATE usuario SET colorBola=\""+ colorBola +"\", colorPaddle=\""+ colorPaddel +"\", colorLadrillo=\""+ colorLadrillo +"\", colorFondo=\""+ colorFondo +"\", sonidoAct=\""+ audio +"\" WHERE nombreUsuario=\""+ nombre +"\";");
+        s.executeUpdate("UPDATE usuario SET colorBola=\""+ colorBola +"\", colorPaddle=\""+ colorPaddel +"\", colorLadrillo=\""+ colorLadrillo +"\", colorFondo=\""+ colorFondo +"\", sonidoAct=\""+ audio +"\" WHERE nombreUsuario=\""+ nombre +"\";");
     }
     
 }

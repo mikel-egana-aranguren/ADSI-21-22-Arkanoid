@@ -9,6 +9,7 @@ import java.util.Random;
 import java.awt.Color;
 
 import javax.swing.SwingUtilities;
+import javax.swing.text.AttributeSet.ColorAttribute;
 import javax.xml.crypto.Data;
 
 import org.json.JSONObject;
@@ -17,6 +18,7 @@ import eus.ehu.adsi.arkanoid.core.ArkanoidThread;
 import eus.ehu.adsi.arkanoid.modelo.Arkanoid;
 import eus.ehu.adsi.arkanoid.modelo.DataBase;
 import eus.ehu.adsi.arkanoid.modelo.Usuario;
+import eus.ehu.adsi.arkanoid.view.game.Config;
 
 public class ArkanoidFrontera {
     private static ArkanoidFrontera mArkanoidFrontera = null;
@@ -39,7 +41,7 @@ public class ArkanoidFrontera {
     public JSONObject darVentaja(String nombreUsuario) {
         Usuario u = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
         int random = generarNumeroAleatorio(4, 1);
-        System.out.println(random);
+        System.out.println(random); ///ELIMINAR ESTO
         return GestorPartidas.getGestorPartidas().crearVentaja(random, u);
     }
 
@@ -54,6 +56,10 @@ public class ArkanoidFrontera {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        Config.setBackgroundColor(ArkanoidFrontera.getArkanoidFrontera().getColor("Fondo", ArkanoidFrontera.getArkanoidFrontera().getNombre()));
+		Config.setLadrilloColor(ArkanoidFrontera.getArkanoidFrontera().getColor("Ladrillo", ArkanoidFrontera.getArkanoidFrontera().getNombre()));
+		Config.setBolaColor(ArkanoidFrontera.getArkanoidFrontera().getColor("Bola", ArkanoidFrontera.getArkanoidFrontera().getNombre()));
+		Config.setPaddleColor(ArkanoidFrontera.getArkanoidFrontera().getColor("Paddle", ArkanoidFrontera.getArkanoidFrontera().getNombre()));
     }
     public JSONObject comprobarInicio(String nombreUsuario, String contrasena) {
 
@@ -287,16 +293,38 @@ public class ArkanoidFrontera {
         String colorStr = null;
         try {
             colorStr = DataBase.getmDataBase().getColor(obj, nombre);
-            System.out.println(colorStr);
         } catch (SQLException e1) {
             e1.printStackTrace();
         }
         Color color;
-        try {
-            Field field = Class.forName("java.awt.Color").getField(colorStr);
-            color = (Color)field.get(null);
-        } catch (Exception e) {
-            color = null; // Not defined
+        switch (colorStr) {
+            case "Rojo":
+                color = Color.RED;
+                break;
+            case "Verde":
+                color = Color.GREEN;
+                break;
+            case "Morado":
+                color = Color.MAGENTA;
+                break;
+            case "Naranja":
+                color = Color.ORANGE;
+                break;
+            case "Cyan":
+                color = Color.CYAN;
+                break;
+            case "Blanco":
+                color = Color.WHITE;
+                break;
+            case "Azul":
+                color = Color.BLUE;
+                break;
+            case "Negro":
+                color = Color.BLACK;
+                break;
+            default:
+                color = Color.PINK;
+                break;
         }
         return color;
     }
