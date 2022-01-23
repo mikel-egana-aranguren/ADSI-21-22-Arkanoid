@@ -256,4 +256,7 @@ public class PublicarResultados24a {
         return botonTerminar;
     }
 
+	public String getMensaje(){
+        return mensaje;
+    }
 }
