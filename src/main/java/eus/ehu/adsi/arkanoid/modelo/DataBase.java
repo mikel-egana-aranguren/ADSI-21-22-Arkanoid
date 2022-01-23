@@ -323,7 +323,26 @@ public class DataBase {
         Statement s = con.createStatement();
         int v = 0;
         if (victoria) v = 1;
-        s.execute("INSERT INTO Partida VALUES (\"" + nombre + "\", \""+ "null" + "\", " + lvl + ", "+ 0 + ", \""+ "null" + "\", \""+ fecha + "\", " + puntuacion + ", " + ladrillosNormalesDestruidos + ", " + ladrillosEspecialesDestruidos + ", " + v + ", " + numVidas + ")");       
+        s.execute("INSERT INTO Partida VALUES (\"" + nombre + "\", \""+ "null" + "\", " + lvl + ", , \""+ "null" + "\", \""+ fecha + "\", " + puntuacion + ", " + ladrillosNormalesDestruidos + ", " + ladrillosEspecialesDestruidos + ", " + v + ", " + numVidas + ")");       
     }
     
+    public int getMaxPunt(String nombre) throws SQLException {
+        int maxPunt=0;
+        Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://sql4.freesqldatabase.com/sql4466495", "sql4466495","NKihfwtwiR");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error al registrar el dirver de MySQL:" + e);
+            return -1;
+		}
+        Statement s = con.createStatement();
+        ResultSet rs;
+        rs = s.executeQuery("SELECT MAX(puntuacion) FROM Partida WHERE nombreUsuario=\"" + nombre +"\"");
+        boolean b = rs.next();
+        if (b) {
+            maxPunt=rs.getInt(1);
+        }
+        return maxPunt;
+    }
 }

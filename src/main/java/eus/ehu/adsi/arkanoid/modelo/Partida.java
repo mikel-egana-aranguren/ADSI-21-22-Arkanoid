@@ -47,18 +47,6 @@ public class Partida {
     public Usuario getJugador() {
     	return jugador;
     }
-    
-    public JSONObject obtenerDatos(int pMaxPuntUsuario) {
-    	JSONObject json = new JSONObject();
-    	json.put("usuario",jugador.getNombre());
-    	json.put("victoria",victoria);
-    	json.put("puntuacion",puntuacion);
-    	json.put("maxPunt",pMaxPuntUsuario);
-    	//json.put("nivel", nivel.getNumNivel());
-        List<Premio> listaPremios = new ArrayList<>();
-    	json.put("premios",listaPremios);	//estar� vac�a si no ha habido premios
-    	return json;
-    }
 
     public void setHoraFin(LocalDateTime fechaHoraFin) {
         fechaFin = fechaHoraFin;
