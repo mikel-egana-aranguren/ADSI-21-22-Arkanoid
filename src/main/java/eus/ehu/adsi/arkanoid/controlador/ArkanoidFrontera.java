@@ -65,7 +65,7 @@ public class ArkanoidFrontera {
     }
 
     public JSONObject darVentaja(String nombreUsuario) {
-        Usuario u = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
+        Usuario u = GestorUsuarios.getGestorUsuarios().buscarUsuarioGestor(nombreUsuario);
         int random = generarNumeroAleatorio(4, 1);
         return GestorPartidas.getGestorPartidas().crearVentaja(random, u);
     }
@@ -104,7 +104,7 @@ public class ArkanoidFrontera {
         JSONObject resultado = new JSONObject();
 
         //Buscar el usuario por su nombre de usuario
-        Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
+        Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario, contrasena);
 
         //Comprobar si el usuario existe
         if (U != null) {
@@ -354,7 +354,7 @@ public class ArkanoidFrontera {
         //Comprobar que todos los campos estén rellenos
         if (!(nombreUsuario.equals("") || correo.equals("") || contrasena1.equals("") || contrasena2.equals(""))) {
             //Buscar el usuario por su nombre de usuario
-            Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
+            Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuarioGestor(nombreUsuario);
 
             //Comprobar que el usuario no exista
             if (U == null) {
@@ -437,7 +437,7 @@ public class ArkanoidFrontera {
         //Comprobar que todos los campos estén rellenos
         if (!(nombreUsuario.equals("") || cAnterior.equals("") || cNueva1.equals("") || cNueva2.equals(""))) {
             //Buscar el usuario por su nombre de usuario
-            Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
+            Usuario U = GestorUsuarios.getGestorUsuarios().buscarUsuarioGestor(nombreUsuario);
 
             //Comprobar si la contrasena anterior es correcta
             if (GestorUsuarios.getGestorUsuarios().esContrasena(U, cAnterior)) {
@@ -546,7 +546,7 @@ public class ArkanoidFrontera {
     	FraseMensaje f2= new FraseMensaje("La maxima puntuacion de pUsuario es pMaxPuntuacion. ");
     	FraseMensaje f3= new FraseMensaje("");	//luego se crear� una frase por cada premio conseguido en la partida
     	
-    	Usuario usuario=GestorUsuarios.getGestorUsuarios().buscarUsuario(pNombreUsuario);
+    	Usuario usuario=GestorUsuarios.getGestorUsuarios().buscarUsuarioGestor(pNombreUsuario);
     	int maxPunt=GestorPartidas.getGestorPartidas().obtenerMaxPuntuacionHistorica(usuario);
     	Partida partida=GestorPartidas.getGestorPartidas().buscarPartidaActual(usuario);	//revisar si esta parte se puede eliminar
     	//igual a estas alturas ya hay fechaFin en la partida, si no la hay, habr�a que ponerla justo aqu�

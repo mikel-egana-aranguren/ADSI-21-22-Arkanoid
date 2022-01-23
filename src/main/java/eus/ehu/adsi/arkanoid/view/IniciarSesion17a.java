@@ -36,7 +36,7 @@ public class IniciarSesion17a extends JFrame {
         this.setLayout(new BorderLayout());
 
         JPanel campos = new JPanel();
-        campos.setBackground(Config.BACKGROUND_COLOR);
+        campos.setBackground(Color.BLACK);
         campos.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -70,7 +70,7 @@ public class IniciarSesion17a extends JFrame {
         this.add(campos, BorderLayout.CENTER);
 
         JPanel botones = new JPanel();
-        botones.setBackground(Config.BACKGROUND_COLOR);
+        botones.setBackground(Color.BLACK);
         botones.add(botonCancelar());
         botones.add(botonIniciar());
         this.add(botones, BorderLayout.PAGE_END);

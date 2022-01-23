@@ -270,5 +270,30 @@ public class DataBase {
         Statement s = con.createStatement();
         s.executeUpdate("UPDATE usuario SET colorBola=\""+ colorBola +"\", colorPaddle=\""+ colorPaddel +"\", colorLadrillo=\""+ colorLadrillo +"\", colorFondo=\""+ colorFondo +"\", sonidoAct=\""+ audio +"\" WHERE nombreUsuario=\""+ nombre +"\";");
     }
+
+    public JSONObject buscarUsuario(String nombreUsuario, String contra) throws SQLException {
+        System.out.println(nombreUsuario);
+        System.out.println(contra);
+        JSONObject j = new JSONObject();
+        Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://sql4.freesqldatabase.com/sql4466495", "sql4466495","NKihfwtwiR");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error al registrar el dirver de MySQL:" + e);
+		}
+        ResultSet rs;
+        Statement s = con.createStatement();
+        rs = s.executeQuery("SELECT * FROM usuario WHERE nombreUsuario = \""+nombreUsuario+"\" AND contraseña = \"" + contra + "\"");
+        boolean b = rs.next();
+        if (b) {
+            System.out.println("hola");
+            j.put("nombreUsuario", rs.getString(1));
+            j.put("correo", rs.getString(2));
+            j.put("contra", rs.getString(3));
+        }
+
+        return j;
+    }
     
 }

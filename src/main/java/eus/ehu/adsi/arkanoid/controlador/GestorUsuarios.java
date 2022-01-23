@@ -22,7 +22,26 @@ public class GestorUsuarios {
         return mGestorUsuarios;
     }
 
-    public Usuario buscarUsuario(String nombreUsuario) {
+    public Usuario buscarUsuario(String nombreUsuario, String contra) {
+        Usuario u = null;
+
+        JSONObject j = null;
+        try {
+            j = DataBase.getmDataBase().buscarUsuario(nombreUsuario, contra);
+        } catch (Exception e) {
+           System.err.println(e);
+        }
+
+        if (j.has("nombreUsuario")) {
+            u = new Usuario(j.getString("nombreUsuario"), j.getString("correo"), j.getString("contra"));
+            GestorUsuarios.getGestorUsuarios().anadir(u);
+            System.out.println("hola");
+        }
+
+        return u;
+        
+    }
+    public Usuario buscarUsuarioGestor(String nombreUsuario) {
         for (Usuario u : lUsuarios) {
             if (u.esNombre(nombreUsuario))
                 return u;
