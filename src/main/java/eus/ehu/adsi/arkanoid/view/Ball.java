@@ -56,7 +56,7 @@ public class Ball extends GameObject {
 		return y + radius;
 	}
 
-	public void aumentarTamañoBola() {
+	public void bolaGorda() {
 		radius=Config.BALL_RADIUS*3;
 	}
 }

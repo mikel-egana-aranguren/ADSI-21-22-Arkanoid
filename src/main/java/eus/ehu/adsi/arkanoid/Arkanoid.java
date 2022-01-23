@@ -233,10 +233,10 @@ public class Arkanoid extends JFrame implements KeyListener {
 			scoreboard.aumentarVidas();
 		}
 		else if(bonus.getNombre().equals("Paddle grande")){
-			paddle.aumentarTamaño();
+			paddle.paddleGrande();
 		}
 		else if(bonus.getNombre().equals("Bola grande")){
-			ball.aumentarTamañoBola();
+			ball.bolaGorda();
 		}
 
 	}
