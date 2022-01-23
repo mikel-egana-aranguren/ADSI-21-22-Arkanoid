@@ -1,17 +1,20 @@
-package eus.ehu.adsi.arkanoid;
-
-import eus.ehu.adsi.arkanoid.view.Config;
+package eus.ehu.adsi.arkanoid.view;
 
 import javax.swing.*;
+
+import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
+import eus.ehu.adsi.arkanoid.view.game.Config;
+import org.json.JSONObject;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Fig17b extends JFrame {
+public class CorreoRecuperacion17b extends JFrame {
 
     private JTextField correo;
 
-    public Fig17b() {
+    public CorreoRecuperacion17b() {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setUndecorated(false);
@@ -47,8 +50,8 @@ public class Fig17b extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Cancelar");
-                //new Fig16();
+                new Inicio16();
+                dispose();
             }
         });
         return cancelar;
@@ -62,16 +65,21 @@ public class Fig17b extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Enviar correo");
+                JSONObject resultado = ArkanoidFrontera.getArkanoidFrontera().recuperarContrasena(correo.getText());
+//              * Definición de JSON:
+//              { : boolean, : String }
+//                  Si es True, String = código que se ha enviado al correo
+//                  Si es False, String = mensaje de error correspondiente
 
+                if (!resultado.getBoolean("estado")) {
 
+                    new MensajeError((String) resultado.get("mensaje"), false);
 
-               //Enviar email
+                } else {
 
-
-
-
-                new Fig17c("", "");
+                    new RecuperarContraseña17c(correo.getText(), (String) resultado.get("mensaje"));
+                    dispose();
+                }
             }
         });
         return enviar;

@@ -1,4 +1,4 @@
-package eus.ehu.adsi.arkanoid.view;
+package eus.ehu.adsi.arkanoid.view.game;
 
 public class Rectangle extends GameObject {
 

@@ -1,13 +1,17 @@
-package eus.ehu.adsi.arkanoid.core;
+package eus.ehu.adsi.arkanoid.view.game.core;
 
 import java.util.List;
 
-
 import org.json.JSONObject;
 
-import eus.ehu.adsi.arkanoid.Arkanoid;
 import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
-import eus.ehu.adsi.arkanoid.view.*;
+import eus.ehu.adsi.arkanoid.view.game.Arkanoid;
+import eus.ehu.adsi.arkanoid.view.game.Ball;
+import eus.ehu.adsi.arkanoid.view.game.Brick;
+import eus.ehu.adsi.arkanoid.view.game.Config;
+import eus.ehu.adsi.arkanoid.view.game.GameObject;
+import eus.ehu.adsi.arkanoid.view.game.Paddle;
+import eus.ehu.adsi.arkanoid.view.game.ScoreBoard;
 
 
 public class Game {
@@ -71,8 +75,9 @@ public class Game {
 				System.out.println(descrip);
 			}
 		}
+
 		scoreboard.increaseScore(nivel);
-    
+
 		double overlapLeft = mBall.right() - mBrick.left();
 		double overlapRight = mBrick.right() - mBall.left();
 		double overlapTop = mBall.bottom() - mBrick.top();
@@ -96,7 +101,6 @@ public class Game {
 				&& mA.bottom() >= mB.top() && mA.top() <= mB.bottom();
 	}
 	
-
 	public static List<Brick> initializeBricks(List<Brick> bricks, int nivel) {
 		double ladrillosD = Config.getCountBlocksX(nivel)*Config.getCountBlocksY(nivel);
 		int ladrillos = (int)ladrillosD;
@@ -123,3 +127,6 @@ public class Game {
 	}
 
 }
+
+
+

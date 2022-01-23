@@ -1,4 +1,4 @@
-package eus.ehu.adsi.arkanoid;
+package eus.ehu.adsi.arkanoid.view.game;
 
 // Adapted from https://gist.github.com/Miretz/f10b18df01f9f9ebfad5
 
@@ -18,25 +18,17 @@ import javax.swing.JFrame;
 import org.apache.logging.log4j.LogManager; //TEMAS DEL LOGGER POR LA VULNERABILIDAD
 import org.apache.logging.log4j.Logger;
 
-import eus.ehu.adsi.arkanoid.view.Ball;
-import eus.ehu.adsi.arkanoid.view.Config;
-import eus.ehu.adsi.arkanoid.view.Paddle;
-import eus.ehu.adsi.arkanoid.view.ScoreBoard;
-import eus.ehu.adsi.arkanoid.view.Brick;
-
 import eus.ehu.adsi.arkanoid.controlador.GestorPartidas;
 import eus.ehu.adsi.arkanoid.controlador.GestorUsuarios;
-
-import eus.ehu.adsi.arkanoid.core.Game;
-
 import eus.ehu.adsi.arkanoid.modelo.Partida;
 import eus.ehu.adsi.arkanoid.modelo.Usuario;
+import eus.ehu.adsi.arkanoid.view.game.core.Game;
 
 public class Arkanoid extends JFrame implements KeyListener { //No se si se podrá hacer MAE esta clase
 
 	// Housekeeping
 	private static final long serialVersionUID = 1L;
-	//private static final Logger logger = LogManager.getLogger(Arkanoid.class);
+	private static final Logger logger = LogManager.getLogger(Arkanoid.class);
 
 	// Game variables
 	private Game game;
@@ -69,11 +61,12 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 		this.addKeyListener(this);
 		this.setLocationRelativeTo(null);
 		this.createBufferStrategy(2);
+		this.setFocusable(true);
 
 		bricks = Game.initializeBricks(bricks, nivel);
 
 	}
-	
+		
 
 	public void run() {
 		
@@ -90,7 +83,7 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 
 			long time1 = System.currentTimeMillis();
 			if (!scoreboard.gameOver && !scoreboard.win) {
-				//logger.info("Playing");
+				logger.info("Playing");
 				game.setTryAgain(false);
 				update();
 				drawScene(ball, bricks, scoreboard, ball2);
@@ -99,12 +92,12 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {
-					//logger.error(e.getMessage());
+					logger.error(e.getMessage());
 				}
 
 			} else {
 				if (game.isTryAgain()) {
-					//logger.info("Trying again");
+					logger.info("Trying again");
 					game.setTryAgain(false);
 					bricks = Game.initializeBricks(bricks, nivel);
 					scoreboard.lives = Config.PLAYER_LIVES;
@@ -126,7 +119,7 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 			double seconds = elapsedTime / 1000.0;
 			if (seconds > 0.0) {
 				double fps = 1.0 / seconds;
-				//logger.info("FPS: " + fps);
+				logger.info("FPS: " + fps);
 			}
 
 		}
@@ -235,7 +228,7 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 	//PRUEBAS
 
 	private void prepararPartida() {
-		Usuario u = new Usuario("null");
+		Usuario u = new Usuario("null", "null", "null");
 		GestorUsuarios.getGestorUsuarios().anadir(u);
 		Partida p = new Partida(u);
 		GestorPartidas.getGestorPartidas().anadir(p);

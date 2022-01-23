@@ -1,4 +1,4 @@
-package eus.ehu.adsi.arkanoid.view;
+package eus.ehu.adsi.arkanoid.view.game;
 
 import java.awt.Color;
 
@@ -75,4 +75,3 @@ public abstract class Config {
 			return 0;
 	}
 }
-

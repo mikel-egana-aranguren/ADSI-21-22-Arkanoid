@@ -7,8 +7,8 @@ import javax.swing.JLabel;
 
 import javax.swing.JPanel;
 
-import eus.ehu.adsi.arkanoid.App;
-import eus.ehu.adsi.arkanoid.Arkanoid;
+import eus.ehu.adsi.arkanoid.view.game.Arkanoid;
+import eus.ehu.adsi.arkanoid.view.game.Config;
 
 import javax.swing.JButton;
 import java.awt.GridBagLayout;
@@ -21,7 +21,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Font;
 
-public class SelectNivel {
+public class SeleccionarNivel19 {
 
 	private JFrame frame;
 	private JPanel panelCentro;
@@ -30,7 +30,7 @@ public class SelectNivel {
 	private JLabel lblNivel;
 	private JComboBox<String> comboBoxNivel;
 	
-	public SelectNivel() {
+	public SeleccionarNivel19() {
 		initialize();
 	}
 	
