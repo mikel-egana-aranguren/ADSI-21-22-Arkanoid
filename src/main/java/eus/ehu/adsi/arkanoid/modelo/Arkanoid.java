@@ -201,11 +201,9 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 		switch (event.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
 			paddle.moveLeft();
-			System.out.println("hola");
 			break;
 		case KeyEvent.VK_RIGHT:
 			paddle.moveRight();
-			System.out.println("adios");
 			break;
 		default:
 			break;

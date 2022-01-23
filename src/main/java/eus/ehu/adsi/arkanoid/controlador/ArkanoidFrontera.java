@@ -1,20 +1,16 @@
 package eus.ehu.adsi.arkanoid.controlador;
 
 import java.sql.SQLException;
-import java.sql.Time;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.awt.Color;
 
-import javax.swing.SwingUtilities;
-import javax.xml.crypto.Data;
 
 import org.json.JSONObject;
 
 import eus.ehu.adsi.arkanoid.core.ArkanoidThread;
-import eus.ehu.adsi.arkanoid.modelo.Arkanoid;
 import eus.ehu.adsi.arkanoid.modelo.DataBase;
 import eus.ehu.adsi.arkanoid.modelo.Usuario;
 
@@ -39,7 +35,6 @@ public class ArkanoidFrontera {
     public JSONObject darVentaja(String nombreUsuario) {
         Usuario u = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
         int random = generarNumeroAleatorio(4, 1);
-        System.out.println(random);
         return GestorPartidas.getGestorPartidas().crearVentaja(random, u);
     }
 
