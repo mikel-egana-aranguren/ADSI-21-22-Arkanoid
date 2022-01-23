@@ -49,7 +49,7 @@ public class MenuPrincipal2 extends JFrame{
 		});
 	}
 	
-	public static MenuPrincipal2 getMiPremios() {
+	public static MenuPrincipal2 getMiMenuPrincipal2() {
 		if(MenuPrincipal2.miMenu==null) {
 			MenuPrincipal2.miMenu = new MenuPrincipal2();
 		}
