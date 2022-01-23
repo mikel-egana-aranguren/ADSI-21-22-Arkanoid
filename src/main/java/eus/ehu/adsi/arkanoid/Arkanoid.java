@@ -385,6 +385,85 @@ public class Arkanoid extends JFrame implements KeyListener {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	////////////////////////////////////////////////////////// AJUSTES /////////////////////////////////////////////////////////////////
+	public static String obtenerAjustes(String pUser) {
+		ResultSet rs = GestorBD.miGestorBD.execSQL1("SELECT * FROM jugador WHERE username='" + pUser+"'");
+		String datos = " ";
+		try {
+			if(rs.next()) {
+				datos=rs.getString("colFondo") + " ";
+				datos=datos + rs.getString("colBrick") + " ";
+				datos=datos + rs.getString("colBola") + " ";
+				datos=datos + rs.getString("colPaddle");
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return datos;
+	}
+	
+	public static void cambiarColores(String pUser,String pFondo,String pLadrillo,String pBola,String pPaddle) {
+		if(pFondo.equalsIgnoreCase("Amarillo")) {
+			System.out.println("Amarillo");
+			Config.BACKGROUND_COLOR = Color.yellow;
+		} else if(pFondo.equalsIgnoreCase("Rojo")) {
+			System.out.println("Rojo");
+			Config.BACKGROUND_COLOR = Color.red;
+		} else if(pFondo.equalsIgnoreCase("Azul")) {
+			System.out.println("Azul");
+			Config.BACKGROUND_COLOR = Color.blue;
+		} else if(pFondo.equalsIgnoreCase("Negro")) {
+			System.out.println("Negro");
+			Config.BACKGROUND_COLOR = Color.black;
+		}
+		
+		if(pLadrillo.equalsIgnoreCase("Amarillo")) {
+			System.out.println("Amarillo");
+			Config.BRICK_COLOR = Color.yellow;
+		} else if(pLadrillo.equalsIgnoreCase("Rojo")) {
+			System.out.println("Rojo");
+			Config.BRICK_COLOR = Color.red;
+		} else if(pLadrillo.equalsIgnoreCase("Azul")) {
+			System.out.println("Azul");
+			Config.BRICK_COLOR = Color.blue;
+		} else if(pLadrillo.equalsIgnoreCase("Negro")) {
+			System.out.println("Negro");
+			Config.BRICK_COLOR = Color.black;
+		} 
+		
+		if(pBola.equalsIgnoreCase("Amarillo")) {
+			System.out.println("Amarillo");
+			Config.BALL_COLOR = Color.yellow;
+		} else if(pBola.equalsIgnoreCase("Rojo")) {
+			System.out.println("Rojo");
+			Config.BALL_COLOR = Color.red;
+		} else if(pBola.equalsIgnoreCase("Azul")) {
+			System.out.println("Azul");
+			Config.BALL_COLOR = Color.blue;
+		} else if(pBola.equalsIgnoreCase("Negro")) {
+			System.out.println("Negro");
+			Config.BALL_COLOR = Color.black;
+		} 
+		
+		if(pPaddle.equalsIgnoreCase("Amarillo")) {
+			System.out.println("Amarillo");
+			Config.PADDLE_COLOR = Color.yellow;
+		} else if(pPaddle.equalsIgnoreCase("Rojo")) {
+			System.out.println("Rojo");
+			Config.PADDLE_COLOR = Color.red;
+		} else if(pPaddle.equalsIgnoreCase("Azul")) {
+			System.out.println("Azul");
+			Config.PADDLE_COLOR = Color.blue;
+		} else if(pPaddle.equalsIgnoreCase("Negro")) {
+			System.out.println("Negro");
+			Config.PADDLE_COLOR = Color.black;
+		} 
+		
+		GestorBD.miGestorBD.execSQL2("UPDATE Jugador SET colFondo='" + pFondo+"', colBrick='" + pLadrillo+"', colBola='" + pBola+"', colPaddle='" + pPaddle+"' WHERE username='" + pUser+"'");
+	}
 
 
 }
