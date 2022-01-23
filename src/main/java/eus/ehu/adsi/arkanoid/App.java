@@ -13,7 +13,8 @@ public class App {
 			EventQueue.invokeAndWait(new Runnable() {
 				public void run(){
 					try {
-						new IniciarSesion17a();
+						//new IniciarSesion17a();
+						new Personalizacion21("Joel");
 					} catch (Exception e){
 						System.err.println(e);
 						e.printStackTrace();
