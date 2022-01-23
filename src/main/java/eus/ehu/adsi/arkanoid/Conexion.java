@@ -9,7 +9,7 @@ public class Conexion {
 	private static final String CONTROLADOR = "com.mysql.jdbc.Driver";
 	private static final String URL = "jdbc:mysql://localhost:3306/arkanoid";
 	private static final String USUARIO = "root";
-	private static final String CLAVE = "password";
+	private static final String CLAVE = "mysql";
 
 	static {
 		try {
