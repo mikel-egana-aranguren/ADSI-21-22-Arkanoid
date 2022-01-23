@@ -32,4 +32,18 @@ public class GestorBD {
 		}
 		return rs;
 	}
+	
+	public void execSQL2(String instr) {
+		Conexion conexion = new Conexion();
+		Connection cn = null;
+		Statement stm = null;
+		ResultSet rs = null;
+		try {
+			cn = conexion.conectar();
+			stm = cn.createStatement();
+			rs = stm.executeQuery(instr);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
