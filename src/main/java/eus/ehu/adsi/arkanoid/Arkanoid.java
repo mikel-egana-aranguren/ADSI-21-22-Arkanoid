@@ -89,6 +89,8 @@ public class Arkanoid extends JFrame implements KeyListener {
 			if(scoreboard.nivelSuperado){
 				scoreboard.nivelSuperado=false;
 				Game.initializeBricks(bricks,scoreboard.getNivelActual());
+				paddle = new Paddle(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT - 50);
+                ball = new Ball(Config.SCREEN_WIDTH / 2, Config.SCREEN_HEIGHT / 2);
 				ball.x = Config.SCREEN_WIDTH / 2;
 				ball.y = Config.SCREEN_HEIGHT / 2;
 				paddle.x = Config.SCREEN_WIDTH / 2;
