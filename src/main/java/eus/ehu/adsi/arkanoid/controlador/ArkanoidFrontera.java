@@ -23,8 +23,8 @@ public class ArkanoidFrontera {
         return GestorPartidas.getGestorPartidas().crearVentaja(random, u);
     }
 
-    private int generarNumeroAleatorio(int i, int j) {
+    public int generarNumeroAleatorio(int max, int min) {
         Random r = new Random();
-        return r.nextInt(i - j + 1) + j;
+        return r.nextInt(max - min + 1) + min;
     }
 }

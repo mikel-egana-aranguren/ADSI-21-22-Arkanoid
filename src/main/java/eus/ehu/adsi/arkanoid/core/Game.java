@@ -98,23 +98,25 @@ public class Game {
 	
 
 	public static List<Brick> initializeBricks(List<Brick> bricks, int nivel) {
-		int counter = 10; //Para generar ladrillos de la suerte
+		double ladrillosD = Config.getCountBlocksX(nivel)*Config.getCountBlocksY(nivel);
+		int ladrillos = (int)ladrillosD;
+		int cant = ArkanoidFrontera.getArkanoidFrontera().generarNumeroAleatorio(ladrillos,1)-1;
 		boolean suerte = false;
 		bricks.clear();
 		int i = 0;
 		for (int iX = 0; iX < Config.getCountBlocksX(nivel); ++iX) {
 			for (int iY = 0; iY < Config.getCountBlocksY(nivel); ++iY) {
-				counter--;
-				if (counter == 0) {
+				if (cant == 0) {
 					suerte = true;
-					counter = 7; //igual es más rentable hacerlo con números aleatorios para que no quede tan random xdddd
-				} else suerte = false;
+				}
 				bricks.add(new Brick(
 						(iX + 1) * (Config.BLOCK_WIDTH + 3) + 22,
 						(iY + 2) * (Config.BLOCK_HEIGHT + 3) + 50,
-						true, i)
+						suerte, i)
 						);
 				i++;
+				cant--;
+				suerte = false;
 			}
 		}
 		return bricks;

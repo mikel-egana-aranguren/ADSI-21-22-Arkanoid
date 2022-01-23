@@ -23,8 +23,8 @@ public class ScoreBoard {
 		score++;
 		if (score == (Config.getCountBlocksX(nivel) * Config.getCountBlocksY(nivel))) {
 			win = true;
-			text = "You have won! \nYour score was: " + score
-					+ "\n\nPress Enter to restart";
+			text = "Has ganado! \nTus puntos fueron: " + score
+					+ "\n\nPulsa enter para volver a jugar";
 		} else {
 			updateScoreboard();
 		}
@@ -34,8 +34,8 @@ public class ScoreBoard {
 		lives--;
 		if (lives == 0) {
 			gameOver = true;
-			text = "You have lost! \nYour score was: " + score
-					+ "\n\nPress Enter to restart";
+			text = "Has perdido! \nTus puntos fueron: " + score
+					+ "\n\nPulsa enter para volver a jugar";
 		} else {
 			updateScoreboard();
 		}

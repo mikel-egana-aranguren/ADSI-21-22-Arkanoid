@@ -269,11 +269,9 @@ public class Arkanoid extends JFrame implements KeyListener { //No se si se podr
 		}
 	}
 
-
 	public void aumentarPaddle(double d) {
 		paddle.update(d);
 	}
-
 
 	public Object getBola(int b) {
 		if (b == 1) return ball;
