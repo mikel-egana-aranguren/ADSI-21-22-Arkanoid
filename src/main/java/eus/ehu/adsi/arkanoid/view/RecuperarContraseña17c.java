@@ -34,7 +34,7 @@ public class RecuperarContraseña17c extends JFrame {
 
     private void drawScene() {
 
-        this.getContentPane().setBackground(Config.BACKGROUND_COLOR);
+        this.getContentPane().setBackground(ArkanoidFrontera.getArkanoidFrontera().getColor("Fondo", ArkanoidFrontera.getArkanoidFrontera().getNombre()));
         this.setLayout(new FlowLayout());
 
         JLabel textoCorreo = new JLabel("Se ha enviado un correo con el código para cambiar la contraseña");

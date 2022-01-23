@@ -206,10 +206,10 @@ public class DataBase {
         rs = s.executeQuery("SELECT ladrilloAzul, ladrilloRojo, ladrilloBlanco, ladrilloNaranja FROM usuario WHERE nombreUsuario=\"" + nombre +"\"");
         boolean b = rs.next();
         if (b) {
-            colores.put("ladrilloRojo", rs.getInt(1));
-            colores.put("ladrilloBlanco", rs.getInt(2));
-            colores.put("ladrilloNaranja", rs.getInt(3));
-            colores.put("ladrilloAzul", rs.getInt(4));
+            colores.put("ladrilloAzul", rs.getInt(1));
+            colores.put("ladrilloRojo", rs.getInt(2));
+            colores.put("ladrilloBlanco", rs.getInt(3));
+            colores.put("ladrilloNaranja", rs.getInt(4));
         }
         return colores;
     }
@@ -237,5 +237,36 @@ public class DataBase {
         return colores;
     }
 
+    public String getColor(String obj, String nombre) throws SQLException{
+        Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://sql4.freesqldatabase.com/sql4466495", "sql4466495","NKihfwtwiR");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error al registrar el dirver de MySQL:" + e);
+            return null;
+		}
+        Statement s = con.createStatement();
+        ResultSet rs;
+        rs = s.executeQuery("SELECT color"+ obj +" FROM usuario WHERE nombreUsuario=\"" + nombre +"\"");
+        boolean b = rs.next();
+        if (b){
+            System.out.println(rs.getString(1));
+            return rs.getString(1);
+        }
+        return null;
+    }
+
+    public void cambiarAjustes(String nombre, String colorBola, String colorPaddel, String colorLadrillo, String colorFondo) throws SQLException{
+        Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://sql4.freesqldatabase.com/sql4466495", "sql4466495","NKihfwtwiR");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error al registrar el dirver de MySQL:" + e);
+		}
+        Statement s = con.createStatement();
+        s.executeQuery("UPDATE usuario SET colorBola=\""+ colorBola +"\", colorPaddle=\""+ colorPaddel +"\", colorLadrillo=\""+ colorLadrillo +"\", colorFondo=\""+ colorFondo +"\" WHERE nombreUsuario=\""+ nombre +"\";");
+    }
     
 }

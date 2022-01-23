@@ -198,12 +198,14 @@ public class Personalizacion21 {
 				public void mouseClicked(MouseEvent e) {
 					
 					String colorBola = comboBoxBall.getSelectedItem().toString();
+					System.out.println(comboBoxBall.getSelectedItem());
 					String colorPadel = comboBoxPaddle.getSelectedItem().toString();
 					String colorLadrillo = comboBoxLadrillo.getSelectedItem().toString();
 					String colorFondo = comboBoxBackGround.getSelectedItem().toString();
-					ArkanoidFrontera.getArkanoidFrontera().cambiarAjustes(colorBola, colorPadel, colorLadrillo, colorFondo, sonido, nombreUsuario);
+					ArkanoidFrontera.getArkanoidFrontera().cambiarAjustes(colorBola, colorPadel, colorLadrillo, colorFondo, nombreUsuario);
 					frame.dispose();
 					new MenuPrincipal18(nombreUsuario);
+
 				}
 				@Override
 				public void mouseEntered(MouseEvent e){
@@ -384,6 +386,7 @@ public class Personalizacion21 {
             } catch (Exception ex){
                 System.out.println(ex);
             }
+
             btnSonido.setContentAreaFilled(false);
 			btnSonido.setFocusPainted(false);
 			btnSonido.setBorderPainted(false);
@@ -399,7 +402,6 @@ public class Personalizacion21 {
 						imgIcon = new ImageIcon(imageReszie);
 						btnSonido.setIcon(imgIcon);
 						sonido = false;
-
 					} else {
 						ImageIcon imgIcon = new ImageIcon("src/main/resources/unmuted.png");
                			Image image = imgIcon.getImage();

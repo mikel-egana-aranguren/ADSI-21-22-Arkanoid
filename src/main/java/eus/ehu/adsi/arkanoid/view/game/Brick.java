@@ -2,6 +2,9 @@ package eus.ehu.adsi.arkanoid.view.game;
 
 import java.awt.Graphics;
 
+import eus.ehu.adsi.arkanoid.controlador.ArkanoidFrontera;
+import eus.ehu.adsi.arkanoid.view.Personalizacion21;
+
 public class Brick extends Rectangle {
 
 	public boolean destroyed = false;
@@ -17,7 +20,7 @@ public class Brick extends Rectangle {
 
 	public void draw(Graphics g) {
 		if (suerte) g.setColor(Config.BRICK_COLOR_SUERTE);
-		else g.setColor(Config.BRICK_COLOR);
+		else g.setColor(Config.getBackGroundColor());
 		g.fillRect((int) left(), (int) top(), (int) sizeX, (int) sizeY);
 	}
 

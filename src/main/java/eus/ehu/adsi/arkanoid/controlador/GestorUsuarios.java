@@ -65,8 +65,4 @@ public class GestorUsuarios {
         }
     }
 
-    public void actualizarPersonalizacion(String nombreUsuario, String colorBola, String colorPadel,
-            String colorLadrillo, String colorFondo, boolean sonido) {
-    }
-
-}
+   }

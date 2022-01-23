@@ -2,11 +2,14 @@ package eus.ehu.adsi.arkanoid.controlador;
 
 import java.sql.SQLException;
 import java.sql.Time;
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
+import java.awt.Color;
 
 import javax.swing.SwingUtilities;
+import javax.xml.crypto.Data;
 
 import org.json.JSONObject;
 
@@ -20,12 +23,17 @@ public class ArkanoidFrontera {
     private LocalDateTime fechaHoraInicio;
     private String fechaHoraInicioStr;
     private int lvl;
+    private String nombreUsuario;
 
     private ArkanoidFrontera() {}
 
     public static ArkanoidFrontera getArkanoidFrontera() {
         if (mArkanoidFrontera == null) mArkanoidFrontera = new ArkanoidFrontera();
         return mArkanoidFrontera;
+    }
+
+    public String getNombre(){
+        return nombreUsuario;
     }
 
     public JSONObject darVentaja(String nombreUsuario) {
@@ -40,10 +48,12 @@ public class ArkanoidFrontera {
         return r.nextInt(i - j + 1) + j;
     }
 
-    public void cambiarAjustes(String colorBola, String colorPadel, String colorLadrillo, String colorFondo, boolean sonido, String nombreUsuario) {
-        Usuario u = GestorUsuarios.getGestorUsuarios().buscarUsuario(nombreUsuario);
-        GestorUsuarios.getGestorUsuarios().actualizarPersonalizacion(nombreUsuario, colorBola, colorPadel, colorLadrillo, colorFondo, sonido);
-        //u.cambiarAjustes(colorBola, colorPadel, colorLadrillo, colorFondo, sonido);
+    public void cambiarAjustes(String colorBola, String colorPadel, String colorLadrillo, String colorFondo, String nombreUsuario) {
+        try {
+            DataBase.getmDataBase().cambiarAjustes(nombreUsuario, colorBola, colorPadel, colorLadrillo, colorFondo);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     public JSONObject comprobarInicio(String nombreUsuario, String contrasena) {
 
@@ -227,6 +237,7 @@ public class ArkanoidFrontera {
 
     public JSONObject cargarDatosPersonalizacion(String nombre) {
         try {
+            nombreUsuario = nombre;
             return DataBase.getmDataBase().cargarDatosPersonalizacion(nombre);
         } catch (SQLException e) {
             System.err.println(e);
@@ -270,5 +281,23 @@ public class ArkanoidFrontera {
             }
         }
         return colores;
+    }
+
+    public Color getColor(String obj, String nombre) {
+        String colorStr = null;
+        try {
+            colorStr = DataBase.getmDataBase().getColor(obj, nombre);
+            System.out.println(colorStr);
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+        Color color;
+        try {
+            Field field = Class.forName("java.awt.Color").getField(colorStr);
+            color = (Color)field.get(null);
+        } catch (Exception e) {
+            color = null; // Not defined
+        }
+        return color;
     }
 }
